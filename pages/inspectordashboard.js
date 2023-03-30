@@ -119,13 +119,13 @@ const inspectordashboard = () => {
                   </div>
                   <div className="m-auto text-center">
 
-                  <button onClick={() => setOpen(true)} class="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
+                  <button onClick={() => setOpen(true)} className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
                   3D Land View
 </button>
-<button class="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
+<button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
 Request Land Document
 </button>
-<button class="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[94%] hover:bg-red-700  mx-2 my-2 ">
+<button className="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[94%] hover:bg-red-700  mx-2 my-2 ">
 Process Status
 </button>  </div></Col>
       <Col span={12}>  

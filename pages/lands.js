@@ -53,7 +53,7 @@ const lands = () => {
       </Modal>
 
 <div className="pt-[130px]">
-      <div class="flex flex-col m-auto p-auto w-[90%] shadow-2xl rounded-2xl">
+      <div className="flex flex-col m-auto p-auto w-[90%] shadow-2xl rounded-2xl">
         <div className="flex items-center flex-none px-4 bg-gradient-to-r from-[#240146] via-[#741760]  to-[#f63d8d] rounded-b-none h-11 rounded-xl">
           <div className="flex space-x-1.5">
             <div className="w-3 h-3 border-2 border-[#dc2626] bg-[#dc2626] rounded-full"></div>
@@ -89,14 +89,14 @@ const lands = () => {
           </div>
         </div>
         <div className="p-8">
-          <h1 class="flex pb-5  font-bold text-4xl text-gray-800">
+          <h1 className="flex pb-5  font-bold text-4xl text-gray-800">
             Selling Land Gallary
           </h1>
-          <div class="flex overflow-x-scroll pb-10 scrollbar-hide ">
-            <div class="flex flex-nowrap ">
+          <div className="flex overflow-x-scroll pb-10 scrollbar-hide ">
+            <div className="flex flex-nowrap ">
 
-              <div               class="inline-block px-3 cursor-pointer"              >
-                <div class="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+              <div               className="inline-block px-3 cursor-pointer"              >
+                <div className="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
                   onClick={() => setOpen(true)}
                     className="p-2 w-[500px] h-48 rounded-2xl"
@@ -114,10 +114,10 @@ const lands = () => {
                   </div>
                   <div className="m-auto text-center">
 
-                  <button onClick={() => setOpen(true)} class="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
+                  <button onClick={() => setOpen(true)} className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
                   3D Land View
 </button>
-<button class="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded my-2">
+<button className="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded my-2">
 Request Land Document
 </button>
                 
@@ -125,8 +125,8 @@ Request Land Document
                 </div>
               </div>
 
-              <div               class="inline-block px-3 cursor-pointer"              >
-                <div class="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+              <div               className="inline-block px-3 cursor-pointer"              >
+                <div className="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
                   onClick={() => setOpen(true)}
                     className="p-2 w-[500px] h-48 rounded-2xl"
@@ -144,10 +144,10 @@ Request Land Document
                   </div>
                   <div className="m-auto text-center">
 
-                  <button onClick={() => setOpen(true)} class="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
+                  <button onClick={() => setOpen(true)} className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
                   3D Land View
 </button>
-<button class="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded my-2">
+<button className="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded my-2">
 Request Land Document
 </button>
                 
@@ -155,8 +155,8 @@ Request Land Document
                 </div>
               </div>
 
-              <div               class="inline-block px-3 cursor-pointer"              >
-                <div class="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+              <div               className="inline-block px-3 cursor-pointer"              >
+                <div className="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
                   onClick={() => setOpen(true)}
                     className="p-2 w-[500px] h-48 rounded-2xl"
@@ -174,10 +174,10 @@ Request Land Document
                   </div>
                   <div className="m-auto text-center">
 
-                  <button onClick={() => setOpen(true)} class="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
+                  <button onClick={() => setOpen(true)} className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
                   3D Land View
 </button>
-<button class="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded my-2">
+<button className="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded my-2">
 Request Land Document
 </button>
                 
@@ -185,8 +185,8 @@ Request Land Document
                 </div>
               </div>
 
-              <div               class="inline-block px-3 cursor-pointer"              >
-                <div class="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+              <div               className="inline-block px-3 cursor-pointer"              >
+                <div className="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
                   onClick={() => setOpen(true)}
                     className="p-2 w-[500px] h-48 rounded-2xl"
@@ -204,10 +204,10 @@ Request Land Document
                   </div>
                   <div className="m-auto text-center">
 
-                  <button onClick={() => setOpen(true)} class="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
+                  <button onClick={() => setOpen(true)} className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
                   3D Land View
 </button>
-<button class="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded my-2">
+<button className="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded my-2">
 Request Land Document
 </button>
                 
@@ -220,7 +220,7 @@ Request Land Document
         </div>
       </div>
       </div>
-      <div class="flex flex-col m-auto p-auto w-[90%] shadow-2xl  mt-10 rounded-2xl mb-10">
+      <div className="flex flex-col m-auto p-auto w-[90%] shadow-2xl  mt-10 rounded-2xl mb-10">
         <div className="flex items-center flex-none px-4 bg-gradient-to-r from-[#240146] via-[#741760]  to-[#f63d8d] rounded-b-none h-11 rounded-xl">
           <div className="flex space-x-1.5">
             <div className="w-3 h-3 border-2 border-[#dc2626] bg-[#dc2626] rounded-full"></div>
@@ -256,14 +256,14 @@ Request Land Document
           </div>
         </div>
         <div className="p-8">
-          <h1 class="flex pb-5  font-bold text-4xl text-gray-800">
+          <h1 className="flex pb-5  font-bold text-4xl text-gray-800">
           Land under Registry Process
           </h1>
-          <div class="flex overflow-x-scroll pb-10 scrollbar-hide ">
-            <div class="flex flex-nowrap ">
+          <div className="flex overflow-x-scroll pb-10 scrollbar-hide ">
+            <div className="flex flex-nowrap ">
 
-              <div               class="inline-block px-3 cursor-pointer"              >
-                <div class="w-[500px] h-[470px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+              <div               className="inline-block px-3 cursor-pointer"              >
+                <div className="w-[500px] h-[470px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
                   onClick={() => setOpen(true)}
                     className="p-2 w-[500px] h-48 rounded-2xl"
@@ -282,13 +282,13 @@ Request Land Document
                   </div>
                   <div className="m-auto text-center">
 
-                  <button onClick={() => setOpen(true)} class="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
+                  <button onClick={() => setOpen(true)} className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
                   3D Land View
 </button>
-<button class="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
+<button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
 Request Land Document
 </button>
-<button onClick={processstatus} class="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[96%] hover:bg-red-700  mx-2 my-2 ">
+<button onClick={processstatus} className="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[96%] hover:bg-red-700  mx-2 my-2 ">
 Process Status
 </button>
                 
@@ -296,8 +296,8 @@ Process Status
                 </div>
               </div>
 
-              <div               class="inline-block px-3 cursor-pointer"              >
-                <div class="w-[500px] h-[470px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+              <div               className="inline-block px-3 cursor-pointer"              >
+                <div className="w-[500px] h-[470px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
                   onClick={() => setOpen(true)}
                     className="p-2 w-[500px] h-48 rounded-2xl"
@@ -316,13 +316,13 @@ Process Status
                   </div>
                   <div className="m-auto text-center">
 
-                  <button onClick={() => setOpen(true)} class="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
+                  <button onClick={() => setOpen(true)} className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
                   3D Land View
 </button>
-<button class="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
+<button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
 Request Land Document
 </button>
-<button class="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[96%] hover:bg-red-700  mx-2 my-2 ">
+<button className="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[96%] hover:bg-red-700  mx-2 my-2 ">
 Process Status
 </button>
                 
@@ -330,8 +330,8 @@ Process Status
                 </div>
               </div>
 
-              <div               class="inline-block px-3 cursor-pointer"              >
-                <div class="w-[500px] h-[470px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+              <div               className="inline-block px-3 cursor-pointer"              >
+                <div className="w-[500px] h-[470px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
                   onClick={() => setOpen(true)}
                     className="p-2 w-[500px] h-48 rounded-2xl"
@@ -350,13 +350,13 @@ Process Status
                   </div>
                   <div className="m-auto text-center">
 
-                  <button onClick={() => setOpen(true)} class="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
+                  <button onClick={() => setOpen(true)} className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
                   3D Land View
 </button>
-<button class="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
+<button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
 Request Land Document
 </button>
-<button class="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[96%] hover:bg-red-700  mx-2 my-2 ">
+<button className="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[96%] hover:bg-red-700  mx-2 my-2 ">
 Process Status
 </button>
                 
@@ -364,8 +364,8 @@ Process Status
                 </div>
               </div>
 
-              <div               class="inline-block px-3 cursor-pointer"              >
-                <div class="w-[500px] h-[470px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+              <div               className="inline-block px-3 cursor-pointer"              >
+                <div className="w-[500px] h-[470px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
                   onClick={() => setOpen(true)}
                     className="p-2 w-[500px] h-48 rounded-2xl"
@@ -383,13 +383,13 @@ Process Status
                   </div>
                   <div className="m-auto text-center">
 
-                  <button onClick={() => setOpen(true)} class="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
+                  <button onClick={() => setOpen(true)} className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded">
                   3D Land View
 </button>
-<button class="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
+<button className="bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed w-[46%] hover:bg-blue-700  mx-2 my-2 ">
 Request Land Document
 </button>
-<button class="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[96%] hover:bg-red-700  mx-2 my-2 ">
+<button className="bg-red-500  text-white font-bold py-2 px-4 rounded   w-[96%] hover:bg-red-700  mx-2 my-2 ">
 Process Status
 </button>
                 

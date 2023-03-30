@@ -114,14 +114,14 @@ const dashboard = () => {
           <>
             <p> Connect Wallet </p>
             <br />
-            <button class="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Wallet Connect
             </button>
           </>
         ) : (
           <>
             <p>Wallet Connected </p>
-            <button class="mb-4 bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
+            <button className="mb-4 bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
               {<Metamask />}
             </button>
           </>
@@ -182,7 +182,7 @@ const dashboard = () => {
             >
               <button
                 type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
               >
                 Login
               </button>
@@ -203,14 +203,14 @@ const dashboard = () => {
           <>
             <p> Connect Wallet </p>
             <br />
-            <button class="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
               Wallet Connect
             </button>
           </>
         ) : (
           <>
             <p>Wallet Connected </p>
-            <button class="mb-4 bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
+            <button className="mb-4 bg-blue-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed">
               {<Metamask />}
             </button>
           </>
@@ -271,7 +271,7 @@ const dashboard = () => {
             >
               <button
                 type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
               >
                 Login
               </button>
@@ -348,7 +348,7 @@ const dashboard = () => {
               >
                 <button
                   type="submit"
-                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
                 >
                   Login
                 </button>

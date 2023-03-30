@@ -14,15 +14,15 @@
 	.st8{fill:#858687;}
 </style>
 <g>
-	<rect class="st0" width="432" height="25.6"/>
+	<rect className="st0" width="432" height="25.6"/>
 </g>
-<circle class="st1" cx="14.5" cy="12.8" r="4.8"/>
-<circle class="st2" cx="33.6" cy="12.8" r="4.8"/>
-<circle class="st3" cx="52.6" cy="12.8" r="4.8"/>
+<circle className="st1" cx="14.5" cy="12.8" r="4.8"/>
+<circle className="st2" cx="33.6" cy="12.8" r="4.8"/>
+<circle className="st3" cx="52.6" cy="12.8" r="4.8"/>
 <g>
-	<path class="st4" d="M316.2,11.5c0-4.2-4-7.7-9-7.7H124.8c-4.9,0-9,3.4-9,7.7v2.6c0,4.2,4.1,7.7,9,7.7h182.5c5,0,9-3.4,9-7.7
+	<path className="st4" d="M316.2,11.5c0-4.2-4-7.7-9-7.7H124.8c-4.9,0-9,3.4-9,7.7v2.6c0,4.2,4.1,7.7,9,7.7h182.5c5,0,9-3.4,9-7.7
 		L316.2,11.5L316.2,11.5z"/>
 </g>
-<text transform="matrix(1 0 0 1 179.6969 17.6645)" class="st5 st6 st7">localhost</text>
-<text transform="matrix(1 0 0 1 228.1969 17.6645)" class="st8 st6 st7">:3000</text>
+<text transform="matrix(1 0 0 1 179.6969 17.6645)" className="st5 st6 st7">localhost</text>
+<text transform="matrix(1 0 0 1 228.1969 17.6645)" className="st8 st6 st7">:3000</text>
 </svg>

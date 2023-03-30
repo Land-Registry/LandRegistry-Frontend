@@ -1,5 +1,5 @@
 import React from "react";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import { Button, Form, Input, InputNumber, Select, Upload } from "antd";
 import Navbar from "../components/navbar/Navbar";
 import { Footer } from "../components/Footer";
@@ -160,7 +160,7 @@ const form = () => {
             <Form.Item>
               <button
                 type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
               >
                 Add Land
               </button>
