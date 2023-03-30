@@ -4,27 +4,27 @@ import Image from "next/image";
 
 export const Footer = () => {
   return (
-    <footer className="bg-gray-50 dark:bg-gray-900">
-      <div className="items-center justify-center px-10 py-4 mx-auto sm:px-6 flex flex-row max-w-7xl mb-6">
-        <div className="items-center gap-4 flex flex-row">
-          {/* <Image
-            src="/images/logo.png"
-            alt="Vivid Logo"
-            height="40"
-            width="40"
-          /> */}
-          <div className="text-sm text-gray-600 dark:text-gray-400 text-center">
-            &copy; RCOEM CSE, Inc. 2023
-          </div>
-        </div>
-        {/* <a
-          href="https://join.slack.com/t/vivid-jqa6824/shared_invite/zt-1f7tbxl86-wruO1aM7FYmEdNaOOnYCMQ"
-          aria-label="Join Slack"
-          className="text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5"
-        >
-          Join our Slack!
-        </a> */}
-      </div>
-    </footer>
+    
+<footer class="bg-gray-300 rounded-lg shadow m-8 mt-16 dark:bg-gray-800">
+    <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="/" class="hover:underline">Land Registry</a> - Indian Revenue System
+    </span>
+    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+        <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+        </li>
+        <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+        </li>
+        <li>
+            <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
+        </li>
+        <li>
+            <a href="#" class="hover:underline">Contact</a>
+        </li>
+    </ul>
+    </div>
+</footer>
+
   );
 };

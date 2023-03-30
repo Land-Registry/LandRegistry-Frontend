@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { ScatteredSpheres } from "../svg/ScatteredSpheres";
 import MacBarSrc from "../public/images/mac-bar.png";
-import Img from "../public/images/img.png"
+import Img from "../public/images/landmeasure.jpg"
 
 // Built with Vivid (https://vivid.lol) ⚡️
 
@@ -83,12 +83,12 @@ export const Hero = () => {
               </label>
               <div className="absolute top-0 w-[4.3rem] h-[2px] bg-gray-100 dark:bg-gray-800 left-3" />
             </form> */}
-            <button
-                type="submit"
+            <a
+                href='/dashboard'
                 className="px-4 py-2 font-bold rounded-lg text-gray-50 bg-primary-600 hover:bg-primary-700 w-fit"
               >
                 GET STARTED
-              </button>
+              </a>
             {/* <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
               {emailSubmitted
                 ? "We'll keep you posted!"
@@ -106,9 +106,14 @@ export const Hero = () => {
             className="rounded-t-lg md:rounded-t-xl"
             alt="Mac window bar"
           />
-          <Image
+          {/* <Image
             src={Img}
             className="rounded-t-lg md:rounded-t-xl"
+            alt="Mac window bar"
+          /> */}
+          <Image
+            src={Img}
+            className=""
             alt="Mac window bar"
           />
           {/* <video

@@ -32,7 +32,7 @@ export const Header = ({ isDarkMode, toggleDarkMode }) => {
   const Logo = () => (
     <Link href="/">
       <div className="flex flex-row items-center gap-1">
-        <Image src="/images/logo.png" alt="Vivid logo" height="40" width="40" />
+        {/* <Image src="/images/logo.png" alt="Vivid logo" height="40" width="40" /> */}
         <div className="text-3xl font-bold">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-blue">
             LAND REGISTRY
@@ -46,11 +46,7 @@ export const Header = ({ isDarkMode, toggleDarkMode }) => {
     <nav>
       
       <ul className="flex flex-row items-center gap-2">
-          <li>
-          <span className=" text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-blue mx-10">
-            LAND REGISTRY
-          </span>
-          </li>
+         
         {reloaded ? ( // Only show after first reload
           <li>
             <button
@@ -83,8 +79,8 @@ export const Header = ({ isDarkMode, toggleDarkMode }) => {
       }`}
     >
       {/* Header Content */}
-      <div className="flex flex-row items-center justify-center h-16 px-5 mx-auto md:h-20 max-w-7xl sm:px-6">
-        {/* <Logo /> */}
+      <div className="flex flex-row items-center justify-between h-16 px-5 mx-auto md:h-20 max-w-7xl sm:px-6">
+        <Logo />
         <Navigation />
       </div>
     </header>

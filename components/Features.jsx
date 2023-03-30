@@ -1,6 +1,11 @@
 import Image from "next/image";
 
 import MacBarSrc from "../public/images/mac-bar.png";
+import Img from "../public/images/landmeasure.jpg"
+import VirtualTour from '../public/images/virtualtour.jpg'
+import Blockchain from '../public/images/blockchain.jpg'
+import SmartContract from '../public/images/smartcontract.jpg'
+
 
 // Built with Vivid (https://vivid.lol) ⚡️
 
@@ -16,16 +21,16 @@ export const Features = () => {
               className="font-bold leading-tight tracking-tighter text-4xl md:text-6xl text-gray-800 dark:text-gray-100"
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-amber to-neon-red">
-                &quot;Just right&quot;
+                &quot;Blockchain&quot;
               </span>{" "}
-              in seconds.
+              Security.
             </h2>
             <p
               data-aos="zoom-y-out"
               data-aos-delay="150"
               className="text-lg md:text-xl text-gray-600 dark:text-gray-400"
             >
-              Test styling and update code right in your browser.
+              Decentralized structure of data with inherent security qualities.
             </p>
           </div>
           <div className="w-5/6 p-4 md:w-1/2 md:p-12 bg-gradient-to-br rounded-xl from-neon-amber to-neon-red">
@@ -39,18 +44,11 @@ export const Features = () => {
                 className="rounded-t-lg md:rounded-t-xl"
                 alt="Mac window bar"
               />
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                aria-label="A video showing Vivid's command palette functionality. The user iterates through previewed styles and applies one."
-                tabIndex={-1}
-              >
-                {/* Need both for Safari compatibility */}
-                <source src="/videos/palette.webm" type="video/webm" />
-                <source src="/videos/palette.mp4" type="video/mp4" />
-              </video>
+                 <Image
+            src={Blockchain}
+            className=""
+            alt="Mac window bar"
+          />
             </div>
           </div>
         </div>
@@ -64,16 +62,16 @@ export const Features = () => {
               className="font-bold leading-tight tracking-tighter text-4xl md:text-6xl text-gray-800 dark:text-gray-100"
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-blue">
-                Resize
+                #3D
               </span>
-              <br /> with a click.
+              <br /> Virtual Land Tour.
             </h2>
             <p
               data-aos="zoom-y-out"
               data-aos-delay="150"
               className="text-lg md:text-xl text-gray-600 dark:text-gray-400"
             >
-              Just drag to resize and realign components.
+              Just visit land from anywhere.
             </p>
           </div>
           <div className="w-5/6 p-4 md:w-1/2 md:p-12 bg-gradient-to-br rounded-xl from-neon-pink to-neon-blue md:-translate-x-14">
@@ -87,18 +85,11 @@ export const Features = () => {
                 className="rounded-t-lg md:rounded-t-xl"
                 alt="Mac window bar"
               />
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                aria-label="A video showing Vivid's mouse resizing functionality. By dragging with a mouse, the user resizes a component."
-                tabIndex={-1}
-              >
-                {/* Need both for Safari compatibility */}
-                <source src="/videos/resize.webm" type="video/webm" />
-                <source src="/videos/resize.mp4" type="video/mp4" />
-              </video>
+              <Image
+            src={VirtualTour}
+            className=""
+            alt="Mac window bar"
+          />
             </div>
           </div>
         </div>
@@ -114,14 +105,14 @@ export const Features = () => {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-neon-sky">
                 Smart commands
               </span>
-              <br /> cut the guesswork.
+              <br /> Transactions.
             </h2>
             <p
               data-aos="zoom-y-out"
               data-aos-delay="150"
               className="text-lg md:text-xl text-gray-600 dark:text-gray-400"
             >
-              Vivid smart commands apply the right styles every time.
+              Flexible, and capable of controlling large amounts of value and data.
             </p>
           </div>
           <div className="w-5/6 p-4 md:w-1/2 md:p-12 bg-gradient-to-br rounded-xl from-neon-green to-neon-sky md:translate-x-14">
@@ -135,18 +126,11 @@ export const Features = () => {
                 className="rounded-t-lg md:rounded-t-xl"
                 alt="Mac window bar"
               />
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                aria-label="A video showing Vivid's smart command functionality. By typing smart-center, the user centers all content on screen."
-                tabIndex={-1}
-              >
-                {/* Need both for Safari compatibility */}
-                <source src="/videos/center.webm" type="video/webm" />
-                <source src="/videos/center.mp4" type="video/mp4" />
-              </video>
+               <Image
+            src={SmartContract}
+            className=""
+            alt="Mac window bar"
+          />
             </div>
           </div>
         </div>
