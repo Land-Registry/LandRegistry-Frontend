@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { ScatteredSpheres } from "../svg/ScatteredSpheres";
 import MacBarSrc from "../public/images/mac-bar.png";
+import Building from "../public/images/buildings.png"
 
 // Built with Vivid (https://vivid.lol) ⚡️
 
@@ -37,14 +38,14 @@ export const Hero = () => {
             data-aos="zoom-y-out"
             className="text-5xl font-bold leading-tight tracking-tighter text-gray-800 md:text-7xl dark:text-gray-100"
           >
-            Build{" "}
+            SECURING{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-blue">
-              visually.
+              INDIA'S.
             </span>
             <br />
-            Code{" "}
+            PROPERTY RIGHTS{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-teal">
-              faster.
+              TOGETHER.
             </span>
           </h1>
           <p
@@ -52,15 +53,14 @@ export const Hero = () => {
             data-aos-delay="150"
             className="text-lg text-gray-600 md:text-xl dark:text-gray-400"
           >
-            Vivid makes front-end development effortless with our in-browser
-            visual editor to modify your code.
+            Land registry using blockchain enables secure, transparent, and tamper-proof recording of land ownership and transactional history.
           </p>
           <div
             className="flex flex-col"
             data-aos="zoom-y-out"
             data-aos-delay="300"
           >
-            <form
+            {/* <form
               className="relative flex flex-row gap-2 md:gap-4"
               onSubmit={handleSubmit}
             >
@@ -81,20 +81,19 @@ export const Hero = () => {
               >
                 Your Email
               </label>
-              {/* Line beneath label to hide outline */}
               <div className="absolute top-0 w-[4.3rem] h-[2px] bg-gray-100 dark:bg-gray-800 left-3" />
-              <button
+            </form> */}
+            <button
                 type="submit"
                 className="px-4 py-2 font-bold rounded-lg text-gray-50 bg-primary-600 hover:bg-primary-700 w-fit"
               >
-                Waitlist
+                GET STARTED
               </button>
-            </form>
-            <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+            {/* <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
               {emailSubmitted
                 ? "We'll keep you posted!"
                 : "Be the first to experience Vivid."}
-            </p>
+            </p> */}
           </div>
         </div>
         {/* Image */}
@@ -107,18 +106,23 @@ export const Hero = () => {
             className="rounded-t-lg md:rounded-t-xl"
             alt="Mac window bar"
           />
-          <video
+          <Image
+            src={Building}
+            className="rounded-t-lg md:rounded-t-xl"
+            alt="Mac window bar"
+          />
+          {/* <video
             autoPlay
             loop
             muted
             playsInline
             aria-label="A video showing Vivid's functionality including command palette, style preview, code pane, and mouse resizing"
             tabIndex={-1}
-          >
+          > */}
             {/* Need both for Safari compatibility */}
-            <source src="/videos/total.webm" type="video/webm" />
+            {/* <source src="/videos/total.webm" type="video/webm" />
             <source src="/videos/total.mp4" type="video/mp4" />
-          </video>
+          </video> */}
         </div>
       </div>
     </section>

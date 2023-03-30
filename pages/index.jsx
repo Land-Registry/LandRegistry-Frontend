@@ -14,7 +14,7 @@ const Home = ({ isDarkMode, toggleDarkMode }) => {
         <Hero />
         <Features />
         <FeatureBlocks />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <Newsletter />
       </main>
       <Footer />
