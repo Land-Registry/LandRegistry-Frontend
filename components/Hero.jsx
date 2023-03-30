@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { ScatteredSpheres } from "../svg/ScatteredSpheres";
 import MacBarSrc from "../public/images/mac-bar.png";
-import Building from "../public/images/buildings.png"
+import Img from "../public/images/img.png"
 
 // Built with Vivid (https://vivid.lol) ⚡️
 
@@ -107,7 +107,7 @@ export const Hero = () => {
             alt="Mac window bar"
           />
           <Image
-            src={Building}
+            src={Img}
             className="rounded-t-lg md:rounded-t-xl"
             alt="Mac window bar"
           />
