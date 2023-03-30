@@ -1,0 +1,28 @@
+{
+  "name": "vivid-landing-template-flat",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "axios": "^1.1.3",
+    "next": "13.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "aos": "^2.3.4",
+    "autoprefixer": "^10.4.13",
+    "eslint": "8.26.0",
+    "eslint-config-next": "13.0.0",
+    "next-seo": "^5.11.1",
+    "postcss": "^8.4.18",
+    "tailwindcss": "^3.2.1",
+    "usehooks-ts": "2.7.2",
+    "vivid-studio": "^0.14.0"
+  }
+}
