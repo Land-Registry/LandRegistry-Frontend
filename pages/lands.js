@@ -18,7 +18,7 @@ const lands = () => {
     window.location='/processstatus';
   }
   return (
-    <div className="  ">
+    <div className="bg-slate-100">
       <Navbar />
 
       <Modal
@@ -54,7 +54,7 @@ const lands = () => {
 
 <div className="pt-[130px]">
       <div className="flex flex-col m-auto p-auto w-[90%] shadow-2xl rounded-2xl">
-        <div className="flex items-center flex-none px-4 bg-gradient-to-r from-[#240146] via-[#741760]  to-[#f63d8d] rounded-b-none h-11 rounded-xl">
+        <div className="flex items-center flex-none px-4 bg-gradient-to-r from-rose-500 via-violet-600 to-blue-700 rounded-b-none h-11 rounded-xl">
           <div className="flex space-x-1.5">
             <div className="w-3 h-3 border-2 border-[#dc2626] bg-[#dc2626] rounded-full"></div>
             <div className="w-3 h-3 border-2 border-[#eab308] bg-[#eab308] rounded-full"></div>
@@ -89,8 +89,8 @@ const lands = () => {
           </div>
         </div>
         <div className="p-8">
-          <h1 className="flex pb-5  font-bold text-4xl text-gray-800">
-            Selling Land Gallary
+          <h1 className="flex pb-5  font-bold text-4xl text-gray-700">
+            SELLING LANDS
           </h1>
           <div className="flex overflow-x-scroll pb-10 scrollbar-hide ">
             <div className="flex flex-nowrap ">
@@ -103,8 +103,7 @@ const lands = () => {
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy3SI5bhu0nhSe6xiB08qoNEOPmNYpT05ODRoxxn_8Xg&usqp=CAU&ec=48665698"
                     alt=""
                   />
-                  <div className="p-2 px-4">
-
+                  <div className="p-2 px-4 text-black">
                   <h1 className="mt-0  font-bold">Area: 50 sq.m.</h1>
                   <h3 className="">Loaction: Nagpur, Maharashtra</h3>
                   <h3 className="">Price: Rs. 1,00,000</h3>

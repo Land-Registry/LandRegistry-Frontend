@@ -55,7 +55,7 @@ const dashboard = () => {
     console.log("Failed:", errorInfo);
   };
   return (
-    <div className="bg-gray-100 h-screen" >
+    <div className="bg-gray-100 max-h-screen" >
       <Navbar />
       <Row gutter={16} className="justify-center py-64">
         <Col
@@ -358,7 +358,7 @@ const dashboard = () => {
         </Form>
       </Modal>
       <Footer/>
-    </div>
+      </div>
   );
 };
 

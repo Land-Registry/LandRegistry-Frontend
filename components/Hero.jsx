@@ -21,10 +21,10 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gray-50 dark:bg-gray-900">
+    <section className="relative overflow-hidden bg-gray-50 dark:bg-[#151414]">
       <div className="absolute inset-0 z-10 backdrop-blur-[200px]" />
-      <div className="md:-left-[28rem] -left-40 -top-40 md:-top-[28rem] bg-neon-pink absolute opacity-60 dark:opacity-30 rounded-full w-96 h-96 md:w-[48rem] md:h-[48rem]" />
-      <div className="md:-right-[28rem] -right-40 -bottom-40 md:-bottom-[28rem] bg-neon-blue absolute opacity-60 dark:opacity-30 rounded-full w-96 h-96 md:w-[48rem] md:h-[48rem]" />
+      <div className="md:-left-[28rem] -left-40 -top-40 md:-top-[28rem] bg-[#333F71] absolute opacity-50 dark:opacity-70 rounded-full w-96 h-96 md:w-[48rem] md:h-[48rem]" />
+      <div className="md:-right-[28rem] -right-40 -bottom-40 md:-bottom-[28rem] bg-[#333F71] absolute opacity-50 dark:opacity-70 rounded-full w-96 h-96 md:w-[48rem] md:h-[48rem]" />
       <div className="relative z-20 px-12 py-24 mx-auto flex flex-col max-w-7xl items-center justify-center min-h-screen 2xl:min-h-[1000px] h-fit gap-16 md:flex-row">
         <div
           className="absolute inset-0 translate-y-32 pointer-events-none dark:invert dark:brightness-90"
@@ -39,12 +39,12 @@ export const Hero = () => {
             className="text-5xl font-bold leading-tight tracking-tighter text-gray-800 md:text-7xl dark:text-gray-100"
           >
             SECURING{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-blue">
+            <span className="bg-gradient-to-l from-rose-500 via-violet-600 to-blue-700 bg-clip-text text-transparent">
               INDIA'S.
             </span>
             <br />
             PROPERTY RIGHTS{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-teal">
+            <span className="bg-gradient-to-r from-rose-500 via-violet-600 to-blue-700 bg-clip-text text-transparent">
               TOGETHER.
             </span>
           </h1>
@@ -60,40 +60,12 @@ export const Hero = () => {
             data-aos="zoom-y-out"
             data-aos-delay="300"
           >
-            {/* <form
-              className="relative flex flex-row gap-2 md:gap-4"
-              onSubmit={handleSubmit}
-            >
-              <input
-                type="email"
-                placeholder="richard.hendricks@piedpiper.com"
-                aria-label="Your email"
-                name="email"
-                id="hero-waitlist"
-                onChange={(event) => setEmail(event.target.value)}
-                value={email}
-                required
-                className="w-full px-4 py-3 text-gray-800 placeholder-gray-400 bg-gray-100 border rounded-lg dark:placeholder-gray-600 dark:bg-gray-800 first-line:border-gray-200 dark:border-gray-600 dark:text-gray-100"
-              />
-              <label
-                htmlFor="hero-waitlist"
-                className="absolute z-10 text-xs text-gray-600 -top-2 left-4 dark:text-gray-400"
-              >
-                Your Email
-              </label>
-              <div className="absolute top-0 w-[4.3rem] h-[2px] bg-gray-100 dark:bg-gray-800 left-3" />
-            </form> */}
             <a
                 href='/dashboard'
-                className="px-4 py-2 font-bold rounded-lg text-gray-50 bg-primary-600 hover:bg-primary-700 w-fit"
+                className="px-4 py-2 font-bold rounded-lg text-gray-50 bg-[#004E89] hover:bg-[#003A66]  w-fit"
               >
                 GET STARTED
               </a>
-            {/* <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-              {emailSubmitted
-                ? "We'll keep you posted!"
-                : "Be the first to experience Vivid."}
-            </p> */}
           </div>
         </div>
         {/* Image */}
