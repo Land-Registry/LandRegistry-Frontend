@@ -2,9 +2,9 @@ import Image from "next/image";
 
 import MacBarSrc from "../public/images/mac-bar.png";
 import Img from "../public/images/landmeasure.jpg"
-import VirtualTour from '../public/images/virtualtour.jpg'
-import Blockchain from '../public/images/blockchain.jpg'
-import SmartContract from '../public/images/smartcontract.jpg'
+import VirtualTour from '../public/images/ar_vr.jpg'
+import Blockchain from '../public/images/b_security.jpg'
+import SmartContract from '../public/images/contract.jpg'
 
 
 // Built with Vivid (https://vivid.lol) ⚡️
@@ -71,7 +71,7 @@ export const Features = () => {
               data-aos-delay="150"
               className="text-lg md:text-xl text-gray-600 dark:text-gray-400"
             >
-              Just visit land from anywhere.
+              Visit land from anywhere.
             </p>
           </div>
           <div className="w-5/6 p-4 md:w-1/2 md:p-12 bg-gradient-to-br rounded-xl from-neon-pink to-neon-blue md:-translate-x-14">

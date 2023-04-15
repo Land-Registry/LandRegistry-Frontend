@@ -5,8 +5,6 @@ import { useEffectOnce, useEventListener } from "usehooks-ts";
 
 import { Moon, Sun } from "../svg/DarkModeIcons";
 
-// Built with Vivid (https://vivid.lol) ⚡️
-
 export const Header = ({ isDarkMode, toggleDarkMode }) => {
   const [top, setTop] = useState(true);
   const [nextSection, setNextSection] = useState(false);
@@ -32,9 +30,8 @@ export const Header = ({ isDarkMode, toggleDarkMode }) => {
   const Logo = () => (
     <Link href="/">
       <div className="flex flex-row items-center gap-1">
-        {/* <Image src="/images/logo.png" alt="Vivid logo" height="40" width="40" /> */}
         <div className="text-3xl font-bold">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-blue">
+          <span className="dark:text-slate-200 text-gray-700 ">
             LAND REGISTRY
           </span>
         </div>
@@ -75,7 +72,7 @@ export const Header = ({ isDarkMode, toggleDarkMode }) => {
     // Colors must be set explicitly since opacity and blur don't work together
     <header
       className={`fixed w-full z-30 transition duration-300 ${
-        !top && "bg-gray-50/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-lg"
+        !top && "bg-gray-50/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg"
       }`}
     >
       {/* Header Content */}

@@ -68,8 +68,8 @@ const form = () => {
     <>
       <Navbar />
       <div className="pt-20">
-        <div className="w-1/2 shadow-2xl  rounded-2xl  mb-6 mx-auto pb-2">
-          <div className="flex items-center flex-none px-4 bg-gradient-to-r from-[#240146] via-[#741760]  to-[#f63d8d] rounded-b-none h-11 rounded-xl">
+      <div className="w-1/2 shadow-2xl  rounded-2xl  mb-6 mx-auto pb-2 bg-gray-100">
+        <div className="flex items-center flex-none px-4 bg-gradient-to-r  from-rose-500 via-violet-600 to-blue-700 rounded-b-none h-11 rounded-xl">
             <div className="flex space-x-1.5">
               <div className="w-3 h-3 border-2 border-[#dc2626] bg-[#dc2626] rounded-full"></div>
               <div className="w-3 h-3 border-2 border-[#eab308] bg-[#eab308] rounded-full"></div>
@@ -202,7 +202,8 @@ const form = () => {
               </Form.Item>
 
               <Form.Item>
-              <button Type="submit"
+                <button
+                  Type="submit"
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
                 >
                   Get Metadata URL
@@ -210,14 +211,22 @@ const form = () => {
               </Form.Item>
 
               {!metadataStatus ? (
-                 <Button  disabled  onClick={() => MintNFT()} type="primary"  className="w-full  font-bold py-2 h-auto px-4  rounded my-2">
-                 Add Land (MINT NFT)
-</Button>
-              ) : (
-                
-                 <Button   onClick={() => MintNFT()} type="primary"  className="w-full bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 rounded my-2">
+                <Button
+                  disabled
+                  onClick={() => MintNFT()}
+                  type="primary"
+                  className="w-full  font-bold py-2 h-auto px-4  rounded my-2"
+                >
                   Add Land (MINT NFT)
-</Button>
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => MintNFT()}
+                  type="primary"
+                  className="w-full bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 rounded my-2"
+                >
+                  Add Land (MINT NFT)
+                </Button>
               )}
             </Form>
           </div>
