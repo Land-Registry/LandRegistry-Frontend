@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import { useEffect, useState } from 'react';
 
 const Metamask = () => {
-    const [accountid, setAccount] = useState('');
+    const [accountid, setAccount] = useState('Connect Wallet');
 
     useEffect(() => {
       if (window.ethereum) {
@@ -15,7 +15,7 @@ const Metamask = () => {
     const onConnect = async () => {
       
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-      console.log("Account: " + accounts[0]);
+      // console.log("Account: " + accounts[0]);
       setAccount(accounts[0]);
     }  
   

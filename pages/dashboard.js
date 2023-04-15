@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState,useEffect } from "react";
 import {
   Card,
   Col,
@@ -13,12 +13,28 @@ import {
 import Navbar from "../components/navbar/Navbar";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import Metamask from "../components/metamask";
+import Web3 from 'web3';
 import { Footer } from "../components/Footer";
 
 const dashboard = () => {
   const [modalseller, setModalSeller] = useState(false);
   const [modalbuyer, setModalBuyer] = useState(false);
   const [modalinstpector, setModalInspector] = useState(false);
+
+  useEffect(() => {
+    if (window.ethereum) {
+      const _web3 = new Web3(window.ethereum)
+    } else {
+      alert('Please install MetaMask!')
+    }
+  }, [])
+
+  const onConnect = async () => {
+    
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    // console.log("Account: " + accounts[0]);
+  }  
+
 
   function OTPalert(params) {
     alert('OTP will be send to your Registred Mobile');    
@@ -110,7 +126,8 @@ const dashboard = () => {
         onOk={() => setModalSeller(false)}
         onCancel={() => setModalSeller(false)}
       >
-        {!(<Metamask />) ? (
+          {(<Metamask /> == '') ? (
+
           <>
             <p> Connect Wallet </p>
             <br />
@@ -199,7 +216,8 @@ const dashboard = () => {
         onOk={() => setModalBuyer(false)}
         onCancel={() => setModalBuyer(false)}
       >
-          {!(<Metamask />) ? (
+           {(<Metamask /> == '') ? (
+
           <>
             <p> Connect Wallet </p>
             <br />
