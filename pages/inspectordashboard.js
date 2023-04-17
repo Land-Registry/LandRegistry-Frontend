@@ -22,7 +22,7 @@ const columns = [
       key: 'bname',
     },
     {
-      title: 'Price',
+      title: 'Price per sqm.',
       dataIndex: 'price',
       key: 'price',
     },
