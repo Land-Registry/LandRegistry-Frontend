@@ -1,7 +1,13 @@
+
+import { Button, message, Space } from "antd";
+import { InsertData } from "./insertData";
+import Metamask from "../components/metamask";
+
 var metadataURL = "";
 var Dataset = "";
-import { Button, message, Space } from "antd";
-
+var token_id = "";
+var transaction_hash = "";
+var owneraddress = <Metamask/>;
 export const getMetadataURL = async (
   City,
   OwnerName,
@@ -10,7 +16,7 @@ export const getMetadataURL = async (
   survay,
   price
 ) => {
-  function VerifyData(Owner, PID, Surveyno, Area) {
+  function VerifyData() {
     const options = {
       method: "POST",
       headers: {
@@ -29,45 +35,42 @@ export const getMetadataURL = async (
       .then((response) => {
         // console.log(response);
         Dataset = response;
-        console.log(Dataset);
+        console.log("234567", Dataset);
+        let i;
+        for (i = 0; i <= Dataset.length; i++) {
+          if (
+            Dataset[i].Owner == OwnerName &&
+            Dataset[i].propertyID == PID &&
+            Dataset[i].Survey_number == survay &&
+            Dataset[i].Area == area
+          ) {
+            alert("Data Verified");
+
+            fetch("https://api.nftport.xyz/v0/metadata", options)
+              .then((response) => response.json())
+              .then((response) => {
+                console.log(response);
+                metadataURL = JSON.stringify(response["metadata_uri"]);
+                alert("Your Metadata URL is Ready MINT NFT");
+              })
+              .catch((err) => console.error(err));
+            return true;
+          }
+        }
+        alert("Data Not Verified");
+        return false;
       })
       .catch((err) => {
         console.error(err);
         // alert(err)
       });
-
-    for (let i in Dataset) {
-      if (
-        Dataset[i].Owner == Owner &&
-        Dataset[i].propertyID == PID &&
-        Dataset[i].Survey_number == Surveyno &&
-        Dataset[i].Area == Area
-      ) {
-        alert("Data Verified");
-
-        fetch("https://api.nftport.xyz/v0/metadata", options)
-          .then((response) => response.json())
-          .then((response) => {
-            console.log(response);
-            VerifyData(OwnerName, PID, survay, area);
-            metadataURL = JSON.stringify(response["metadata_uri"]);
-            alert("Your Metadata URL is Ready MINT NFT");
-          })
-          .catch((err) => console.error(err));
-        return true;
-      } else {
-        alert("Data Not Verified");
-        return false;
-      }
-    }
   }
 
-  VerifyData(OwnerName, PID, survay, area);
+  VerifyData();
 };
 
-export const MintNFT = async () => {
+export const MintNFT = async (City, OwnerName, area, PID, survay, price) => {
   // Mint NFT
-  console.log(metadataURL);
   const options1 = {
     method: "POST",
     headers: {
@@ -83,17 +86,55 @@ export const MintNFT = async () => {
   };
 
   fetch("https://api.nftport.xyz/v0/mints/customizable", options1)
-    .then((response1) => response1.json())
-    .then((response1) => {
-      console.log(response1);
-      alert("NFT MINT");
-      window.location.href = "/lands";
+    .then((response) => response.json())
+    .then((response) => {
+      console.log("asedfg", response);
+      transaction_hash = response["transaction_hash"];
+      alert("NFT is Minting (It may take 10 sec)");
+      setTimeout(() => {
+        console.log("World!");
+        getTokenId();
+        InsertData({
+          "tokenID": token_id,
+          "propertyID": PID,
+          "physicalSurveyNo": survay,
+          "Area": area,
+          "City": City,
+          "owner": OwnerName,
+          "Price": price,
+          "ownerAddress": owneraddress
+        });
+        setTimeout(() => {
+        // window.location.href = "/lands";
+        }, 2000);
+      }, 7000);
       return true;
     })
     .catch((err) => {
-      console.error(err);
+      console.error("error: ", err);
       alert(err);
     });
 
   console.log("NFT Minted");
+};
+
+export const getTokenId = async () => {
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "bfb1eeca-e144-4c3b-82ab-13d5bef82804",
+    },
+  };
+
+  fetch(
+    `https://api.nftport.xyz/v0/mints/${transaction_hash}?chain=polygon`,
+    options
+  )
+    .then((response) => response.json())
+    .then((response) => {
+      token_id = response["token_id"];
+    })
+
+    .catch((err) => console.error(err));
 };

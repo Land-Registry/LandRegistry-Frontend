@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import Navbar from '../components/navbar/Navbar';
 import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Table, Tag } from 'antd';
+import { Checkbox, Col, Row,Button, Table, Tag } from 'antd';
 import { Footer } from "../components/Footer";
+
+const onChange = (checkedValues) => {
+  console.log('checked = ', checkedValues);
+};  
 
 const columns = [
     {
@@ -37,6 +41,11 @@ const columns = [
       key: 'transfer',
       dataIndex: 'transfer',
     },
+    {
+      title: 'Status',
+      key: 'status',
+      dataIndex: 'status',
+    },
     
   ];
   const data = [
@@ -51,6 +60,25 @@ const columns = [
 </Button>,
       transfer: <Button type="primary" href="/processstatus/1234" className="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]">
       Transfer</Button>,
+      status: <> <Checkbox.Group
+      style={{
+        width: '100%',
+      }}
+      onChange={onChange}
+    >
+      <Row>
+        <Col span={8}>
+          <Checkbox value="token">Token Send</Checkbox>
+        </Col>
+        <Col span={8}>
+          <Checkbox value="document">Document Verification</Checkbox>
+        </Col>
+        <Col span={8}>
+          <Checkbox value="transaction">Transaction</Checkbox>
+        </Col>
+      </Row>
+    </Checkbox.Group>
+      </>,
 
     },
     

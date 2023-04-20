@@ -5,6 +5,8 @@ import { getMetadataURL } from '../utils/mintNFT';
 import { MintNFT } from '../utils/mintNFT';
 import Data from '../utils/Data';
 import {VerifyData} from '../utils/verifyData';
+import {InsertData} from '../utils/insertData';
+import Metamask from '../components/metamask';
 
 
 const x = () => {
@@ -16,8 +18,17 @@ const x = () => {
     
       <button  onClick={() => MintNFT()}>MINT</button> <br />
       <button  onClick={() => VerifyData('Ayush',1233,1234,20)}>VerifyData</button> <br />
+      <button  onClick={() => 
+InsertData({
+  "tokenID": 123,
+  "propertyID": 123,
+  "physicalSurveyNo": 123,
+  "Area": 23,
+  "owner": 'OwnerName',
+  "Price": 1234
+})}>Data insert</button> <br />
 
-<Data/>
+{/* <Data/> */}
 
     </div>
   );

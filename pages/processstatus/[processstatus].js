@@ -6,7 +6,7 @@ import {
   SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Steps, Col, Row, Modal, Space, Table, Tag } from "antd";
+import { Steps, Col, Row, Modal, Space, Table, Tag ,Button, Checkbox, Form, Input} from "antd";
 import { Footer } from "../../components/Footer";
 import { useRouter } from "next/router";
 var Owner = "";
@@ -28,6 +28,13 @@ var request = false;
 var ImageURL = "";
 var DocumentURL = '';
 var ICON = <LoadingOutlined />;
+
+const onFinish = (values) => {
+  console.log('Success:', values);
+};
+const onFinishFailed = (errorInfo) => {
+  console.log('Failed:', errorInfo);
+};
 
 function SetIcon(state) {
   if (state == "process"){
@@ -81,7 +88,8 @@ const columns = [
 
 
 const processstatus = () => {
-  const [open, setOpen] = useState(false);
+  const [open3d, setOpen3d] = useState(false);
+  const [openprice, setOpenprice] = useState(false);
   const [opendocument, setOpendocument] = useState(false);
   const [Dataset, setDataset] = useState([]);
   // const [Owner, setOwner] = useState("");
@@ -156,12 +164,70 @@ const processstatus = () => {
 
   return (
     <div>
+        <Modal
+        title="Update Price"
+        centered
+        open={openprice}
+        onOk={() => setOpenprice(false)}
+        onCancel={() => setOpenprice(false)}
+        width={600}
+        okButtonProps={{
+          disabled: true,
+          style: {
+            display: "none",
+          },
+        }}
+        cancelButtonProps={{
+          disabled: true,
+          style: {
+            display: "none",
+          },
+        }}
+      >
+         <Form
+         className="m-auto"
+    name="Update Price"
+    style={{
+      maxWidth: 400,
+    }}
+    initialValues={{
+      remember: true,
+    }}
+    onFinish={onFinish}
+    onFinishFailed={onFinishFailed}
+    autoComplete="off"
+  >
+    <Form.Item
+      label="price"
+      name="Price"
+      rules={[
+        {
+          required: true,
+          message: 'Update Price',
+        },
+      ]}
+    >
+      <Input />
+    </Form.Item>
+
+    <Form.Item
+      wrapperCol={{
+        offset: 8,
+        span: 16,
+      }}
+    >
+      <Button type="primary" htmlType="submit" className="bg-blue-500  hover:bg-blue-700 text-white text-center font-bold mx-auto px-4  rounded">
+        Update
+      </Button>
+    </Form.Item>
+  </Form>
+      </Modal>
       <Modal
         title="Land"
         centered
-        open={open}
-        onOk={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
+        open={open3d}
+        onOk={() => setOpen3d(false)}
+        onCancel={() => setOpen3d(false)}
         width={1000}
         okButtonProps={{
           disabled: true,
@@ -239,16 +305,22 @@ const processstatus = () => {
               </div>
               <div className="m-auto text-center">
                 <button
-                  onClick={() => setOpen(true)}
-                  className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
+                  onClick={() => setOpen3d(true)}
+                  className="bg-blue-500 w-[29%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
                 >
                   3D Land View
                 </button>
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[46%] hover:bg-blue-700  mx-2 my-2 "
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] hover:bg-blue-700  mx-2 my-2 "
                   onClick={() => setOpendocument(true)}
                 >
                   View Document
+                </button>
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[29%] hover:bg-blue-700  mx-2 my-2 "
+                  onClick={() => setOpenprice(true)}
+                >
+                  Update Price
                 </button>
                 <button className="bg-green-500  text-white font-bold py-2 px-4 rounded   w-[94%] hover:bg-green-700  mx-2 my-2 ">
                   Make Payment

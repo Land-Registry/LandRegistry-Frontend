@@ -36,16 +36,10 @@ const props = {
 
 const form = () => {
   const [metadataStatus, setmetadataStatus] = useState(false);
+  const [data,setData] = useState([]);
   const onFinish = (values) => {
+    setData(values);
     // console.log("Success:", values);
-    getMetadataURL(
-      values.city,
-      values.name,
-      values.area,
-      values.PID,
-      values.survay,
-      values.price
-    );
     getMetadataURL(
       values.city,
       values.name,
@@ -59,6 +53,17 @@ const form = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+
+  function getMintNFT(){
+    if(metadataStatus){
+      MintNFT(data.city,
+        data.name,
+        data.area,
+        data.PID,
+        data.survay,
+        data.price);
+    }
+  }
 
   function MintNFTRedirect() {
     // MintNFT();
@@ -206,22 +211,22 @@ const form = () => {
                   Type="submit"
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
                 >
-                  Get Metadata URL
+                  Verify Land
                 </button>
               </Form.Item>
 
               {!metadataStatus ? (
                 <Button
                   disabled
-                  onClick={() => MintNFT()}
+                  onClick={() => getMintNFT()}
                   type="primary"
                   className="w-full  font-bold py-2 h-auto px-4  rounded my-2"
                 >
-                  Add Land (MINT NFT)
+                  Mint Land
                 </Button>
               ) : (
                 <Button
-                  onClick={() => MintNFT()}
+                  onClick={() => getMintNFT()}
                   type="primary"
                   className="w-full bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 rounded my-2"
                 >
