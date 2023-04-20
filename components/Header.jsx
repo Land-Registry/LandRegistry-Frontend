@@ -40,7 +40,7 @@ export const Header = ({ isDarkMode, toggleDarkMode }) => {
   );
 
   const Navigation = () => (
-    <nav>
+    <nav >
       
       <ul className="flex flex-row items-center gap-2">
          
@@ -72,7 +72,7 @@ export const Header = ({ isDarkMode, toggleDarkMode }) => {
     // Colors must be set explicitly since opacity and blur don't work together
     <header
       className={`fixed w-full z-30 transition duration-300 ${
-        !top && "bg-gray-50/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg"
+        !top && "bg-gray-50/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-lg"
       }`}
     >
       {/* Header Content */}
