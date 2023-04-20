@@ -71,7 +71,7 @@ const dashboard = () => {
     console.log("Failed:", errorInfo);
   };
   return (
-    <div className="bg-gray-100 max-h-screen" >
+    <div className="bg-gray-200 max-h-screen overflow-y-auto overflow-x-hidden" >
       <Navbar />
       <Row gutter={16} className="justify-center py-64">
         <Col
@@ -79,12 +79,12 @@ const dashboard = () => {
           onClick={() => setModalSeller(true)}
           className=" m-8 cursor-pointer transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300 "
         >
-          <Card title="Seller Login" bordered={false}>
+          <Card title="SELLER LOGIN" bordered={false}>
+            <ul className="font-bold text-lg mb-2 text-center">FUNCTIONS OF SELLER</ul>
             <ul>
-              <li>Metamask Connection</li>
-              <li>Add Land</li>
-              <li>Update Land</li>
-              <li>Remove Land</li>
+              <li className="text-center">CONNECT TO METAMASK</li>
+              <li className="text-center">ADD LAND DETAILS</li>
+              <li className="text-center">UPDATE LAND DETAILS</li>
             </ul>
           </Card>
         </Col>
@@ -94,11 +94,11 @@ const dashboard = () => {
           className=" m-8 cursor-pointer transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
         >
           <Card title="Buyer Login" bordered={false}>
+          <ul className="font-bold text-lg mb-2 text-center">FUNCTIONS OF BUYER</ul>
             <ul>
-              <li>Metamask Connection</li>
-              <li>Buy Land</li>
-              <li>Request Document</li>
-              <li>Transaction</li>
+              <li className="text-center">CONNECT TO METAMASK</li>
+              <li className="text-center">BUY LAND</li>
+              <li className="text-center">REQUEST FOR DOCUMENTS</li>
             </ul>
           </Card>
         </Col>
@@ -108,11 +108,12 @@ const dashboard = () => {
           className=" m-8 cursor-pointer transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
         >
           <Card title="Land Inspector" bordered={false}>
+          <ul className="font-bold text-lg mb-2 text-center">FUNCTIONS OF LAND INSPECTOR</ul>
             <ul>
-              <li>Register Using unique Id</li>
-              <li>Verify Land</li>
-              <li>Update Land</li>
-              <li>Transfer Ownership</li>
+              <li className="text-center">LOGIN USING UMIQUE ID</li>
+              <li className="text-center">VERIFY LAND DETAILS</li>
+              <li className="text-center">TRANSFER OWNERSHIP</li>
+              <li className="text-center">UPDATE LAND DETAILS</li>
             </ul>
           </Card>
         </Col>
@@ -375,7 +376,9 @@ const dashboard = () => {
           </Form.Item>
         </Form>
       </Modal>
+      
       <Footer/>
+     
       </div>
   );
 };

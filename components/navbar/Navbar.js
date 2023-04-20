@@ -6,7 +6,7 @@ const Navbar = () => {
 
   return (
     
-<nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 shadow-lg fixed w-full z-50">
+<nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 shadow-lg fixed w-full z-50 bg-opacity-80">
   <div className="container flex flex-wrap items-center justify-between mx-auto">
   <a href="/dashboard" className="flex items-center">
       <div className="flex flex-row items-center gap-1">

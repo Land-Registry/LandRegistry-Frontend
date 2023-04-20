@@ -72,8 +72,8 @@ const form = () => {
   return (
     <>
       <Navbar />
-      <div className="pt-20">
-      <div className="w-1/2 shadow-2xl  rounded-2xl  mb-6 mx-auto pb-2 bg-gray-100">
+      <div className="pt-20 bg-gray-300">
+      <div className="w-1/2 shadow-2xl  rounded-2xl  mb-8 mx-auto pb-2 bg-gray-100 dark:bg-gray-100 ">
         <div className="flex items-center flex-none px-4 bg-gradient-to-r  from-rose-500 via-violet-600 to-blue-700 rounded-b-none h-11 rounded-xl">
             <div className="flex space-x-1.5">
               <div className="w-3 h-3 border-2 border-[#dc2626] bg-[#dc2626] rounded-full"></div>
@@ -83,7 +83,7 @@ const form = () => {
           </div>
 
           <div className="m-10 mt-6 mb-10">
-            <p className="font-bold mb-6 text-xl">#Add Land</p>
+            <p className="font-bold mb-6 text-xl text-black">ADD LAND DETAILS</p>
             <Form
               className=""
               layout="vertical"
@@ -91,7 +91,7 @@ const form = () => {
               onFinishFailed={onFinishFailed}
             >
               <Form.Item
-                label="Owner Name"
+                label="Land Owner Name"
                 name="name"
                 rules={[
                   {
@@ -103,7 +103,7 @@ const form = () => {
                 <Input />
               </Form.Item>
               <Form.Item
-                label="Area (in sqm.)"
+                label="Land Area (in sqm.)"
                 name="area"
                 rules={[
                   {
@@ -114,18 +114,7 @@ const form = () => {
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                label="City"
-                name="city"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your City!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
+              
               <Form.Item
                 label="State"
                 name="state"
@@ -138,7 +127,30 @@ const form = () => {
               >
                 <Input />
               </Form.Item>
-
+              <Form.Item
+                label="District"
+                name="district"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your District!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                label="Taulka"
+                name="taluka"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Taluka!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
               <Form.Item
                 label="Price"
                 name="price"

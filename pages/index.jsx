@@ -3,8 +3,6 @@ import { FeatureBlocks } from "../components/FeatureBlocks";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
-import { Newsletter } from "../components/Newsletter";
-import { Testimonials } from "../components/Testimonials";
 
 const Home = ({ isDarkMode, toggleDarkMode }) => {
   return (
@@ -14,8 +12,6 @@ const Home = ({ isDarkMode, toggleDarkMode }) => {
         <Hero />
         <Features />
         <FeatureBlocks />
-        {/* <Testimonials /> */}
-        {/* <Newsletter /> */}
       </main>
       <Footer />
     </div>
