@@ -8,6 +8,7 @@ import axios from "axios";
 import Metamask from "../components/metamask";
 import processstatus from "./processstatus/[processstatus]";
 import Router from 'next/router'
+import { UpdateData } from "../utils/updateData";
 
 const onChange = (value) => {
   console.log(`selected ${value}`);
@@ -17,7 +18,11 @@ const onSearch = (value) => {
   console.log("search:", value);
 };
 
+var owneraddress;
+var FilterDataset = [];
 const contractaddress = "0x2f9227E2e1465a1bB38cE53c4516eC867Ac1535D";
+
+
 
 const lands = () => {
   const [open, setOpen] = useState(false);
@@ -29,10 +34,20 @@ const lands = () => {
 
   fetch("http://localhost:8000/SellingLand")
     .then((response) => response.json())
-    .then((response) => {
+    .then(async (response) => {
       // console.log(response);
       setDataset(response);
       console.log(Dataset);
+      
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      owneraddress = accounts[0];
+
+      FilterDataset = Dataset.filter(function (el) {
+        return (
+          (el.ownerAddress.toLowerCase())!= (owneraddress.toLowerCase()) && (el.request == false)
+        );
+      });
+
     })
     .catch((err) => {
       console.error(err);
@@ -88,10 +103,16 @@ const lands = () => {
   //     console.error(error);
   //   });
 
-    function RequestLand(PID) {
+    async function RequestLand(PID) {
       enterLoading(0)
       console.log(PID)
       // processstatus(PID)
+
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      owneraddress = accounts[0];
+      
+      UpdateData({Buyer_address:owneraddress,Document_Access:owneraddress,request:true},PID)
+
       const {pathname} = Router
        Router.push(`/processstatus/${PID}`)    }
 
@@ -172,18 +193,18 @@ const lands = () => {
             <h1 className="flex pb-5  font-bold text-4xl text-gray-800">
               Selling Land Gallary
             </h1>
-            <div className="flex overflow-x-scroll pb-10 scrollbar-hide ">
+            <div className=" flex overflow-x-scroll pb-10 scrollbar-hide ">
               <div className="flex flex-nowrap ">
                 {/*  */}
 
-                {Dataset &&
-                  Dataset.map((data) => (
+                {FilterDataset &&
+                  FilterDataset.map((data) => (
                     <div className="inline-block px-3 cursor-pointer">
-                      <div className="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                      <div className="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white text-black  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                         <img
                           onClick={() => setOpen(true)}
                           className="p-2 w-[500px] h-48 rounded-2xl"
-                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy3SI5bhu0nhSe6xiB08qoNEOPmNYpT05ODRoxxn_8Xg&usqp=CAU&ec=48665698"
+                          src={data.ImageURL}
                           alt=""
                         />
                         <div className="p-2 px-4">
@@ -201,7 +222,7 @@ const lands = () => {
                           </h1>
                           <h3 className="">Price: Rs. {data.Price}</h3>
                           <h3>PID: {data.propertyID}</h3>
-                          <h3>Survey no: {data.Survey_number}</h3>
+                          <h3>Survey no: {data.physicalSurveyNo}</h3>
                           <h3>Owner: {data.ownerAddress}</h3>
                         </div>
                         <div className="m-auto text-center">
@@ -269,13 +290,8 @@ const lands = () => {
           </div>
         </div>
         <div className="p-8">
-<<<<<<< HEAD
-          <h1 className="flex pb-5  font-bold text-4xl text-gray-800">
-            Land under Registry Process
-=======
           <h1 className="flex pb-5  font-bold text-4xl text-gray-700">
-            SELLING LANDS
->>>>>>> 2dd1065a72af1896e0fb9756fd9ef38a383f4f2f
+            SELLING LAND
           </h1>
           <div className="flex overflow-x-scroll pb-10 scrollbar-hide ">
             <div className="flex flex-nowrap "> 
@@ -287,9 +303,6 @@ const lands = () => {
               <div className="inline-block px-3 cursor-pointer">
                 <div className="w-[500px] h-[470px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
-<<<<<<< HEAD
-                    onClick={() => setOpen(true)}
-=======
                   onClick={() => setOpen(true)}
                     className="p-2 w-[500px] h-48 rounded-2xl"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy3SI5bhu0nhSe6xiB08qoNEOPmNYpT05ODRoxxn_8Xg&usqp=CAU&ec=48665698"
@@ -380,7 +393,6 @@ Request Land Document
                 <div className="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                   <img
                   onClick={() => setOpen(true)}
->>>>>>> 2dd1065a72af1896e0fb9756fd9ef38a383f4f2f
                     className="p-2 w-[500px] h-48 rounded-2xl"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf9G2rNCbd0Putgz-ybp5IjT5QXpZ-nrp2dmo2lONj1Q&usqp=CAU&ec=48665698"
                     alt=""
@@ -420,7 +432,6 @@ Request Land Document
         </div>
       </div> */}
       <Footer />
-      </div>
       </div>
   );
 };

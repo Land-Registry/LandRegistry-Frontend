@@ -14,6 +14,8 @@ import { Footer } from "../components/Footer";
 import { getMetadataURL } from "../utils/mintNFT";
 import { MintNFT } from "../utils/mintNFT";
 
+
+
 const props = {
   name: "file",
   listType: "picture",
@@ -41,7 +43,7 @@ const form = () => {
     setData(values);
     // console.log("Success:", values);
     getMetadataURL(
-      values.city,
+      values.district,
       values.name,
       values.area,
       values.PID,
@@ -56,7 +58,7 @@ const form = () => {
 
   function getMintNFT(){
     if(metadataStatus){
-      MintNFT(data.city,
+      MintNFT(data.district,
         data.name,
         data.area,
         data.PID,
@@ -69,6 +71,7 @@ const form = () => {
     // MintNFT();
     window.location.href = "/lands";
   }
+
   return (
     <>
       <Navbar />

@@ -6,9 +6,23 @@ import {
   SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Steps, Col, Row, Modal, Space, Table, Tag ,Button, Checkbox, Form, Input} from "antd";
+import {
+  Steps,
+  Col,
+  Row,
+  Modal,
+  Space,
+  Table,
+  Tag,
+  Button,
+  Checkbox,
+  Form,
+  Input,
+} from "antd";
 import { Footer } from "../../components/Footer";
 import { useRouter } from "next/router";
+import { UpdateData } from "../../utils/updateData";
+var id = "";
 var Owner = "";
 var Tokenid = "";
 var PropertyID = "";
@@ -20,34 +34,42 @@ var Buyer_address = "";
 var InspectorName = "";
 var Document_Access = "";
 var tokensend = "process";
+var ProcessStatus;
 var Document_Verify = "wait";
 var Transaction = "wair";
 var Ownership_Transfer = "wait";
 var Price = "";
 var request = false;
 var ImageURL = "";
-var DocumentURL = '';
+var DocumentURL = "";
 var ICON = <LoadingOutlined />;
 
 const onFinish = (values) => {
-  console.log('Success:', values);
+  console.log("Success:", values);
+  UpdateData({ Price: parseInt(values.Price) }, PropertyID);
+  alert("Price Updated Successfully. Please wait for the transaction to be completed.")
 };
 const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo);
+  console.log("Failed:", errorInfo);
 };
 
-function SetIcon(state) {
-  if (state == "process"){
-    ICON = <LoadingOutlined />
-  }
-  else if (state == "wait"){
-    ICON = <SolutionOutlined />
-  }
-  else if (state == "finish"){
-    ICON = <SolutionOutlined />
+function SetIcon(stateno, ProcessStatus) {
+  if (stateno == ProcessStatus) {
+    ICON = <LoadingOutlined />;
+  } else {
+    ICON = <SolutionOutlined />;
   }
   return ICON;
-  
+}
+
+function SetStatus(stateno, ProcessStatus) {
+  if (stateno == ProcessStatus) {
+    return "process";
+  } else if (stateno <= ProcessStatus) {
+    return "finish";
+  } else {
+    return "wait";
+  }
 }
 
 const columns = [
@@ -84,9 +106,6 @@ const columns = [
   },
 ];
 
-
-
-
 const processstatus = () => {
   const [open3d, setOpen3d] = useState(false);
   const [openprice, setOpenprice] = useState(false);
@@ -101,43 +120,42 @@ const processstatus = () => {
   const router = useRouter();
   const { processstatus } = router.query;
 
-  function PrcessData() {
-    fetch("http://localhost:8000/SellingLand")
-      .then((response) => response.json())
-      .then((response) => {
-        // console.log(response);
-        setDataset(response);
-        console.log(Dataset);
-      })
-      .catch((err) => {
-        console.error(err);
-        // alert(err)
-      });
+  fetch("http://localhost:8000/SellingLand")
+    .then((response) => response.json())
+    .then((response) => {
+      // console.log(response);
+      setDataset(response);
+      console.log(Dataset);
+    })
+    .catch((err) => {
+      console.error(err);
+      // alert(err)
+    });
 
-    for (let i in Dataset) {
-      if (Dataset[i].propertyID == processstatus) {
-        Owner = Dataset[i].Owner;
-        Tokenid = Dataset[i].tokenID;
-        PropertyID = Dataset[i].propertyID;
-        SurveyNo = Dataset[i].Survey_number;
-        Area = Dataset[i].Area;
-        Buyer_name = Dataset[i].Buyer_name;
-        ownerAddress = Dataset[i].ownerAddress;
-        Buyer_address = Dataset[i].Buyer_address;
-        Document_Access = Dataset[i].Document_Access;
-        tokensend = Dataset[i].tokensend;
-        Document_Verify = Dataset[i].Document_Verify;
-        Transaction = Dataset[i].Transaction;
-        Ownership_Transfer = Dataset[i].Ownership_Transfer;
-        Price = Dataset[i].Price;
-        ImageURL = Dataset[i].ImageURL; 
-        request = Dataset[i].request;
-        InspectorName = Dataset[i].InspectorName;
-        DocumentURL = Dataset[i].DocumentURL;
-      }
+  for (let i in Dataset) {
+    if (Dataset[i].propertyID == processstatus) {
+      id = Dataset[i]._id;
+      Owner = Dataset[i].owner;
+      Tokenid = Dataset[i].tokenID;
+      PropertyID = Dataset[i].propertyID;
+      SurveyNo = Dataset[i].Survey_number;
+      Area = Dataset[i].Area;
+      Buyer_name = Dataset[i].Buyer_name;
+      ownerAddress = Dataset[i].ownerAddress;
+      Buyer_address = Dataset[i].Buyer_address;
+      Document_Access = Dataset[i].Document_Access;
+      tokensend = Dataset[i].tokensend;
+      ProcessStatus = Dataset[i].ProcessStatus;
+      Document_Verify = Dataset[i].Document_Verify;
+      Transaction = Dataset[i].Transaction;
+      Ownership_Transfer = Dataset[i].Ownership_Transfer;
+      Price = Dataset[i].Price;
+      ImageURL = Dataset[i].ImageURL;
+      request = Dataset[i].request;
+      InspectorName = Dataset[i].InspectorName;
+      DocumentURL = Dataset[i].DocumentURL;
     }
   }
-
 
   const data = [
     {
@@ -160,11 +178,9 @@ const processstatus = () => {
     },
   ];
 
-  PrcessData();
-
   return (
     <div>
-        <Modal
+      <Modal
         title="Update Price"
         centered
         open={openprice}
@@ -184,43 +200,47 @@ const processstatus = () => {
           },
         }}
       >
-         <Form
-         className="m-auto"
-    name="Update Price"
-    style={{
-      maxWidth: 400,
-    }}
-    initialValues={{
-      remember: true,
-    }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item
-      label="price"
-      name="Price"
-      rules={[
-        {
-          required: true,
-          message: 'Update Price',
-        },
-      ]}
-    >
-      <Input />
-    </Form.Item>
+        <Form
+          className="m-auto"
+          name="Update Price"
+          style={{
+            maxWidth: 400,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="price"
+            name="Price"
+            rules={[
+              {
+                required: true,
+                message: "Update Price",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
 
-    <Form.Item
-      wrapperCol={{
-        offset: 8,
-        span: 16,
-      }}
-    >
-      <Button type="primary" htmlType="submit" className="bg-blue-500  hover:bg-blue-700 text-white text-center font-bold mx-auto px-4  rounded">
-        Update
-      </Button>
-    </Form.Item>
-  </Form>
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="bg-blue-500  hover:bg-blue-700 text-white text-center font-bold mx-auto px-4  rounded"
+            >
+              Update Price
+            </Button>
+          </Form.Item>
+        </Form>
       </Modal>
       <Modal
         title="Land"
@@ -279,10 +299,7 @@ const processstatus = () => {
           height="500px"
         >
           <p>
-            Unable to display PDF file.{" "}
-            <a href={DocumentURL}>
-              Download
-            </a>{" "}
+            Unable to display PDF file. <a href={DocumentURL}>Download</a>{" "}
             instead.
           </p>
         </object>
@@ -296,17 +313,15 @@ const processstatus = () => {
               <div className="p-2 px-4">
                 <h1 className="mt-0  font-bold">Area: {Area} sq.m.</h1>
                 <h3 className="">Loaction: Nagpur, Maharashtra</h3>
-                <h3 className="">Price: Rs. 1,00,000</h3>
+                <h3 className="">Price: Rs. {Price}</h3>
                 <h3>PID: {PropertyID}</h3>
                 <h3>Survey no: {SurveyNo}</h3>
-                <h3>
-                  Owner: {Owner}
-                </h3>
+                <h3>Owner: {Owner}</h3>
               </div>
               <div className="m-auto text-center">
                 <button
                   onClick={() => setOpen3d(true)}
-                  className="bg-blue-500 w-[29%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
+                  className="bg-blue-500 w-[30%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
                 >
                   3D Land View
                 </button>
@@ -317,7 +332,7 @@ const processstatus = () => {
                   View Document
                 </button>
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[29%] hover:bg-blue-700  mx-2 my-2 "
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] hover:bg-blue-700  mx-2 my-2 "
                   onClick={() => setOpenprice(true)}
                 >
                   Update Price
@@ -329,7 +344,7 @@ const processstatus = () => {
             </Col>
             <Col span={12}>
               <img
-                onClick={() => setOpen(true)}
+                onClick={() => setOpen3d(true)}
                 className="m-auto w-[500px] h-48 rounded-2xl cursor-pointer hover:blur-sm"
                 src={ImageURL}
                 alt={ImageURL}
@@ -340,29 +355,29 @@ const processstatus = () => {
           <Steps
             items={[
               {
-                title: "Login",
+                title: "1. Login",
                 status: "finish",
                 icon: <UserOutlined />,
               },
               {
-                title: "Token Send",
-                  status: tokensend,
-                icon: SetIcon(tokensend),
+                title: "2. Token Send",
+                status: SetStatus(2, ProcessStatus),
+                icon: SetIcon(2, ProcessStatus),
               },
               {
-                title: "Document Verification",
-                status: Document_Verify,
-                icon: SetIcon(Document_Verify),
+                title: "3. Document Verification",
+                status: SetStatus(3,ProcessStatus),
+                icon: SetIcon(3, ProcessStatus),
                 // icon: <SolutionOutlined />,
               },
               {
-                title: "Transaction",
-                status: Transaction,
-                icon: SetIcon(Transaction),
+                title: "4. Transaction",
+                status: SetStatus(4, ProcessStatus),
+                icon: SetIcon(4, ProcessStatus),
                 // icon: <LoadingOutlined />,
               },
               {
-                title: "Ownership Transfered",
+                title: "5. Ownership Transfered",
                 status: Ownership_Transfer,
                 icon: <SmileOutlined />,
               },

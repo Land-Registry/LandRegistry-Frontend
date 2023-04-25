@@ -13,10 +13,13 @@ const Metamask = () => {
     }, [])
   
     const onConnect = async () => {
-      
-      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-      // console.log("Account: " + accounts[0]);
-      setAccount(accounts[0]);
+      try {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        // console.log("Account: " + accounts[0]);
+        setAccount(accounts[0]);
+      } catch (error) {
+        console.log(error);
+      }
     }  
   
     onConnect();

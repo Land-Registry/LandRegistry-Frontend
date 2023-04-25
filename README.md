@@ -1,35 +1,83 @@
-# Vivid Landing Page Template (Simple)
+<!-- {
+  "_id": {
+    "$oid": "643aa7040c875b4e22d36dfc"
+  },
+  "tokenID": 1234,
+  "propertyID": 1234,
+  "Survey_number": 21234,
+  "Area": 2345,
+  "request": true,
+  "Buyer_name": "xyz",
+  "InspectorName": "xyz",
+  "ownerAddress": "0xA2bB6955EB5Ec0d999523d72F8d50f15A35cE242",
+  "Buyer_address": "0x7ED790A1Ac108b9A50e24f5c5E061df59e3673a7",
+  "Document_Access": "0xA2bB6955EB5Ec0d999523d72F8d50f15A35cE242",
+  "tokensend": "finish",
+  "ProcessStatus": 4,
+  "Document_Verify": "process",
+  "Transaction": "wait",
+  "Ownership_Transfer": "wait",
+  "Price": 12345,
+  "ImageURL": "https://cdn.pixabay.com/photo/2015/10/05/14/50/farm-972717__340.jpg",
+  "DocumentURL": "https://metamask.io/files/LeastAuthority-MetaMask-Audit-Report.pdf",
+  "owner": "Owner"
+}
 
-This is a ready to use template for any landing page you need, built with React, NextJS, and Tailwind CSS.
+ -->
 
-Modelled after the [Vivid landing page](https://vivid.lol).
 
-> NOTE: This version of our landing page template is simplified to be less modular than our [standard template](https://github.com/vivid-labs/vivid-landing-template). Although this has some downsides for code quality, it makes this project more approachable for those unfamiliar with front end.
+ <!-- {
+  "_id": {
+    "$oid": "6442e0712f9b69be5b9c10f8"
+  },
+  "tokenID": 789,
+  "propertyID": 789,
+  "Survey_number": 789,
+  "Area": 789,
+  "request": true,
+  "Buyer_name": "xyz",
+  "InspectorName": "xyz",
+  "ownerAddress": "0x7ED790A1Ac108b9A50e24f5c5E061df59e3673a7",
+  "Buyer_address": "0xA2bB6955EB5Ec0d999523d72F8d50f15A35cE242",
+  "Document_Access": "0xA2bB6955EB5Ec0d999523d72F8d50f15A35cE242",
+  "tokensend": "finish",
+  "ProcessStatus": 2,
+  "Document_Verify": "process",
+  "Transaction": "wait",
+  "Ownership_Transfer": "wait",
+  "Price": 123456,
+  "ImageURL": "https://cdn.pixabay.com/photo/2015/10/05/14/50/farm-972717__340.jpg",
+  "DocumentURL": "https://metamask.io/files/LeastAuthority-MetaMask-Audit-Report.pdf",
+  "owner": "Ayush"
+} -->
 
-## Preview
 
-![vivid-template-pic](https://user-images.githubusercontent.com/62365335/202585708-82c27ea9-85fc-491f-b991-d4005651b0c2.png)
 
-## Features
+{
+  "owner": "Ayush",
+  "City": "Nagpur",
+  "State": "Maharashtra",
+  "Area": "50",
+  "pricePerSqFeet": "1000",
+  "Previous_Price": "100000",
+  "propertyID": "1111",
+  "Location": "3242.4344",
+  "DocumentURL": "https://metamask.io/files/LeastAuthority-MetaMask-Audit-Report.pdf",
+  "physicalSurveyNo": 1111,
+  "status":false
+},
 
-- Built simply with TailwindCSS
 
-- Perfect lighthouse scores for great SEO
-
-- Very accessible, passing checks for screen-readers and other browsing aids
-
-- Easily customizable via Vivid, Tailwind configuration, and global style presets
-
-- Built-in light and dark modes
-
-## Getting Started
-
-1. Install dependencies with `yarn install` (or the equivalent for other package managers)
-
-2. Run the test app with `yarn dev`
-
-## Customizing
-
-This template is made to be easily customizable! Using Vivid, you can command-click on any part of the page and immediately edit its code. Check out the [Vivid docs](https://docs.vivid.lol) for more information on how to style in-browser!
-
-If you want to edit colors or fonts, simply edit `styles/globals.css` or `tailwind.config.js`.
+{
+  "owner": "Shete",
+  "City": "Nagpur",
+  "State": "Maharashtra",
+  "Area": "20",
+  "pricePerSqFeet": "2000",
+  "Previous_Price": "200000",
+  "propertyID": "2222",
+  "Location": "3242.4344",
+  "DocumentURL": "https://metamask.io/files/LeastAuthority-MetaMask-Audit-Report.pdf",
+  "physicalSurveyNo": 2222,
+  "status":false
+}
