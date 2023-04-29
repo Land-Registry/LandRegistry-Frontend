@@ -22,6 +22,9 @@ import {
 import { Footer } from "../../components/Footer";
 import { useRouter } from "next/router";
 import { UpdateData } from "../../utils/updateData";
+import { CheckBalance, MakePayment } from "../../utils/makePayment";
+import { Chat } from "../../PushModule/@pushprotocol/uiweb";
+
 var id = "";
 var Owner = "";
 var Tokenid = "";
@@ -43,6 +46,10 @@ var request = false;
 var ImageURL = "";
 var DocumentURL = "";
 var ICON = <LoadingOutlined />;
+var PaymentStatus = false;
+var address;
+var support_address;
+
 
 const onFinish = (values) => {
   console.log("Success:", values);
@@ -106,7 +113,19 @@ const columns = [
   },
 ];
 
-const processstatus = () => {
+async function getaddress() {
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  address = accounts[0];
+  if (address == ownerAddress){
+    support_address = Buyer_address;
+  }
+  else{
+    support_address = ownerAddress;
+  }
+
+}
+
+const processstatus =  () => {
   const [open3d, setOpen3d] = useState(false);
   const [openprice, setOpenprice] = useState(false);
   const [opendocument, setOpendocument] = useState(false);
@@ -116,6 +135,7 @@ const processstatus = () => {
   // const [PropertyID, setPropertyID] = useState("");
   // const [SurveyNo, setSurveyNo] = useState("");
   // const [Area, setArea] = useState("");
+  getaddress();
 
   const router = useRouter();
   const { processstatus } = router.query;
@@ -138,7 +158,7 @@ const processstatus = () => {
       Owner = Dataset[i].owner;
       Tokenid = Dataset[i].tokenID;
       PropertyID = Dataset[i].propertyID;
-      SurveyNo = Dataset[i].Survey_number;
+      SurveyNo = Dataset[i].physicalSurveyNo;
       Area = Dataset[i].Area;
       Buyer_name = Dataset[i].Buyer_name;
       ownerAddress = Dataset[i].ownerAddress;
@@ -154,6 +174,7 @@ const processstatus = () => {
       request = Dataset[i].request;
       InspectorName = Dataset[i].InspectorName;
       DocumentURL = Dataset[i].DocumentURL;
+      PaymentStatus = Dataset[i].PaymentStatus;
     }
   }
 
@@ -272,6 +293,7 @@ const processstatus = () => {
           src="https://kuula.co/share/collection/7vzxT?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"
         ></iframe>
       </Modal>
+ 
       <Modal
         title="Land Document"
         centered
@@ -337,9 +359,31 @@ const processstatus = () => {
                 >
                   Update Price
                 </button>
-                <button className="bg-green-500  text-white font-bold py-2 px-4 rounded   w-[94%] hover:bg-green-700  mx-2 my-2 ">
-                  Make Payment
-                </button>{" "}
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] hover:bg-blue-700  mx-2 my-2 "
+                  onClick={() => CheckBalance()}
+                >
+                  Check Balance
+                </button>
+                {PaymentStatus == true ? (
+
+                    <button
+                disabled
+                    className="bg-green-500  text-white font-bold py-2 px-4 rounded   w-[62%] hover:bg-green-700 cursor-not-allowed  mx-2 my-2 ">
+                  Payment Done
+                </button>
+                ):(address == Buyer_address)?(<button
+                  onClick={()=>MakePayment(PropertyID,Buyer_address,ownerAddress,Price)} 
+                   className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 ">
+                    Make Payment
+                  </button>):(
+                   <button
+                   disabled 
+                   className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded cursor-not-allowed w-[62%] hover:bg-green-700  mx-2 my-2 ">
+                    You are not allow to Pay
+                  </button>
+                  )
+                  }
               </div>
             </Col>
             <Col span={12}>
@@ -393,6 +437,12 @@ const processstatus = () => {
       </div>
 
       <Footer />
+      <Chat
+          account={address} //user address
+          supportAddress={support_address} //support address
+          apiKey="jVPMCRom1B.iDRMswdehJG7NpHDiECIHwYMMv6k2KzkPJscFIDyW8TtSnk4blYnGa8DIkfuacU0"
+          env="staging"
+        />
     </div>
   );
 };

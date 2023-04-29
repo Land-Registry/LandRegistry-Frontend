@@ -1,11 +1,11 @@
-
 import { Button, message, Space } from "antd";
 import { InsertData } from "./insertData";
 import Metamask from "../components/metamask";
+import { CreateNFT, GetTokenId } from "./ContractPlugins";
 
 var metadataURL = "";
 var Dataset = "";
-var token_id = "";
+var token_id = GetTokenId();
 var transaction_hash = "";
 var owneraddress;
 var landarray = [
@@ -15,6 +15,7 @@ var landarray = [
   "https://media.istockphoto.com/id/810005974/photo/peanut-tractor.jpg?s=170667a&w=0&k=20&c=K7VSqoq5tSqFI5kX-iEsKKHAF0MwHnkwdkv5iZ2CcWE=",
   "https://media.istockphoto.com/id/1179655501/photo/wheat-field.jpg?s=170667a&w=0&k=20&c=IBKD9ZGmVWrFHW0nL1yUdmprOTTxuLediny3gTCbfBo=",
 ];
+
 export const getMetadataURL = async (
   City,
   OwnerName,
@@ -23,7 +24,8 @@ export const getMetadataURL = async (
   survay,
   price
 ) => {
-
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  owneraddress = accounts[0];
 
   function VerifyData() {
     const options = {
@@ -33,9 +35,9 @@ export const getMetadataURL = async (
         Authorization: "bfb1eeca-e144-4c3b-82ab-13d5bef82804",
       },
       body: `{  
-            "name":"Test1",
+            "name":"${OwnerName}",
           "description":"${City},,${OwnerName},,${area},,${PID},,${survay},,${price}",
-          "file_url":"TEST_LAND"
+          "file_url":"${landarray[Math.round(Math.random() * 4)]}"
           }`,
     };
 
@@ -61,6 +63,28 @@ export const getMetadataURL = async (
                 console.log(response);
                 metadataURL = JSON.stringify(response["metadata_uri"]);
                 alert("Your Metadata URL is Ready MINT NFT");
+                token_id = GetTokenId();
+                CreateNFT(
+                  owneraddress,
+                  metadataURL,
+                  OwnerName,
+                  `${City},,${OwnerName},,${area},,${PID},,${survay},,${price}`,
+                  landarray[Math.round(Math.random() * 4)]
+                );
+                setTimeout(() => {
+                  InsertData({
+                    tokenID: token_id,
+                    propertyID: parseInt(PID),
+                    physicalSurveyNo: parseInt(survay),
+                    Area: parseInt(area),
+                    City: City,
+                    owner: OwnerName,
+                    Price: parseInt(price),
+                    ownerAddress: owneraddress,
+                    ImageURL: landarray[Math.round(Math.random() * 4)],
+                  });
+                  window.location.href = "/lands";
+                }, 10000);
               })
               .catch((err) => console.error(err));
             return true;
@@ -78,77 +102,4 @@ export const getMetadataURL = async (
   VerifyData();
 };
 
-export const MintNFT = async (City, OwnerName, area, PID, survay, price) => {
-  // Mint NFT
 
-  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-  owneraddress = accounts[0];
-
-  const options1 = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "bfb1eeca-e144-4c3b-82ab-13d5bef82804",
-    },
-    body: `{
-      "chain":"polygon",
-      "contract_address":"0x2f9227E2e1465a1bB38cE53c4516eC867Ac1535D",
-      "metadata_uri":${metadataURL},
-      "mint_to_address":"0x7ED790A1Ac108b9A50e24f5c5E061df59e3673a7"
-      }`,
-  };
-
-  fetch("https://api.nftport.xyz/v0/mints/customizable", options1)
-    .then((response) => response.json())
-    .then((response) => {
-      console.log("asedfg", response);
-      transaction_hash = response["transaction_hash"];
-      alert("NFT is Minting (It may take 10 sec)");
-      setTimeout(() => {
-        console.log("World!");
-        getTokenId();
-        InsertData({
-          "tokenID": parseInt(token_id),
-          "propertyID": parseInt(PID),
-          "physicalSurveyNo": parseInt(survay),
-          "Area": parseInt(area),
-          "City": City,
-          "owner": OwnerName,
-          "Price": parseInt(price),
-          "ownerAddress": owneraddress,
-          "ImageURL":landarray[Math.round(Math.random()*4)]
-        });
-        setTimeout(() => {
-        window.location.href = "/lands";
-        }, 2000);
-      }, 10000);
-      return true;
-    })
-    .catch((err) => {
-      console.error("error: ", err);
-      alert(err);
-    });
-
-  console.log("NFT Minted");
-};
-
-export const getTokenId = async () => {
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "bfb1eeca-e144-4c3b-82ab-13d5bef82804",
-    },
-  };
-
-  fetch(
-    `https://api.nftport.xyz/v0/mints/${transaction_hash}?chain=polygon`,
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      token_id = response["token_id"];
-    })
-
-    .catch((err) => console.error(err));
-};

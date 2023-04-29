@@ -12,7 +12,6 @@ import {
 import Navbar from "../components/navbar/Navbar";
 import { Footer } from "../components/Footer";
 import { getMetadataURL } from "../utils/mintNFT";
-import { MintNFT } from "../utils/mintNFT";
 
 
 
@@ -50,22 +49,11 @@ const form = () => {
       values.survay,
       values.price
     );
-    setmetadataStatus(true);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
-  function getMintNFT(){
-    if(metadataStatus){
-      MintNFT(data.district,
-        data.name,
-        data.area,
-        data.PID,
-        data.survay,
-        data.price);
-    }
-  }
 
   function MintNFTRedirect() {
     // MintNFT();
@@ -226,28 +214,9 @@ const form = () => {
                   Type="submit"
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
                 >
-                  Verify Land
+                  Verify Land and Create NFT
                 </button>
               </Form.Item>
-
-              {!metadataStatus ? (
-                <Button
-                  disabled
-                  onClick={() => getMintNFT()}
-                  type="primary"
-                  className="w-full  font-bold py-2 h-auto px-4  rounded my-2"
-                >
-                  Mint Land
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => getMintNFT()}
-                  type="primary"
-                  className="w-full bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 rounded my-2"
-                >
-                  Add Land (MINT NFT)
-                </Button>
-              )}
             </Form>
           </div>
         </div>
