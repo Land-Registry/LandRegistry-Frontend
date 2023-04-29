@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
-    "@pushprotocol/restapi": "^1.2.7",
+    "@pushprotocol/restapi": "^0.7.6",
     "@pushprotocol/uiweb": "^1.0.0",
     "alchemy-sdk": "^2.8.0",
     "antd": "^5.3.3",
