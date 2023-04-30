@@ -3,16 +3,16 @@ This project proposes to develop a blockchain-based secure, sharable land record
 
 # Methadology
 - `Pre-agreement` : Buyer and seller sign a contract with details of the transfer and payment status.
-- Sell request: The pre-agreement is sent to the registry office to request the sale of the property.
-- Verification: The registry office sends verification requests to bank, revenue department, surveyor, and registry office to validate ownership and dues.
-- Approval: Registry office receives information from all departments and verifies data.
-- Notification: Registry office notifies the buyer to sign the agreement digitally if ownership verification is verified.
-- Initiate fund transfer: The system tracks the amount to be transferred to the bank by the buyer.
-- Approve fund transfer: Bank approves fund transfer with reference to the pre-agreement contract.
-- Transfer detail: Bank sends transfer details to registry office.
-- Ownership transfer: Registry office approves ownership transfer and notifies seller and buyer.
-- Ownership certificate: Registry office generates electronic title deed with blockchain hash and QR code to buyer.
-- Record update: Ownership transfer certificate is updated with blockchain hash to all departments in the land registry system.
+- `Sell request`: The pre-agreement is sent to the registry office to request the sale of the property.
+- `Verification`: The registry office sends verification requests to bank, revenue department, surveyor, and registry office to validate ownership and dues.
+- `Approval`: Registry office receives information from all departments and verifies data.
+- `Notification`: Registry office notifies the buyer to sign the agreement digitally if ownership verification is verified.
+- `Initiate fund transfer`: The system tracks the amount to be transferred to the bank by the buyer.
+- `Approve fund transfer`: Bank approves fund transfer with reference to the pre-agreement contract.
+- `Transfer detail`: Bank sends transfer details to registry office.
+- `Ownership transfer`: Registry office approves ownership transfer and notifies seller and buyer.
+- `Ownership certificate`: Registry office generates electronic title deed with blockchain hash and QR code to buyer.
+- `Record update`: Ownership transfer certificate is updated with blockchain hash to all departments in the land registry system.
 
 # Smart Contract
 ERC721 Contract (Polygon MATIC)
