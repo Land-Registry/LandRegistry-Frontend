@@ -23,8 +23,8 @@ import { Footer } from "../../components/Footer";
 import { useRouter } from "next/router";
 import { UpdateData } from "../../utils/updateData";
 import { CheckBalance, MakePayment } from "../../utils/makePayment";
-// import { Chat } from "../../PushModule/@pushprotocol/uiweb";
-import { Chat } from "@pushprotocol/uiweb";
+import { Chat } from "../../PushModule/@pushprotocol/uiweb";
+// import { Chat } from "@pushprotocol/uiweb";
 
 var id = "";
 var Owner = "";
