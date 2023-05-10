@@ -1,11 +1,12 @@
 import { Button, message, Space } from "antd";
 import { InsertData } from "./insertData";
-import Metamask from "../components/metamask";
-import { CreateNFT, GetTokenId } from "./ContractPlugins";
+import { CreateNFT } from "./ContractPlugins";
+import Web3 from "web3";
+import { abi,contractAddress } from "./abi";
+
 
 var metadataURL = "";
 var Dataset = "";
-var token_id = GetTokenId();
 var transaction_hash = "";
 var owneraddress;
 var landarray = [
@@ -24,6 +25,21 @@ export const getMetadataURL = async (
   survay,
   price
 ) => {
+
+  if (typeof window.ethereum === "undefined") {
+    alert("Please install MetaMask first.");
+  }
+  
+  window.addEventListener("load", async () => {
+    try {
+      await ethereum.enable();
+    } catch (error) {}
+  });
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(abi, contractAddress);
+
+  const tokenid = await contract.methods._tokenIds().call();
+
   const accounts = await ethereum.request({ method: "eth_requestAccounts" });
   owneraddress = accounts[0];
 
@@ -48,7 +64,9 @@ export const getMetadataURL = async (
         Dataset = response;
         console.log("234567", Dataset);
         let i;
-        for (i = 0; i <= Dataset.length; i++) {
+        for (i = 0; i < Dataset.length; i++) {
+          console.log(i)
+          console.log(Dataset[i]);
           if (
             Dataset[i].owner == OwnerName &&
             Dataset[i].propertyID == PID &&
@@ -56,6 +74,7 @@ export const getMetadataURL = async (
             Dataset[i].Area == area
           ) {
             alert("Data Verified");
+            if(Dataset[i].pricePerSqFeet*Dataset[i].Area<price){
 
             fetch("https://api.nftport.xyz/v0/metadata", options)
               .then((response) => response.json())
@@ -63,7 +82,6 @@ export const getMetadataURL = async (
                 console.log(response);
                 metadataURL = JSON.stringify(response["metadata_uri"]);
                 alert("Your Metadata URL is Ready MINT NFT");
-                token_id = GetTokenId();
                 CreateNFT(
                   owneraddress,
                   metadataURL,
@@ -72,22 +90,40 @@ export const getMetadataURL = async (
                   landarray[Math.round(Math.random() * 4)]
                 );
                 setTimeout(() => {
-                  InsertData({
-                    tokenID: token_id,
-                    propertyID: parseInt(PID),
-                    physicalSurveyNo: parseInt(survay),
-                    Area: parseInt(area),
-                    City: City,
-                    owner: OwnerName,
-                    Price: parseInt(price),
-                    ownerAddress: owneraddress,
-                    ImageURL: landarray[Math.round(Math.random() * 4)],
-                  });
+                  console.log(
+                    "tokenID:", tokenid,
+                    "propertyID:", parseInt(PID),
+                    "physicalSurveyNo:", parseInt(survay),
+                    "Area:", parseInt(area),
+                    "City:", City,
+                    "owner:", OwnerName,
+                    "Price:", parseInt(price),
+                    "ownerAddress:", owneraddress,
+                    "ImageURL:", landarray[Math.round(Math.random() * 4)]
+                    )
+                InsertData({
+                  tokenID: tokenid,
+                  propertyID: parseInt(PID),
+                  physicalSurveyNo: parseInt(survay),
+                  Area: parseInt(area),
+                  City: City,
+                  owner: OwnerName,
+                  Price: parseInt(price),
+                  ownerAddress: owneraddress,
+                  ImageURL: landarray[Math.round(Math.random() * 4)],
+                });
+                setTimeout(() => {
                   window.location.href = "/lands";
                 }, 10000);
+              }, 2000);
               })
               .catch((err) => console.error(err));
             return true;
+            }
+            else{
+              alert(`Price is less than the price of land\npricePerSqFeet: ${Dataset[i].pricePerSqFeet}\nArea: ${Dataset[i].Area}\nPrcie Will be Greate than : ${Dataset[i].pricePerSqFeet*Dataset[i].Area}`);
+              return false;
+            }
           }
         }
         alert("Data Not Verified");

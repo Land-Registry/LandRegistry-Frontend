@@ -1,8 +1,9 @@
 import { useState } from "react";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../components/navbar/navbar";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Progress, Table } from "antd";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/footer";
+
 import { MainUpdateData, UpdateData } from "../utils/updateData";
 import { TransferOwnership } from "../utils/ContractPlugins";
 
@@ -62,6 +63,7 @@ const inspectordashboard = () => {
   const data = Dataset.filter(function (el) {
     return el.request == true;
   });
+  console.log(data)
 
   function transferNFT(propertyID) {
     let data = Dataset.filter(function (el) {
@@ -76,10 +78,9 @@ const inspectordashboard = () => {
     MainUpdateData({ owner: data[0].Buyer_name }, propertyID);
     UpdateData({ ownerAddress: data[0].Buyer_address }, propertyID);
     UpdateData({ owner: data[0].Buyer_name }, propertyID);
-    UpdateData({ ProcessStatus: 2 }, propertyID);
-    setTimeout(() => {
-      window.location.href = "/lands";
-    }, 5000);
+    UpdateData({ ProcessStatus: 5 }, propertyID);
+    UpdateData({PaymentStatus:false},propertyID);
+    UpdateData({request:false},propertyID)
   }
 
   function CheckTransaction(propertyID) {
@@ -207,8 +208,8 @@ const inspectordashboard = () => {
   }
   return (
     <div>
-      <Navbar />
-      <div className="pt-[110px] rounded-2xl">
+      {/* <Navbar /> */}
+      <div className="pt-[10px] rounded-2xl">
         <div className="w-[90%] shadow-2xl m-auto p-10 rounded-2xl">
           <Table
             className="mt-10"

@@ -1,6 +1,7 @@
 import { Features } from "../components/Features";
 import { FeatureBlocks } from "../components/FeatureBlocks";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/footer";
+
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
 

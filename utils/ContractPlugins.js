@@ -25,6 +25,10 @@ export const CreateNFT = async (
       await ethereum.enable();
     } catch (error) {}
   });
+
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  const address = accounts[0];
+  
   const web3 = new Web3(window.ethereum);
   const contract = new web3.eth.Contract(abi, contractAddress);
 

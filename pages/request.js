@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../components/navbar/navbar";
 import {
   LoadingOutlined,
   SmileOutlined,
@@ -7,7 +7,8 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Steps, Col, Row, Modal, Space, Table, Tag } from "antd";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/footer";
+
 import processstatus from "./processstatus/[processstatus]";
 import { UpdateData } from "../utils/updateData";
 import Metamask from "../components/metamask";
@@ -79,10 +80,11 @@ const columns1 = [
 
 function AcceptResponse(text) {
   UpdateData({ request: false }, text);
+  alert("Your Response is Accepted\nYou will be redirected to Process Status Page")
   setTimeout
   (() => {
   window.location.href = `/processstatus/${text}`;
-  }, 3000);
+  }, 10000);
 }
 
 const columns = [
@@ -159,15 +161,15 @@ const Request = () => {
   let data = Dataset.filter(function (el) {
     return (
       (el.ownerAddress.toLowerCase())== (accountid.toLowerCase()) &&
-      el.Buyer_address != "" &&
-      el.request != false
+      el.request == true
     );
   });
 
   // Land I Request
   let data1 = Dataset.filter(function (el) {
     console.log("sdfghgds "+el.Buyer_address+" wergfth "+accountid)
-    return ((el.Buyer_address) == (accountid.toLowerCase())); 
+    return ((el.Buyer_address) == (accountid.toLowerCase())
+    ); 
   });
 
   return (

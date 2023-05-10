@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Button, Modal, Card } from "antd";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../components/navbar/navbar";
 import { Select } from "antd";
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/footer";
+
 import { retrieveNFT } from "../utils/retrieveNFT";
 import axios from "axios";
 import Metamask from "../components/metamask";
 import processstatus from "./processstatus/[processstatus]";
-import Router from 'next/router'
+import Router from "next/router";
 import { UpdateData } from "../utils/updateData";
 
 const onChange = (value) => {
@@ -21,8 +22,6 @@ const onSearch = (value) => {
 var owneraddress;
 var FilterDataset = [];
 const contractaddress = "0x2f9227E2e1465a1bB38cE53c4516eC867Ac1535D";
-
-
 
 const lands = () => {
   const [open, setOpen] = useState(false);
@@ -38,16 +37,18 @@ const lands = () => {
       // console.log(response);
       setDataset(response);
       console.log(Dataset);
-      
-      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
       owneraddress = accounts[0];
 
       FilterDataset = Dataset.filter(function (el) {
         return (
-          (el.ownerAddress.toLowerCase())!= (owneraddress.toLowerCase()) && (el.request == false)
+          el.ownerAddress.toLowerCase() != owneraddress.toLowerCase() &&
+          el.request == false
         );
       });
-
     })
     .catch((err) => {
       console.error(err);
@@ -103,18 +104,24 @@ const lands = () => {
   //     console.error(error);
   //   });
 
-    async function RequestLand(PID) {
-      enterLoading(0)
-      console.log(PID)
-      // processstatus(PID)
+  async function RequestLand(PID) {
+    enterLoading(0);
+    console.log(PID);
+    // processstatus(PID)
 
-      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-      owneraddress = accounts[0];
-      
-      UpdateData({Buyer_address:owneraddress,Document_Access:owneraddress,request:true},PID)
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    const address = accounts[0];
 
-      const {pathname} = Router
-       Router.push(`/processstatus/${PID}`)    }
+    UpdateData(
+      { Buyer_address: address, Document_Access: address, request: true },
+      PID
+    );
+    setTimeout(() => {
+      const { pathname } = Router;
+      //  Router.push(`/processstatus/${PID}`)
+      Router.push(`/request`);
+    }, 5000);
+  }
 
   return (
     <div className="bg-slate-100">
@@ -432,7 +439,7 @@ Request Land Document
         </div>
       </div> */}
       <Footer />
-      </div>
+    </div>
   );
 };
 

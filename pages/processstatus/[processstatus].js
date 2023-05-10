@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../../components/navbar/navbar";
 import {
   LoadingOutlined,
   SmileOutlined,
@@ -19,8 +19,8 @@ import {
   Form,
   Input,
 } from "antd";
-import { Footer } from "../../components/Footer";
-import { useRouter } from "next/router";
+import { Footer } from "../../components/footer";
+import { useRouter,Router } from "next/router";
 import { UpdateData } from "../../utils/updateData";
 import { CheckBalance, MakePayment } from "../../utils/makePayment";
 import { Chat } from "../../PushModule/@pushprotocol/uiweb";
@@ -129,6 +129,7 @@ async function getaddress() {
 const processstatus =  () => {
   const [open3d, setOpen3d] = useState(false);
   const [openprice, setOpenprice] = useState(false);
+  const [opennotify, setOpennotify] = useState(false);
   const [opendocument, setOpendocument] = useState(false);
   const [Dataset, setDataset] = useState([]);
   // const [Owner, setOwner] = useState("");
@@ -140,6 +141,13 @@ const processstatus =  () => {
 
   const router = useRouter();
   const { processstatus } = router.query;
+
+
+        if (5 == ProcessStatus) {
+          setOpennotify(true);
+          ProcessStatus = 6;
+          return "finish";
+        }
 
   fetch("http://localhost:8000/SellingLand")
     .then((response) => response.json())
@@ -202,6 +210,23 @@ const processstatus =  () => {
 
   return (
     <div>
+        <Modal
+        title="Notification"
+        centered
+        open={opennotify}
+        width={600}
+        closable={false}
+        footer={null}
+        
+        
+      >
+     {address == ownerAddress ?(
+       "Thanks for Buying Land By ❤" 
+       ):(
+         "Thanks for Selling Land By ❤"
+     )}
+
+      </Modal>
       <Modal
         title="Update Price"
         centered
@@ -423,7 +448,7 @@ const processstatus =  () => {
               },
               {
                 title: "5. Ownership Transfered",
-                status: Ownership_Transfer,
+                status: SetStatus(5, ProcessStatus),
                 icon: <SmileOutlined />,
               },
             ]}

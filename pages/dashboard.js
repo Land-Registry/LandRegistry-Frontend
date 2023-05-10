@@ -10,11 +10,12 @@ import {
   Checkbox,
   Space,
 } from "antd";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../components/navbar/navbar";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import Metamask from "../components/metamask";
 import Web3 from 'web3';
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/footer";
+
 
 const dashboard = () => {
   const [modalseller, setModalSeller] = useState(false);
@@ -51,7 +52,7 @@ const dashboard = () => {
   const onFinishbuyer = (values) => {
     console.log("Success:", values);
     alert(`Adhar Card ${values} Sucessfull Verified!!`)
-    window.location = "/lands";
+    window.location = "/request";
   };
   const onFinishFailedbuyer = (errorInfo) => {
     console.log("Failed:", errorInfo);

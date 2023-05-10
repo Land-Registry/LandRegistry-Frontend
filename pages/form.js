@@ -9,8 +9,9 @@ import {
   Select,
   Upload,
 } from "antd";
-import Navbar from "../components/navbar/Navbar";
-import { Footer } from "../components/Footer";
+import Navbar from "../components/navbar/navbar";
+import { Footer } from "../components/footer";
+
 import { getMetadataURL } from "../utils/mintNFT";
 
 
