@@ -184,6 +184,7 @@ const processstatus =  () => {
       InspectorName = Dataset[i].InspectorName;
       DocumentURL = Dataset[i].DocumentURL;
       PaymentStatus = Dataset[i].PaymentStatus;
+      ProcessStatus = Dataset[i].ProcessStatus;
     }
   }
 
@@ -398,6 +399,12 @@ const processstatus =  () => {
                     className="bg-green-500  text-white font-bold py-2 px-4 rounded   w-[62%] hover:bg-green-700 cursor-not-allowed  mx-2 my-2 ">
                   Payment Done
                 </button>
+                ):(ProcessStatus < 4)?(
+                  <button
+                   disabled 
+                   className="disabled:opacity-25 bg-blue-500  text-white font-bold py-2 px-4 rounded cursor-not-allowed w-[62%] hover:bg-blue-700  mx-2 my-2 ">
+                    Pending Process
+                  </button>
                 ):(address == Buyer_address)?(<button
                   onClick={()=>MakePayment(PropertyID,Buyer_address,ownerAddress,Price)} 
                    className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 ">

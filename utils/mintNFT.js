@@ -3,6 +3,7 @@ import { InsertData } from "./insertData";
 import { CreateNFT } from "./ContractPlugins";
 import Web3 from "web3";
 import { abi,contractAddress } from "./abi";
+import { MainUpdateData } from "./updateData";
 
 
 var metadataURL = "";
@@ -16,6 +17,8 @@ var landarray = [
   "https://media.istockphoto.com/id/810005974/photo/peanut-tractor.jpg?s=170667a&w=0&k=20&c=K7VSqoq5tSqFI5kX-iEsKKHAF0MwHnkwdkv5iZ2CcWE=",
   "https://media.istockphoto.com/id/1179655501/photo/wheat-field.jpg?s=170667a&w=0&k=20&c=IBKD9ZGmVWrFHW0nL1yUdmprOTTxuLediny3gTCbfBo=",
 ];
+
+var BuyerNames = ["Aman","Kumar","Ravi","Suresh","Ramesh"]
 
 export const getMetadataURL = async (
   City,
@@ -67,6 +70,7 @@ export const getMetadataURL = async (
         for (i = 0; i < Dataset.length; i++) {
           console.log(i)
           console.log(Dataset[i]);
+          if (Dataset[i].status==true){
           if (
             Dataset[i].owner == OwnerName &&
             Dataset[i].propertyID == PID &&
@@ -101,6 +105,7 @@ export const getMetadataURL = async (
                     "ownerAddress:", owneraddress,
                     "ImageURL:", landarray[Math.round(Math.random() * 4)]
                     )
+                    MainUpdateData({status:true,TokenID:tokenid},PID)
                 InsertData({
                   tokenID: tokenid,
                   propertyID: parseInt(PID),
@@ -111,6 +116,7 @@ export const getMetadataURL = async (
                   Price: parseInt(price),
                   ownerAddress: owneraddress,
                   ImageURL: landarray[Math.round(Math.random() * 4)],
+                  Buyer_name: BuyerNames[Math.round(Math.random()*3)]
                 });
                 setTimeout(() => {
                   window.location.href = "/lands";
@@ -125,6 +131,11 @@ export const getMetadataURL = async (
               return false;
             }
           }
+        }
+          else{
+            alert("Your Land is Already Added");
+            return false;
+            }
         }
         alert("Data Not Verified");
         return false;

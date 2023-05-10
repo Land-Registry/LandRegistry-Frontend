@@ -36,20 +36,18 @@ const columns1 = [
   },
   {
     title: "Status",
-    dataIndex: "request",
-    key: "request",
+    dataIndex: "ProcessStatus",
+    key: "ProcessStatus",
     render: (text) => (
       <>
         <div className="flex">
-          {" "}
-          {text == false ? (
+          {text == 2 ? (
             <button
-              onClick={() => (window.location.href = `/processstatus/${text}`)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full mr-4 py-2 rounded"
             >
-              Accepted {text}
+              Accepted
             </button>
-          ) : text==true? (
+          ) : text == 1? (
             <button
               className="bg-red-500 hover:bg-red-700 text-white font-bold w-full  mr-4 py-2 rounded"
             >
@@ -79,12 +77,13 @@ const columns1 = [
 ];
 
 function AcceptResponse(text) {
+  UpdateData({ProcessStatus:2},text);
   UpdateData({ request: false }, text);
   alert("Your Response is Accepted\nYou will be redirected to Process Status Page")
   setTimeout
   (() => {
   window.location.href = `/processstatus/${text}`;
-  }, 10000);
+  }, 5000);
 }
 
 const columns = [
@@ -121,7 +120,7 @@ const columns = [
           </button>
           <br />
           <button
-            onClick={()=>UpdateData({ Buyer_address: "", Buyer_name: "" }, text)}
+            onClick={()=>UpdateData({ Buyer_address: "0", Buyer_name: "0" }, text)}
             className="bg-red-500 hover:bg-red-700 text-white font-bold w-full  mr-4 py-2 rounded"
           >
             Reject

@@ -47,6 +47,7 @@ const lands = () => {
         return (
           el.ownerAddress.toLowerCase() != owneraddress.toLowerCase() &&
           el.request == false
+          // el.Buyer_address == "0"
         );
       });
     })
