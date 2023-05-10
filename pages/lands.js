@@ -31,7 +31,7 @@ const lands = () => {
   const [loadings, setLoadings] = useState([]);
   const [Dataset, setDataset] = useState([]);
 
-  fetch("http://localhost:8000/SellingLand")
+  fetch("https://fine-gray-hatchling-slip.cyclic.app/SellingLand")
     .then((response) => response.json())
     .then(async (response) => {
       // console.log(response);

@@ -57,7 +57,7 @@ export const getMetadataURL = async (
           }`,
     };
 
-    fetch("http://localhost:8000/landDetails")
+    fetch("https://fine-gray-hatchling-slip.cyclic.app/landDetails")
       .then((response) => response.json())
       .then((response) => {
         // console.log(response);

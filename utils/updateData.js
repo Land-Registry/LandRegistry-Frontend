@@ -6,7 +6,7 @@ export const UpdateData = async (data,url_pid) => {
   console.log(data);
   console.log(url_pid);
 
-  const url = `http://localhost:8000/SellingLand/${url_pid}/`;
+  const url = `https://fine-gray-hatchling-slip.cyclic.app/SellingLand/${url_pid}/`;
   console.log(url);
   try{
     const response = await axios.post(url, data) 
@@ -21,7 +21,7 @@ export const MainUpdateData = async (data,url_pid) => {
   console.log(data);
   console.log(url_pid);
 
-  const url = `http://localhost:8000/landDetails/${url_pid}/`;
+  const url = `https://fine-gray-hatchling-slip.cyclic.app/landDetails/${url_pid}/`;
   console.log(url);
   try{
     const response = await axios.post(url, data) 

@@ -145,7 +145,7 @@ const Request = () => {
   }, []);
 
 
-  fetch("http://localhost:8000/SellingLand")
+  fetch("https://fine-gray-hatchling-slip.cyclic.app/SellingLand")
     .then((response) => response.json())
     .then((response) => {
       // console.log(response);
