@@ -199,7 +199,7 @@ const lands = () => {
           </div>
           <div className="p-8">
             <h1 className="flex pb-5  font-bold text-4xl text-gray-800">
-              Selling Land Gallary
+              Selling Land Gallery
             </h1>
             <div className=" flex overflow-x-scroll pb-10 scrollbar-hide ">
               <div className="flex flex-nowrap ">

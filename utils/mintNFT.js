@@ -70,7 +70,7 @@ export const getMetadataURL = async (
         for (i = 0; i < Dataset.length; i++) {
           console.log(i)
           console.log(Dataset[i]);
-          if (Dataset[i].status==true){
+          // if (Dataset[i].ownerAddress==owneraddress){
           if (
             Dataset[i].owner == OwnerName &&
             Dataset[i].propertyID == PID &&
@@ -131,11 +131,11 @@ export const getMetadataURL = async (
               return false;
             }
           }
-        }
-          else{
-            alert("Your Land is Already Added");
-            return false;
-            }
+        // }
+        //   else{
+        //     alert("Your Land is Already Added");
+        //     return false;
+        //     }
         }
         alert("Data Not Verified");
         return false;

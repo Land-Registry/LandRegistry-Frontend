@@ -52,21 +52,21 @@ const inspectordashboard = () => {
     UpdateData({ ProcessStatus: setPercent(PID) - 1 }, PID);
   };
 
-  // fetch("https://fine-gray-hatchling-slip.cyclic.app/SellingLand/")
-  //   .then((response) => response.json())
-  //   .then((response) => {
-  //     // console.log(response);
-  //     setDataset(response);
-  //     console.log(Dataset);
-  //   })
-  //   .catch((err) => {
-  //     console.error(err);
-  //     // alert(err)
-  //   });
-
-    axios.get("https://fine-gray-hatchling-slip.cyclic.app/SellingLand").then((response) => {
-      setDataset(response.data);
+  fetch("https://fine-gray-hatchling-slip.cyclic.app/SellingLand/")
+    .then((response) => response.json())
+    .then((response) => {
+      // console.log(response);
+      setDataset(response);
+      console.log(Dataset);
+    })
+    .catch((err) => {
+      console.error(err);
+      // alert(err)
     });
+
+    // axios.get("https://fine-gray-hatchling-slip.cyclic.app/SellingLand").then((response) => {
+    //   setDataset(response.data);
+    // });
 
 try {
       

@@ -232,7 +232,7 @@ function SellLand(PID) {
                 <Input />
               </Form.Item>
               <Form.Item
-                label="Taulka"
+                label="Taluka"
                 name="taluka"
                 rules={[
                   {
