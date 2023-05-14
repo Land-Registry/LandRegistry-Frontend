@@ -38,7 +38,7 @@ const dashboard = () => {
   }  
 
   async function SendOTP(aadhar) {
-      const url = `http://localhost:8000/otp/sendOtp/`;
+      const url = `https://rich-cyan-fawn-robe.cyclic.app/otp/sendOtp/`;
       console.log(url);
       try{
         const response = await axios.post(url, {aadharNo:aadhar}) 
@@ -50,7 +50,7 @@ const dashboard = () => {
     }
   
     async function VerifyOTP(user,aadhar, otp) {
-      const url = `http://localhost:8000/otp/verifyOtp/`;
+      const url = `https://rich-cyan-fawn-robe.cyclic.app/otp/verifyOtp/`;
       console.log(url);
       try{
         const response = await axios.post(url, {aadharNo:aadhar, otp:otp})

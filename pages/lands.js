@@ -35,7 +35,7 @@ const lands = () => {
     // console.log(Data)
     setaddress(<Metamask />);
 
-    fetch("http://localhost:8000/SellingLand")
+    fetch("https://rich-cyan-fawn-robe.cyclic.app/SellingLand")
       .then((response) => response.json())
       .then(async (response) => {
         // console.log(response);
