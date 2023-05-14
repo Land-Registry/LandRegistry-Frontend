@@ -15,6 +15,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import Metamask from "../components/metamask";
 import Web3 from 'web3';
 import { Footer } from "../components/footer";
+import axios from "axios";
 
 
 const dashboard = () => {
@@ -36,26 +37,87 @@ const dashboard = () => {
     // console.log("Account: " + accounts[0]);
   }  
 
-
+  async function SendOTP(aadhar) {
+      const url = `http://localhost:8000/otp/sendOtp/`;
+      console.log(url);
+      try{
+        const response = await axios.post(url, {aadharNo:aadhar}) 
+        console.log(response);
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+  
+    async function VerifyOTP(user,aadhar, otp) {
+      const url = `http://localhost:8000/otp/verifyOtp/`;
+      console.log(url);
+      try{
+        const response = await axios.post(url, {aadharNo:aadhar, otp:otp})
+        console.log(response);
+        alert(response.data);
+        console.log(
+          "Adhar Card "+aadhar+" Sucessfull Verified!!"
+        )        
+        if (user == 'seller'){
+          window.location = "/form";
+        }
+        else if (user == 'buyer'){
+          window.location = "/lands";
+        }
+        else if (user == 'inspector'){
+          window.location = "/inspectordashboard";
+        }
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+    
   function OTPalert(params) {
     alert('OTP will be send to your Registred Mobile');    
+    }
+
+  function OTPSelleralert(params) {
+  alert('OTP will be send to your Registred Mobile');    
   }
   const onFinishseller = (values) => {
-    console.log("Success:", values);
-    alert(`Adhar Card ${values} Sucessfull Verified!!`)
-    window.location = "/form";
+    VerifyOTP(
+      'seller',
+      values['Adhar Number'],
+      values['otp']
+    )
   };
   const onFinishFailedseller = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    if (errorInfo.values['Adhar Number']){
+      console.log("Failed:", errorInfo.values['otp']);
+      SendOTP(errorInfo.values['Adhar Number']);
+    }
+    else{
+    alert(
+      "Please inser Correct Adhar Card"
+    )
+    }
+  
   };
   
   const onFinishbuyer = (values) => {
-    console.log("Success:", values);
-    alert(`Adhar Card ${values} Sucessfull Verified!!`)
-    window.location = "/request";
+    VerifyOTP(
+      'seller',
+      values['Adhar Number'],
+      values['otp']
+    )
   };
   const onFinishFailedbuyer = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    if (errorInfo.values['Adhar Number']){
+      console.log("Failed:", errorInfo.values['otp']);
+      SendOTP(errorInfo.values['Adhar Number']);
+    }
+    else{
+    alert(
+      "Please inser Correct Adhar Card"
+    )
+    }
   };
 
   const onFinishinspector = (values) => {
@@ -178,17 +240,14 @@ const dashboard = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input the OTP you got!",
+                      message: "OTP send to your Linked Mobile Number",
                     },
                   ]}
                 >
                   <Input placeholder="Enter OTP" />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-              <Button onClick={OTPalert}>Get otp</Button>
-
-              </Col>
+              
             </Row>
           </Form.Item>
 
@@ -203,7 +262,7 @@ const dashboard = () => {
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
               >
-                Login
+                Get OTP / Login
               </button>
             </Space>
           </Form.Item>
@@ -260,7 +319,7 @@ const dashboard = () => {
             <Input placeholder="xxxx xxxx xxxx xxxx" />
           </Form.Item>
 
-          <Form.Item label="OTP" >
+          <Form.Item label="OTP">
             <Row gutter={8}>
               <Col span={12}>
                 <Form.Item
@@ -269,16 +328,14 @@ const dashboard = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input the OTP you got!",
+                      message: "OTP send to your Linked Mobile Number",
                     },
                   ]}
                 >
                   <Input placeholder="Enter OTP" />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Button onClick={OTPalert}>Get otp</Button>
-              </Col>
+              
             </Row>
           </Form.Item>
 
@@ -293,7 +350,7 @@ const dashboard = () => {
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
               >
-                Login
+                 Get OTP / Login
               </button>
             </Space>
           </Form.Item>

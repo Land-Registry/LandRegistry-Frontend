@@ -50,7 +50,8 @@ const lands = () => {
         let FilterDataset1 = response.filter(function (el) {
           return (
             el.ownerAddress.toLowerCase() != owneraddress.toLowerCase() &&
-            el.request == false
+            el.request == false &&
+            el.processstatus == "2"
             // el.Buyer_address == "0"
           );
         });
@@ -123,7 +124,7 @@ const lands = () => {
       const { pathname } = Router;
       //  Router.push(`/processstatus/${PID}`)
       Router.push(`/request`);
-    }, 5000);
+    }, 3000);
   }
 
   return (

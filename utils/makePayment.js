@@ -18,7 +18,7 @@ export const MakePayment = async (PID, fromaddress, toaddress, amount) => {
 
   if (amount * 10 ** 18 <= balanceOf) {
     const MakePayment = await contract.methods
-      .transferFrom(fromaddress, toaddress, BigInt(parseInt(amount) * 10 ** 18))
+      .transferFrom(fromaddress, toaddress, BigInt((parseInt(amount)*0.95) * 10 ** 18))
       .send({ from: fromaddress });
 
     if (MakePayment != "") {
@@ -27,6 +27,7 @@ export const MakePayment = async (PID, fromaddress, toaddress, amount) => {
         UpdateData(
           {
             PaymentStatus: true,
+            TransactionHash: MakePayment["transactionHash"],
           },
           PID
         );
@@ -67,6 +68,53 @@ export const MaketokenPayment = async (PID, fromaddress, toaddress, amount) => {
         );
       alert("Payment Done");
     }
+  } else {
+    alert("Insufficient Balance");
+  }
+};
+
+export const PaymentBuyertoSeller = async (PID, fromaddress, toaddress, amount) => {
+  if (typeof window.ethereum === "undefined") {
+    alert("Please install MetaMask first.");
+  }
+
+  window.addEventListener("load", async () => {
+    try {
+      await ethereum.enable();
+    } catch (error) {}
+  });
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
+  const balanceOf = await contract.methods.balanceOf(fromaddress).call();
+
+  if (amount * 10 ** 18 <= balanceOf) {
+    const MakePayment = await contract.methods
+      .transferFrom(fromaddress, toaddress, BigInt((parseInt(amount)*0.05) * 10 ** 18))
+      .send({ from: fromaddress });
+      if (MakePayment != "") {
+        console.log(MakePayment);
+        console.log(MakePayment["transactionHash"]);
+        const date = new Date();
+
+let currentDay= String(date.getDate()).padStart(2, '0');
+
+let currentMonth = String(date.getMonth()+3).padStart(2,"0");
+
+let currentYear = date.getFullYear();
+let DurationDate = `${currentDay}-${currentMonth}-${currentYear}`
+          UpdateData(
+            {
+              StampDutyTokenStatus: true,
+              ProcessStatus:4,
+              PaymentDuration:DurationDate
+            },
+            PID
+          );
+        alert("Payment Done");
+        // window.location.href = "/inspectorDashboard";
+      }
+
+
   } else {
     alert("Insufficient Balance");
   }

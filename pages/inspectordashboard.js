@@ -75,7 +75,6 @@ const inspectordashboard = () => {
   //   setDataset(response.data);
   // });
 
-  
   var data = Dataset.filter(function (el) {
     return el.request == true && el.Buyer_address != "0";
   });
@@ -90,16 +89,33 @@ const inspectordashboard = () => {
       data[0].Buyer_address,
       data[0].tokenID
     );
-    UpdateData({ request: false }, propertyID);
     MainUpdateData({ owner: data[0].Buyer_name }, propertyID);
-    UpdateData({ ownerAddress: data[0].Buyer_address }, propertyID);
-    UpdateData({ owner: data[0].Buyer_name }, propertyID);
-    UpdateData({ ProcessStatus: 5 }, propertyID);
-    UpdateData({ PaymentStatus: false }, propertyID);
-    UpdateData({ status: 5 }, propertyID);
-    UpdateData({ request: false }, propertyID);
-    UpdateData({ Buyer_address: "0" }, propertyID);
-    UpdateData({ Buyer_name: "0" }, propertyID);
+    UpdateData(
+      {
+        ownerAddress: data[0].Buyer_address,
+        owner: data[0].Buyer_name,
+        ProcessStatus: 5,
+        PaymentStatus: false,
+        status: 5,
+        request: false,
+        Buyer_address: "0",
+        Buyer_name: "0",
+        PaymentDuration: "",
+        StampDutyTokenStatus: "",
+      },
+      propertyID
+    );
+
+    // UpdateData({ request: false, ownerAddress: data[0].Buyer_address }, propertyID);
+    // UpdateData({ owner: data[0].Buyer_name }, propertyID);
+    // UpdateData({ ProcessStatus: 5 }, propertyID);
+    // UpdateData({ PaymentStatus: false }, propertyID);
+    // UpdateData({ status: 5 }, propertyID);
+    // UpdateData({ request: false }, propertyID);
+    // UpdateData({ Buyer_address: "0" }, propertyID);
+    // UpdateData({ Buyer_name: "0" }, propertyID);
+    // UpdateData({ PaymentDuration: "" }, propertyID);
+    // UpdateData({ StampDutyTokenStatus: "" }, propertyID);
   }
 
   function CheckTransaction(propertyID) {
