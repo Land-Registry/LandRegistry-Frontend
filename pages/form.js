@@ -53,17 +53,25 @@ useEffect(() => {
   };
 }, []);
 
-fetch("https://fine-gray-hatchling-slip.cyclic.app/SellingLand")
-  .then((response) => response.json())
-  .then((response) => {
-    // console.log(response);
-    setDataset(response);
-    console.log(Dataset);
-  })
-  .catch((err) => {
-    console.error(err);
-    // alert(err)
-  });
+
+function FetchData() {
+  fetch("http://localhost:8000/SellingLand/")
+    .then((response) => response.json())
+    .then((response) => {
+      // console.log(response);
+      setDataset(response);
+      // console.log(Dataset);
+    })
+    .catch((err) => {
+      console.error(err);
+      // alert(err)
+    });
+  console.log("Function Called");
+}
+
+useEffect(() => {
+  FetchData();
+}, []);
 
 // My Land
 try {

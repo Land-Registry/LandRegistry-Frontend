@@ -26,8 +26,42 @@ export const MakePayment = async (PID, fromaddress, toaddress, amount) => {
       console.log(MakePayment["transactionHash"]);
         UpdateData(
           {
-            TransactionHash: MakePayment["transactionHash"],
             PaymentStatus: true,
+          },
+          PID
+        );
+      alert("Payment Done");
+    }
+  } else {
+    alert("Insufficient Balance");
+  }
+};
+
+export const MaketokenPayment = async (PID, fromaddress, toaddress, amount) => {
+  if (typeof window.ethereum === "undefined") {
+    alert("Please install MetaMask first.");
+  }
+
+  window.addEventListener("load", async () => {
+    try {
+      await ethereum.enable();
+    } catch (error) {}
+  });
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
+  const balanceOf = await contract.methods.balanceOf(fromaddress).call();
+
+  if (amount * 10 ** 18 <= balanceOf) {
+    const MakePayment = await contract.methods
+      .transferFrom(fromaddress, toaddress, BigInt(parseInt(amount) * 10 ** 18))
+      .send({ from: fromaddress });
+
+    if (MakePayment != "") {
+      console.log(MakePayment);
+      console.log(MakePayment["transactionHash"]);
+        UpdateData(
+          {
+            StampDutyTokenStatus: true,
           },
           PID
         );

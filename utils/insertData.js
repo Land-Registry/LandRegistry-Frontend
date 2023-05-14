@@ -1,7 +1,7 @@
 import axios from "axios"
 const cors = require('cors')
 
-const url = 'https://fine-gray-hatchling-slip.cyclic.app/SellingLand';
+const url = 'http://localhost:8000/SellingLand';
 
 export const InsertData = async (data) => {
   console.log('fgh')

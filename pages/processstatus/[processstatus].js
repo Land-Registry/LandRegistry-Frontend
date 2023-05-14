@@ -20,9 +20,9 @@ import {
   Input,
 } from "antd";
 import { Footer } from "../../components/footer";
-import { useRouter,Router } from "next/router";
+import { useRouter, Router } from "next/router";
 import { UpdateData } from "../../utils/updateData";
-import { CheckBalance, MakePayment } from "../../utils/makePayment";
+import { CheckBalance, MakePayment, MaketokenPayment } from "../../utils/makePayment";
 import { Chat } from "../../PushModule/@pushprotocol/uiweb";
 // import { Chat } from "@pushprotocol/uiweb";
 
@@ -50,35 +50,13 @@ var ICON = <LoadingOutlined />;
 var PaymentStatus = false;
 var address;
 var support_address;
+var BuyerTokenstatus = false;
+var StampDutyTokenStatus = false;
+var OwnerAdhar = "";
+var OwnerContact = "";
 
 
-const onFinish = (values) => {
-  console.log("Success:", values);
-  UpdateData({ Price: parseInt(values.Price) }, PropertyID);
-  alert("Price Updated Successfully. Please wait for the transaction to be completed.")
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
 
-function SetIcon(stateno, ProcessStatus) {
-  if (stateno == ProcessStatus) {
-    ICON = <LoadingOutlined />;
-  } else {
-    ICON = <SolutionOutlined />;
-  }
-  return ICON;
-}
-
-function SetStatus(stateno, ProcessStatus) {
-  if (stateno == ProcessStatus) {
-    return "process";
-  } else if (stateno <= ProcessStatus) {
-    return "finish";
-  } else {
-    return "wait";
-  }
-}
 
 const columns = [
   {
@@ -117,16 +95,14 @@ const columns = [
 async function getaddress() {
   const accounts = await ethereum.request({ method: "eth_requestAccounts" });
   address = accounts[0];
-  if (address == ownerAddress){
+  if (address == ownerAddress) {
     support_address = Buyer_address;
-  }
-  else{
+  } else {
     support_address = ownerAddress;
   }
-
 }
 
-const processstatus =  () => {
+const processstatus = () => {
   const [open3d, setOpen3d] = useState(false);
   const [openprice, setOpenprice] = useState(false);
   const [opennotify, setOpennotify] = useState(false);
@@ -137,30 +113,75 @@ const processstatus =  () => {
   // const [PropertyID, setPropertyID] = useState("");
   // const [SurveyNo, setSurveyNo] = useState("");
   // const [Area, setArea] = useState("");
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    UpdateData({ Price: parseInt(values.Price) }, PropertyID);
+    alert(
+      "Price Updated Successfully. Please wait for the transaction to be completed."
+    );
+    FetchData();
+  };
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+  
+  function SetIcon(stateno, ProcessStatus) {
+    if (stateno == ProcessStatus) {
+      ICON = <LoadingOutlined />;
+    } else {
+      ICON = <SolutionOutlined />;
+    }
+    return ICON;
+  }
+  
+  function SetStatus(stateno, ProcessStatus) {
+    if (stateno == ProcessStatus) {
+      return "process";
+    } else if (stateno <= ProcessStatus) {
+      return "finish";
+    } else {
+      return "wait";
+    }
+  }
+
   getaddress();
 
   const router = useRouter();
   const { processstatus } = router.query;
 
+  if (5 == ProcessStatus) {
+    setOpennotify(true);
+    ProcessStatus = 6;
+    return "finish";
+  }
 
-        if (5 == ProcessStatus) {
-          setOpennotify(true);
-          ProcessStatus = 6;
-          return "finish";
-        }
+  function FetchData() {
+    fetch("http://localhost:8000/SellingLand/")
+      .then((response) => response.json())
+      .then((response) => {
+        // console.log(response);
+        setDataset(response);
+        console.log("sfdbg",Dataset);
+      })
+      .catch((err) => {
+        console.error(err);
+        // alert(err)
+      });
+    console.log("Function Called");
 
-  fetch("https://fine-gray-hatchling-slip.cyclic.app/SellingLand")
-    .then((response) => response.json())
-    .then((response) => {
-      // console.log(response);
-      setDataset(response);
-      console.log(Dataset);
-    })
-    .catch((err) => {
-      console.error(err);
-      // alert(err)
-    });
+  
+  }
 
+
+  useEffect(() => {
+    FetchData();
+  }, []);
+
+  setUpdateData();
+
+  function setUpdateData() {
+    
   for (let i in Dataset) {
     if (Dataset[i].propertyID == processstatus) {
       id = Dataset[i]._id;
@@ -185,8 +206,13 @@ const processstatus =  () => {
       DocumentURL = Dataset[i].DocumentURL;
       PaymentStatus = Dataset[i].PaymentStatus;
       ProcessStatus = Dataset[i].ProcessStatus;
+      BuyerTokenstatus = Dataset[i].BuyerTokenstatus;
+      StampDutyTokenStatus =       Dataset[i].StampDutyTokenStatus;
+      OwnerAdhar =Dataset[i].OwnerAdhar;
+      OwnerContact=       Dataset[i].OwnerContact;
     }
   }
+}
 
   const data = [
     {
@@ -211,22 +237,17 @@ const processstatus =  () => {
 
   return (
     <div>
-        <Modal
+      <Modal
         title="Notification"
         centered
         open={opennotify}
         width={600}
         closable={false}
         footer={null}
-        
-        
       >
-     {address == ownerAddress ?(
-       "Thanks for Buying Land By ❤" 
-       ):(
-         "Thanks for Selling Land By ❤"
-     )}
-
+        {address == ownerAddress
+          ? "Thanks for Buying Land By ❤"
+          : "Thanks for Selling Land By ❤"}
       </Modal>
       <Modal
         title="Update Price"
@@ -320,7 +341,7 @@ const processstatus =  () => {
           src="https://kuula.co/share/collection/7vzxT?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"
         ></iframe>
       </Modal>
- 
+
       <Modal
         title="Land Document"
         centered
@@ -380,12 +401,21 @@ const processstatus =  () => {
                 >
                   View Document
                 </button>
+                {ProcessStatus < 4?(
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] hover:bg-blue-700  mx-2 my-2 "
                   onClick={() => setOpenprice(true)}
                 >
                   Update Price
                 </button>
+                ):(
+                  <button
+                  className="disabled:opacity-25 bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] cursor-not-allowed hover:bg-blue-700  mx-2 my-2 "
+                   disabled
+                >
+                  Update Price
+                </button> 
+                )}
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] hover:bg-blue-700  mx-2 my-2 "
                   onClick={() => CheckBalance()}
@@ -393,30 +423,50 @@ const processstatus =  () => {
                   Check Balance
                 </button>
                 {PaymentStatus == true ? (
-
-                    <button
-                disabled
-                    className="bg-green-500  text-white font-bold py-2 px-4 rounded   w-[62%] hover:bg-green-700 cursor-not-allowed  mx-2 my-2 ">
-                  Payment Done
-                </button>
-                ):(ProcessStatus < 4)?(
                   <button
-                   disabled 
-                   className="disabled:opacity-25 bg-blue-500  text-white font-bold py-2 px-4 rounded cursor-not-allowed w-[62%] hover:bg-blue-700  mx-2 my-2 ">
-                    Pending Process
+                    disabled
+                    className="bg-green-500  text-white font-bold py-2 px-4 rounded   w-[62%] hover:bg-green-700 cursor-not-allowed  mx-2 my-2 "
+                  >
+                    Payment Done
                   </button>
-                ):(address == Buyer_address)?(<button
-                  onClick={()=>MakePayment(PropertyID,Buyer_address,ownerAddress,Price)} 
-                   className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 ">
-                    Make Payment
-                  </button>):(
-                   <button
-                   disabled 
-                   className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded cursor-not-allowed w-[62%] hover:bg-green-700  mx-2 my-2 ">
+                ) : ProcessStatus < 4 ? (
+                  <button
+                    disabled
+                    className="disabled:opacity-25 bg-blue-500  text-white font-bold py-2 px-4 rounded cursor-not-allowed w-[62%] hover:bg-blue-700  mx-2 my-2 "
+                  >
+                    Pending Processes
+                  </button>
+                ) : address == Buyer_address  &&  StampDutyTokenStatus == false     ? (
+                  <button
+                    onClick={() =>
+                      MaketokenPayment(PropertyID,Buyer_address,'0x7ed790a1ac108b9a50e24f5c5e061df59e3673a7',parseInt(Price)*0.06)
+                    }
+                    className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 "
+                  >
+                    Pay for Stamp Duty ({parseInt(parseInt(Price)*0.06)}LR)
+                  </button>
+                ) : address == Buyer_address        
+                ? (
+                  <>
+                  <button
+                    onClick={() =>
+                      MakePayment(PropertyID,Buyer_address,ownerAddress,Price
+                      )
+                    }
+                    className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 "
+                  >
+                   Make Payment
+                  </button>
+                 
+                  </>
+                ) : (
+                  <button
+                    disabled
+                    className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded cursor-not-allowed w-[62%] hover:bg-green-700  mx-2 my-2 "
+                  >
                     You are not allow to Pay
                   </button>
-                  )
-                  }
+                )}
               </div>
             </Col>
             <Col span={12}>
@@ -443,7 +493,7 @@ const processstatus =  () => {
               },
               {
                 title: "3. Document Verification",
-                status: SetStatus(3,ProcessStatus),
+                status: SetStatus(3, ProcessStatus),
                 icon: SetIcon(3, ProcessStatus),
                 // icon: <SolutionOutlined />,
               },
@@ -471,11 +521,11 @@ const processstatus =  () => {
 
       <Footer />
       <Chat
-          account={address} //user address
-          supportAddress={support_address} //support address
-          apiKey="jVPMCRom1B.iDRMswdehJG7NpHDiECIHwYMMv6k2KzkPJscFIDyW8TtSnk4blYnGa8DIkfuacU0"
-          env="staging"
-        />
+        account={address} //user address
+        supportAddress={support_address} //support address
+        apiKey="jVPMCRom1B.iDRMswdehJG7NpHDiECIHwYMMv6k2KzkPJscFIDyW8TtSnk4blYnGa8DIkfuacU0"
+        env="staging"
+      />
     </div>
   );
 };

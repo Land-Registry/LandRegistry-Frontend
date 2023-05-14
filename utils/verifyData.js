@@ -4,7 +4,7 @@ import React, { useState } from "react";
 export const VerifyData = async (Owner,PID,Surveyno,Area) => {
   const [Dataset, setDataset] = useState([]);
 
-  fetch("https://fine-gray-hatchling-slip.cyclic.app/landDetails")
+  fetch("http://localhost:8000/landDetails")
     .then((response) => response.json())
     .then((response) => {
       // console.log(response);

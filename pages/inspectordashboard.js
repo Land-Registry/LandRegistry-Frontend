@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/navbar/navbar";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Progress, Table } from "antd";
@@ -6,8 +6,7 @@ import { Footer } from "../components/footer";
 import axios from "axios";
 import { MainUpdateData, UpdateData } from "../utils/updateData";
 import { TransferOwnership } from "../utils/ContractPlugins";
-const cors = require('cors')
-
+const cors = require("cors");
 
 // const data = [
 //   {
@@ -38,45 +37,48 @@ const cors = require('cors')
 //   },
 // ];
 
-
 const inspectordashboard = () => {
   const [open, setOpen] = useState(false);
   const [Dataset, setDataset] = useState([]);
-  
+
   const increase = (PID) => {
     alert("Process Increment");
     UpdateData({ ProcessStatus: setPercent(PID) + 1 }, PID);
+    FetchData();
   };
   const decline = (PID) => {
     alert("Process Decrement");
     UpdateData({ ProcessStatus: setPercent(PID) - 1 }, PID);
+    FetchData();
   };
 
-  fetch("https://fine-gray-hatchling-slip.cyclic.app/SellingLand/")
-    .then((response) => response.json())
-    .then((response) => {
-      // console.log(response);
-      setDataset(response);
-      console.log(Dataset);
-    })
-    .catch((err) => {
-      console.error(err);
-      // alert(err)
-    });
+  function FetchData() {
+    fetch("http://localhost:8000/SellingLand/")
+      .then((response) => response.json())
+      .then((response) => {
+        // console.log(response);
+        setDataset(response);
+        // console.log(Dataset);
+      })
+      .catch((err) => {
+        console.error(err);
+        // alert(err)
+      });
+    console.log("Function Called");
+  }
 
-    // axios.get("https://fine-gray-hatchling-slip.cyclic.app/SellingLand").then((response) => {
-    //   setDataset(response.data);
-    // });
+  useEffect(() => {
+    FetchData();
+  }, []);
 
-try {
-      
+  // axios.get("http://localhost:8000/SellingLand").then((response) => {
+  //   setDataset(response.data);
+  // });
+
+  
   var data = Dataset.filter(function (el) {
     return el.request == true && el.Buyer_address != "0";
   });
-    } catch (error) {
-      console.log(error)
-    }
-  console.log("asfdsgb",data);
 
   function transferNFT(propertyID) {
     let data = Dataset.filter(function (el) {
@@ -96,8 +98,8 @@ try {
     UpdateData({ PaymentStatus: false }, propertyID);
     UpdateData({ status: 5 }, propertyID);
     UpdateData({ request: false }, propertyID);
-    UpdateData({Buyer_address:"0"},propertyID);
-    UpdateData({Buyer_name:"0"},propertyID);
+    UpdateData({ Buyer_address: "0" }, propertyID);
+    UpdateData({ Buyer_name: "0" }, propertyID);
   }
 
   function CheckTransaction(propertyID) {

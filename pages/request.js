@@ -24,7 +24,7 @@ const columns1 = [
   },
   {
     title: "Seller Name",
-    dataIndex: "Owner",
+    dataIndex: "owner",
     key: "owner",
     render: (text) => <a>{text}</a>,
   },
@@ -41,7 +41,7 @@ const columns1 = [
     render: (text) => (
       <>
         <div className="flex">
-          {text == 2 ? (
+          {text >= 2 ? (
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full mr-4 py-2 rounded"
             >
@@ -140,11 +140,9 @@ const Request = () => {
     return async () => {
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       setAccount(accounts[0]);
-    };
-  }, []);
 
 
-  fetch("https://fine-gray-hatchling-slip.cyclic.app/SellingLand")
+    fetch("http://localhost:8000/SellingLand")
     .then((response) => response.json())
     .then((response) => {
       // console.log(response);
@@ -155,6 +153,11 @@ const Request = () => {
       console.error(err);
       // alert(err)
     });
+  };
+  }, []);
+
+
+
 
   // My Land Requested
   let data = Dataset.filter(function (el) {

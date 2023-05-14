@@ -20,41 +20,49 @@ const onSearch = (value) => {
 };
 
 var owneraddress;
-var FilterDataset = [];
 const contractaddress = "0x2f9227E2e1465a1bB38cE53c4516eC867Ac1535D";
 
 const lands = () => {
   const [open, setOpen] = useState(false);
   const [Data, setData] = useState([]);
   const [address, setaddress] = useState("");
-
+  const [FilterDataset,setFilterDataset] = useState([]);
   const [loadings, setLoadings] = useState([]);
   const [Dataset, setDataset] = useState([]);
 
-  fetch("https://fine-gray-hatchling-slip.cyclic.app/SellingLand")
-    .then((response) => response.json())
-    .then(async (response) => {
-      // console.log(response);
-      setDataset(response);
-      console.log(Dataset);
+  useEffect(() => {
+    // setData(retrieveNFT())
+    // console.log(Data)
+    setaddress(<Metamask />);
 
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      owneraddress = accounts[0];
+    fetch("http://localhost:8000/SellingLand")
+      .then((response) => response.json())
+      .then(async (response) => {
+        // console.log(response);
+        setDataset(response);
+        console.log("2345",response);
 
-      FilterDataset = Dataset.filter(function (el) {
-        return (
-          el.ownerAddress.toLowerCase() != owneraddress.toLowerCase() &&
-          el.request == false
-          // el.Buyer_address == "0"
-        );
+        const accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        owneraddress = accounts[0];
+
+        let FilterDataset1 = response.filter(function (el) {
+          return (
+            el.ownerAddress.toLowerCase() != owneraddress.toLowerCase() &&
+            el.request == false
+            // el.Buyer_address == "0"
+          );
+        });
+        setFilterDataset(FilterDataset1);
+
+
+      })
+      .catch((err) => {
+        console.error(err);
+        // alert(err)
       });
-    })
-    .catch((err) => {
-      console.error(err);
-      // alert(err)
-    });
+  }, []);
 
   const enterLoading = (index) => {
     setLoadings((prevLoadings) => {
@@ -70,12 +78,6 @@ const lands = () => {
       });
     }, 100000);
   };
-
-  useEffect(() => {
-    // setData(retrieveNFT())
-    // console.log(Data)
-    setaddress(<Metamask />);
-  }, []);
 
   // const options = {
   //   method: "GET",
