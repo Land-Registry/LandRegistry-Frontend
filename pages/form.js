@@ -88,7 +88,7 @@ try {
 }
 
 function SellLand(PID) {
-  UpdateData({ProcessStatus:2},PID);
+  UpdateData({ProcessStatus:1},PID);
   window.location.href = "/request";
 }
 

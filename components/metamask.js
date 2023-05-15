@@ -5,11 +5,15 @@ const Metamask = () => {
     const [accountid, setAccount] = useState('Connect Wallet');
 
     useEffect(() => {
+      try{
       if (window.ethereum) {
         const _web3 = new Web3(window.ethereum)
       } else {
         alert('Please install MetaMask!')
       }
+    } catch (error) {
+      console.log(error);
+        }
     }, [])
   
     const onConnect = async () => {

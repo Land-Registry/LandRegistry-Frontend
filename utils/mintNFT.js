@@ -2,9 +2,8 @@ import { Button, message, Space } from "antd";
 import { InsertData } from "./insertData";
 import { CreateNFT } from "./ContractPlugins";
 import Web3 from "web3";
-import { abi,contractAddress } from "./abi";
+import { abi, contractAddress } from "./abi";
 import { MainUpdateData } from "./updateData";
-
 
 var metadataURL = "";
 var Dataset = "";
@@ -18,7 +17,7 @@ var landarray = [
   "https://media.istockphoto.com/id/1179655501/photo/wheat-field.jpg?s=170667a&w=0&k=20&c=IBKD9ZGmVWrFHW0nL1yUdmprOTTxuLediny3gTCbfBo=",
 ];
 
-var BuyerNames = ["Aman","Kumar","Ravi","Suresh","Ramesh"]
+var BuyerNames = ["Aman", "Kumar", "Ravi", "Suresh", "Ramesh"];
 
 export const getMetadataURL = async (
   City,
@@ -28,11 +27,10 @@ export const getMetadataURL = async (
   survay,
   price
 ) => {
-
   if (typeof window.ethereum === "undefined") {
     alert("Please install MetaMask first.");
   }
-  
+
   window.addEventListener("load", async () => {
     try {
       await ethereum.enable();
@@ -68,9 +66,9 @@ export const getMetadataURL = async (
         console.log("234567", Dataset);
         let i;
         for (i = 0; i < Dataset.length; i++) {
-          console.log(i)
+          console.log(i);
           console.log(Dataset[i]);
-          // if (Dataset[i].ownerAddress==owneraddress){
+
           if (
             Dataset[i].owner == OwnerName &&
             Dataset[i].propertyID == PID &&
@@ -78,64 +76,77 @@ export const getMetadataURL = async (
             Dataset[i].Area == area
           ) {
             alert("Data Verified");
-            if(Dataset[i].pricePerSqFeet*Dataset[i].Area<price){
-
-            fetch("https://api.nftport.xyz/v0/metadata", options)
-              .then((response) => response.json())
-              .then((response) => {
-                console.log(response);
-                metadataURL = JSON.stringify(response["metadata_uri"]);
-                alert("Your Metadata URL is Ready MINT NFT");
-                CreateNFT(
-                  owneraddress,
-                  metadataURL,
-                  OwnerName,
-                  `${City},,${OwnerName},,${area},,${PID},,${survay},,${price}`,
-                  landarray[Math.round(Math.random() * 4)]
+            if (Dataset[i].status == false) {
+              if (Dataset[i].pricePerSqFeet * Dataset[i].Area < price) {
+                fetch("https://api.nftport.xyz/v0/metadata", options)
+                  .then((response) => response.json())
+                  .then((response) => {
+                    console.log(response);
+                    metadataURL = JSON.stringify(response["metadata_uri"]);
+                    alert("Your Metadata URL is Ready MINT NFT");
+                    CreateNFT(
+                      owneraddress,
+                      metadataURL,
+                      OwnerName,
+                      `${City},,${OwnerName},,${area},,${PID},,${survay},,${price}`,
+                      landarray[Math.round(Math.random() * 4)]
+                    );
+                    setTimeout(() => {
+                      console.log(
+                        "tokenID:",
+                        tokenid,
+                        "propertyID:",
+                        parseInt(PID),
+                        "physicalSurveyNo:",
+                        parseInt(survay),
+                        "Area:",
+                        parseInt(area),
+                        "City:",
+                        City,
+                        "owner:",
+                        OwnerName,
+                        "Price:",
+                        parseInt(price),
+                        "ownerAddress:",
+                        owneraddress,
+                        "ImageURL:",
+                        landarray[Math.round(Math.random() * 4)]
+                      );
+                      MainUpdateData({ status: true, TokenID: tokenid }, PID);
+                      InsertData({
+                        tokenID: tokenid,
+                        propertyID: parseInt(PID),
+                        physicalSurveyNo: parseInt(survay),
+                        Area: parseInt(area),
+                        City: City,
+                        owner: OwnerName,
+                        Price: parseInt(price),
+                        ownerAddress: owneraddress,
+                        ImageURL: landarray[Math.round(Math.random() * 4)],
+                        Buyer_name: BuyerNames[Math.round(Math.random() * 3)],
+                      });
+                      setTimeout(() => {
+                        window.location.href = "/lands";
+                      }, 10000);
+                    }, 2000);
+                  })
+                  .catch((err) => console.error(err));
+                return true;
+              } else {
+                alert(
+                  `Price is less than the price of land\npricePerSqFeet: ${
+                    Dataset[i].pricePerSqFeet
+                  }\nArea: ${Dataset[i].Area}\nPrcie Will be Greate than : ${
+                    Dataset[i].pricePerSqFeet * Dataset[i].Area
+                  }`
                 );
-                setTimeout(() => {
-                  console.log(
-                    "tokenID:", tokenid,
-                    "propertyID:", parseInt(PID),
-                    "physicalSurveyNo:", parseInt(survay),
-                    "Area:", parseInt(area),
-                    "City:", City,
-                    "owner:", OwnerName,
-                    "Price:", parseInt(price),
-                    "ownerAddress:", owneraddress,
-                    "ImageURL:", landarray[Math.round(Math.random() * 4)]
-                    )
-                    MainUpdateData({status:true,TokenID:tokenid},PID)
-                InsertData({
-                  tokenID: tokenid,
-                  propertyID: parseInt(PID),
-                  physicalSurveyNo: parseInt(survay),
-                  Area: parseInt(area),
-                  City: City,
-                  owner: OwnerName,
-                  Price: parseInt(price),
-                  ownerAddress: owneraddress,
-                  ImageURL: landarray[Math.round(Math.random() * 4)],
-                  Buyer_name: BuyerNames[Math.round(Math.random()*3)]
-                });
-                setTimeout(() => {
-                  window.location.href = "/lands";
-                }, 10000);
-              }, 2000);
-              })
-              .catch((err) => console.error(err));
-            return true;
-            }
-            else{
-              alert(`Price is less than the price of land\npricePerSqFeet: ${Dataset[i].pricePerSqFeet}\nArea: ${Dataset[i].Area}\nPrcie Will be Greate than : ${Dataset[i].pricePerSqFeet*Dataset[i].Area}`);
+                return false;
+              }
+            } else {
+              alert("Your Land is Already Added");
               return false;
             }
           }
-        // }
-        //   else{
-        //     alert("Your Land is Already Added");
-        //     return false;
-        //     }
         }
         alert("Data Not Verified");
         return false;
@@ -148,5 +159,3 @@ export const getMetadataURL = async (
 
   VerifyData();
 };
-
-

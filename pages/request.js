@@ -41,13 +41,13 @@ const columns1 = [
     render: (text) => (
       <>
         <div className="flex">
-          {text >= 2 ? (
+          {text >= 3 ? (
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full mr-4 py-2 rounded"
             >
               Accepted
             </button>
-          ) : text == 1? (
+          ) : text < 3? (
             <button
               className="bg-red-500 hover:bg-red-700 text-white font-bold w-full  mr-4 py-2 rounded"
             >
@@ -82,8 +82,14 @@ function AcceptResponse(text) {
   alert("Your Response is Accepted\nYou will be redirected to Process Status Page")
   setTimeout
   (() => {
-  window.location.href = `/processstatus/${text}`;
-  }, 5000);
+    window.location.href = `/processstatus/${text}`;
+  }, 1000);
+}
+
+function RejectResponse(text) {
+  UpdateData({ Buyer_address: "0",request:false,ProcessStatus: 1}, text);
+  UpdateData({ request: false }, text);
+  alert("Your Response is Rejected\nYou will be redirected to lands Page")
 }
 
 const columns = [
@@ -120,7 +126,7 @@ const columns = [
           </button>
           <br />
           <button
-            onClick={()=>UpdateData({ Buyer_address: "0", Buyer_name: "0" }, text)}
+            onClick={()=>RejectResponse(text)}
             className="bg-red-500 hover:bg-red-700 text-white font-bold w-full  mr-4 py-2 rounded"
           >
             Reject
@@ -163,7 +169,7 @@ const Request = () => {
   let data = Dataset.filter(function (el) {
     return (
       (el.ownerAddress.toLowerCase())== (accountid.toLowerCase()) &&
-      el.request == true
+      el.request == true && el.ProcessStatus == 2
     );
   });
 

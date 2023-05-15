@@ -49,9 +49,10 @@ const lands = () => {
 
         let FilterDataset1 = response.filter(function (el) {
           return (
-            el.ownerAddress.toLowerCase() != owneraddress.toLowerCase() &&
-            el.request == false &&
-            el.processstatus == "2"
+            el.ownerAddress.toLowerCase() != owneraddress.toLowerCase() 
+            &&
+            el.request == false
+             && el.ProcessStatus == 1
             // el.Buyer_address == "0"
           );
         });
@@ -117,7 +118,7 @@ const lands = () => {
     const address = accounts[0];
 
     UpdateData(
-      { Buyer_address: address, Document_Access: address, request: true },
+      { Buyer_address: address, Document_Access: address, request: true, ProcessStatus:2 },
       PID
     );
     setTimeout(() => {

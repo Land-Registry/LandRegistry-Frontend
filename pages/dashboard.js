@@ -103,7 +103,7 @@ const dashboard = () => {
   
   const onFinishbuyer = (values) => {
     VerifyOTP(
-      'seller',
+      'buyer',
       values['Adhar Number'],
       values['otp']
     )
