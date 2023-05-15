@@ -41,7 +41,7 @@ const columns1 = [
     render: (text) => (
       <>
         <div className="flex">
-          {text >= 3 ? (
+          {text >= 2 ? (
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full mr-4 py-2 rounded"
             >

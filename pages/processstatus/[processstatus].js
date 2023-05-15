@@ -338,7 +338,7 @@ const processstatus = () => {
           allow="xr-spatial-tracking; gyroscope; accelerometer"
           allowfullscreen
           scrolling="no"
-          src="https://kuula.co/share/collection/7vzxT?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"
+          src="https://kuula.co/share/5hDfC?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"
         ></iframe>
       </Modal>
 
@@ -401,7 +401,7 @@ const processstatus = () => {
                 >
                   View Document
                 </button>
-                {ProcessStatus < 4 ? (
+                {ProcessStatus < 3 ? (
                   <button
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] hover:bg-blue-700  mx-2 my-2 "
                     onClick={() => setOpenprice(true)}
@@ -452,8 +452,7 @@ const processstatus = () => {
                   >
                     Pending Processes
                   </button>
-                ) : address == Buyer_address &&
-                  StampDutyTokenStatus == false ? (
+                ) : address == Buyer_address && StampDutyTokenStatus == false ? (
                   <button
                     onClick={() =>
                       MaketokenPayment(
@@ -467,7 +466,7 @@ const processstatus = () => {
                   >
                     Pay for Stamp Duty ({parseInt(parseInt(Price) * 0.06)}LR)
                   </button>
-                ) : address == Buyer_address ? (
+                ) : address == Buyer_address && StampDutyTokenStatus == true ? (
                   <>
                     <button
                       onClick={() =>

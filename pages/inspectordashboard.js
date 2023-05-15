@@ -101,7 +101,8 @@ const inspectordashboard = () => {
         Buyer_address: "0",
         Buyer_name: "0",
         PaymentDuration: "",
-        StampDutyTokenStatus: "",
+        StampDutyTokenStatus: false,
+
       },
       propertyID
     );

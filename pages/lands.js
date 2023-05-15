@@ -159,7 +159,7 @@ const lands = () => {
           allow="xr-spatial-tracking; gyroscope; accelerometer"
           allowfullscreen
           scrolling="no"
-          src="https://kuula.co/share/collection/7vzxT?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"
+          src="https://kuula.co/share/5hDfC?logo=1&info=1&fs=1&vr=0&sd=1&thumbs=1"
         ></iframe>
       </Modal>
 

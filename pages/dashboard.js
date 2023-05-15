@@ -358,7 +358,7 @@ const dashboard = () => {
       </Modal>
 
       <Modal
-        title="Buyer Login"
+        title="LandInspector Login"
         centered
         footer={null}
         open={modalinstpector}
