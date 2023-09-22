@@ -22,6 +22,7 @@ const dashboard = () => {
   const [modalseller, setModalSeller] = useState(false);
   const [modalbuyer, setModalBuyer] = useState(false);
   const [modalinstpector, setModalInspector] = useState(false);
+  const [clientID, setClientID] = useState('');
 
   useEffect(() => {
     if (window.ethereum) {
@@ -38,41 +39,78 @@ const dashboard = () => {
   }  
 
   async function SendOTP(aadhar) {
-      const url = `https://rich-cyan-fawn-robe.cyclic.app/otp/sendOtp/`;
-      console.log(url);
-      try{
-        const response = await axios.post(url, {aadharNo:aadhar}) 
-        console.log(response);
-      }
-      catch(error){
-        console.log(error);
-      }
+    const url = 'https://api.emptra.com/aadhaarVerification/requestOtp';
+    
+    // Replace these with your actual secretKey and clientId
+    const secretKey = 'ohfBZTSKx1nxWf0LXRrPT3LLf7j1nBpimYF8ro8kjWebyO3adMlPeZoMjf2aArSfn';
+    const clientIdKey = '26b21be52ab8fbdea03eff523a05122b:a19dd06055d433bf76c609e64e1eecbf';
+    const headers = {
+      'Content-Type': 'application/json',
+      secretKey,
+      clientID:clientIdKey,
+    };
+    
+    const requestData = {
+      aadhaarNumber: aadhar,
+    };
+    
+    try {
+      const response = await axios.post(url, requestData, { headers });
+      console.log(response.data);
+      
+      if (response.data && response.data.result && response.data.result.data) {
+        const { client_id } = response.data.result.data;
+        setClientID(client_id); // Store client_id in state
+      } 
+      
+      // Handle other response data here
+    } catch (error) {
+      console.error(error);
+      // Handle errors here
     }
+  }
   
-    async function VerifyOTP(user,aadhar, otp) {
-      const url = `https://rich-cyan-fawn-robe.cyclic.app/otp/verifyOtp/`;
-      console.log(url);
-      try{
-        const response = await axios.post(url, {aadharNo:aadhar, otp:otp})
-        console.log(response);
-        alert(response.data);
-        console.log(
-          "Adhar Card "+aadhar+" Sucessfull Verified!!"
-        )        
-        if (user == 'seller'){
-          window.location = "/form";
+  async function VerifyOTP(user, aadhar, otp) {
+    const url = 'https://api.emptra.com/aadhaarVerification/submitOtp';
+
+    // Replace these with your actual secretKey and clientId
+    const secretKey = 'ohfBZTSKx1nxWf0LXRrPT3LLf7j1nBpimYF8ro8kjWebyO3adMlPeZoMjf2aArSfn';
+    const clientIdKey = '26b21be52ab8fbdea03eff523a05122b:a19dd06055d433bf76c609e64e1eecbf';
+
+    const headers = {
+      'Content-Type': 'application/json',
+      secretKey,
+      clientID:clientIdKey,
+    };
+
+    const requestData = {
+      client_id: clientID, // Use the stored client_id from state
+      otp: otp,
+    };
+
+    try {
+      const response = await axios.post(url, requestData, { headers });
+      console.log(response.data);
+
+      if (response.data && response.data.result && response.data.result.data) {
+        // Handle the response data as needed
+        // Redirect based on the user value
+        if (user === 'seller') {
+          window.location = `/${aadhar}/form`;
+        } else if (user === 'buyer') {
+          window.location = `/${aadhar}/lands`;
+        } else if (user === 'inspector') {
+          window.location = '/inspectordashboard';
         }
-        else if (user == 'buyer'){
-          window.location = "/lands";
-        }
-        else if (user == 'inspector'){
-          window.location = "/inspectordashboard";
-        }
+
+        // You can also update other state variables or perform actions here
       }
-      catch(error){
-        console.log(error);
-      }
+    } catch (error) {
+      console.error(error);
+      // Handle errors here
     }
+  }
+
     
   function OTPalert(params) {
     alert('OTP will be send to your Registred Mobile');    

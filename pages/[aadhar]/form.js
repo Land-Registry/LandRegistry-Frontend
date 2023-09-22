@@ -12,11 +12,11 @@ import {
   Table,
 } from "antd";
 
-import Navbar from "../components/navbar/navbar";
-import { Footer } from "../components/footer";
-
-import { getMetadataURL } from "../utils/mintNFT";
-import { UpdateData } from "../utils/updateData";
+import Navbar from "../../components/navbar/navbar";
+import { Footer } from "../../components/footer";
+import { useRouter } from 'next/router';
+import { getMetadataURL } from "../../utils/mintNFT";
+import { UpdateData } from "../../utils/updateData";
 
 const props = {
   name: "file",
@@ -45,6 +45,9 @@ const form = () => {
   const [data, setData] = useState([]);
   const [Dataset, setDataset] = useState([]);
 const [accountid, setAccount] = useState("Connect Wallet");
+const router = useRouter();
+const { aadhar } = router.query;
+const aadharNum =aadhar;
 
 useEffect(() => {
   return async () => {
@@ -101,7 +104,8 @@ function SellLand(PID) {
       values.area,
       values.PID,
       values.survay,
-      values.price
+      values.price,
+      values.aadhar=aadharNum,
     );
   };
   const onFinishFailed = (errorInfo) => {
@@ -157,7 +161,7 @@ function SellLand(PID) {
       <div className="pt-20 bg-gray-300">
         <div className="w-[90%] shadow-2xl m-auto p-10 rounded-2xl mb-[500px]">
           <h1 className="flex   font-bold text-4xl text-gray-800">
-            My Land
+            My Land ({aadhar})
           </h1>
 
           <Table
@@ -202,6 +206,20 @@ function SellLand(PID) {
               >
                 <Input />
               </Form.Item>
+              <Form.Item
+  label="Land Owner Aadhar Number" 
+  name="aadhar"
+  className="text-black"
+  initialValue={aadharNum}
+  rules={[
+    {
+      required: true,
+      message: "Please input Owner Name",
+    },
+  ]}
+>
+  <Input defaultValue={aadharNum} placeholder={aadharNum} disabled/> {/* Add the `disabled` attribute to make it non-editable */}
+</Form.Item>
               <Form.Item
                 label="Land Area (in sqm.)"
                 name="area"

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from "../components/navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import {
   LoadingOutlined,
   SmileOutlined,
@@ -7,11 +7,11 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Steps, Col, Row, Modal, Space, Table, Tag } from "antd";
-import { Footer } from "../components/footer";
+import { Footer } from "../../components/footer";
 
 import processstatus from "./processstatus/[processstatus]";
-import { UpdateData } from "../utils/updateData";
-import Metamask from "../components/metamask";
+import { UpdateData } from "../../utils/updateData";
+import Metamask from "../../components/metamask";
 
 var status = "accept";
 

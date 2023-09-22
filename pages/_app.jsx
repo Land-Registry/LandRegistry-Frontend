@@ -42,14 +42,13 @@ const App = ({ Component, pageProps }) => {
   });
 
   return (
-    <>
+    <div className="bg-white">
       <Head>
         <link
           rel="apple-touch-icon"
           sizes="180x180"
           href="/apple-touch-icon.png"
         />
-        <link rel="icon" href="/icons/favicon.ico" />
         <meta
           property="og:image"
           content="https://vivid.lol/images/landing-page.png"
@@ -66,10 +65,9 @@ const App = ({ Component, pageProps }) => {
       />
       <Component
         {...pageProps}
-        isDarkMode={isDarkMode}
-        toggleDarkMode={toggleDarkMode}
+        className="bg-white"
       />
-    </>
+    </div>
   );
 };
 

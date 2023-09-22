@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from "../../components/navbar/navbar";
+import Navbar from "../../../components/navbar/navbar";
 import {
   LoadingOutlined,
   SmileOutlined,
@@ -19,16 +19,16 @@ import {
   Form,
   Input,
 } from "antd";
-import { Footer } from "../../components/footer";
+import { Footer } from "../../../components/footer";
 import { useRouter, Router } from "next/router";
-import { UpdateData } from "../../utils/updateData";
+import { UpdateData } from "../../../utils/updateData";
 import {
   CheckBalance,
   MakePayment,
   MaketokenPayment,
   PaymentBuyertoSeller,
-} from "../../utils/makePayment";
-import { Chat } from "../../PushModule/@pushprotocol/uiweb";
+} from "../../../utils/makePayment";
+import { Chat } from "../../../PushModule/@pushprotocol/uiweb";
 // import { Chat } from "@pushprotocol/uiweb";
 
 var id = "";
@@ -380,7 +380,7 @@ const processstatus = () => {
         <div className="w-[90%] shadow-2xl m-auto p-10 rounded-2xl">
           <Row className="mb-10">
             <Col span={12}>
-              <div className="p-2 px-4">
+              <div className="p-2 px-4 text-black">
                 <h1 className="mt-0  font-bold">Area: {Area} sq.m.</h1>
                 <h3 className="">Loaction: Nagpur, Maharashtra</h3>
                 <h3 className="">Price: Rs. {Price}</h3>
