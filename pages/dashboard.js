@@ -10,16 +10,19 @@ import {
   Checkbox,
   Space,
 } from "antd";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../components/navbar/navbar";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import Metamask from "../components/metamask";
 import Web3 from 'web3';
-import { Footer } from "../components/Footer";
+import { Footer } from "../components/footer";
+import axios from "axios";
+
 
 const dashboard = () => {
   const [modalseller, setModalSeller] = useState(false);
   const [modalbuyer, setModalBuyer] = useState(false);
   const [modalinstpector, setModalInspector] = useState(false);
+  const [clientID, setClientID] = useState('');
 
   useEffect(() => {
     if (window.ethereum) {
@@ -35,26 +38,124 @@ const dashboard = () => {
     // console.log("Account: " + accounts[0]);
   }  
 
+  async function SendOTP(aadhar) {
+    const url = 'https://api.emptra.com/aadhaarVerification/requestOtp';
+    
+    // Replace these with your actual secretKey and clientId
+    const secretKey = 'ohfBZTSKx1nxWf0LXRrPT3LLf7j1nBpimYF8ro8kjWebyO3adMlPeZoMjf2aArSfn';
+    const clientIdKey = '26b21be52ab8fbdea03eff523a05122b:a19dd06055d433bf76c609e64e1eecbf';
+    const headers = {
+      'Content-Type': 'application/json',
+      secretKey,
+      clientID:clientIdKey,
+    };
+    
+    const requestData = {
+      aadhaarNumber: aadhar,
+    };
+    
+    try {
+      const response = await axios.post(url, requestData, { headers });
+      console.log(response.data);
+      
+      if (response.data && response.data.result && response.data.result.data) {
+        const { client_id } = response.data.result.data;
+        setClientID(client_id); // Store client_id in state
+      } 
+      
+      // Handle other response data here
+    } catch (error) {
+      console.error(error);
+      // Handle errors here
+    }
+  }
+  
+  async function VerifyOTP(user, aadhar, otp) {
+    const url = 'https://api.emptra.com/aadhaarVerification/submitOtp';
 
+    // Replace these with your actual secretKey and clientId
+    const secretKey = 'ohfBZTSKx1nxWf0LXRrPT3LLf7j1nBpimYF8ro8kjWebyO3adMlPeZoMjf2aArSfn';
+    const clientIdKey = '26b21be52ab8fbdea03eff523a05122b:a19dd06055d433bf76c609e64e1eecbf';
+
+    const headers = {
+      'Content-Type': 'application/json',
+      secretKey,
+      clientID:clientIdKey,
+    };
+
+    const requestData = {
+      client_id: clientID, // Use the stored client_id from state
+      otp: otp,
+    };
+
+    try {
+      const response = await axios.post(url, requestData, { headers });
+      console.log(response.data);
+
+      if (response.data && response.data.result && response.data.result.data) {
+        // Handle the response data as needed
+        // Redirect based on the user value
+        if (user === 'seller') {
+          window.location = `/${aadhar}/form`;
+        } else if (user === 'buyer') {
+          window.location = `/${aadhar}/lands`;
+        } else if (user === 'inspector') {
+          window.location = '/inspectordashboard';
+        }
+
+        // You can also update other state variables or perform actions here
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle errors here
+    }
+  }
+
+    
   function OTPalert(params) {
     alert('OTP will be send to your Registred Mobile');    
+    }
+
+  function OTPSelleralert(params) {
+  alert('OTP will be send to your Registred Mobile');    
   }
   const onFinishseller = (values) => {
-    console.log("Success:", values);
-    alert(`Adhar Card ${values} Sucessfull Verified!!`)
-    window.location = "/form";
+    VerifyOTP(
+      'seller',
+      values['Adhar Number'],
+      values['otp']
+    )
   };
   const onFinishFailedseller = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    if (errorInfo.values['Adhar Number']){
+      console.log("Failed:", errorInfo.values['otp']);
+      SendOTP(errorInfo.values['Adhar Number']);
+    }
+    else{
+    alert(
+      "Please inser Correct Adhar Card"
+    )
+    }
+  
   };
   
   const onFinishbuyer = (values) => {
-    console.log("Success:", values);
-    alert(`Adhar Card ${values} Sucessfull Verified!!`)
-    window.location = "/lands";
+    VerifyOTP(
+      'buyer',
+      values['Adhar Number'],
+      values['otp']
+    )
   };
   const onFinishFailedbuyer = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    if (errorInfo.values['Adhar Number']){
+      console.log("Failed:", errorInfo.values['otp']);
+      SendOTP(errorInfo.values['Adhar Number']);
+    }
+    else{
+    alert(
+      "Please inser Correct Adhar Card"
+    )
+    }
   };
 
   const onFinishinspector = (values) => {
@@ -177,17 +278,14 @@ const dashboard = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input the OTP you got!",
+                      message: "OTP send to your Linked Mobile Number",
                     },
                   ]}
                 >
                   <Input placeholder="Enter OTP" />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-              <Button onClick={OTPalert}>Get otp</Button>
-
-              </Col>
+              
             </Row>
           </Form.Item>
 
@@ -202,7 +300,7 @@ const dashboard = () => {
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
               >
-                Login
+                Get OTP / Login
               </button>
             </Space>
           </Form.Item>
@@ -259,7 +357,7 @@ const dashboard = () => {
             <Input placeholder="xxxx xxxx xxxx xxxx" />
           </Form.Item>
 
-          <Form.Item label="OTP" >
+          <Form.Item label="OTP">
             <Row gutter={8}>
               <Col span={12}>
                 <Form.Item
@@ -268,16 +366,14 @@ const dashboard = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Please input the OTP you got!",
+                      message: "OTP send to your Linked Mobile Number",
                     },
                   ]}
                 >
                   <Input placeholder="Enter OTP" />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Button onClick={OTPalert}>Get otp</Button>
-              </Col>
+              
             </Row>
           </Form.Item>
 
@@ -292,7 +388,7 @@ const dashboard = () => {
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
               >
-                Login
+                 Get OTP / Login
               </button>
             </Space>
           </Form.Item>
@@ -300,7 +396,7 @@ const dashboard = () => {
       </Modal>
 
       <Modal
-        title="Buyer Login"
+        title="LandInspector Login"
         centered
         footer={null}
         open={modalinstpector}

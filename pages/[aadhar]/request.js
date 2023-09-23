@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../../components/navbar/navbar";
 import {
   LoadingOutlined,
   SmileOutlined,
@@ -7,10 +7,11 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Steps, Col, Row, Modal, Space, Table, Tag } from "antd";
-import { Footer } from "../components/Footer";
+import { Footer } from "../../components/footer";
+
 import processstatus from "./processstatus/[processstatus]";
-import { UpdateData } from "../utils/updateData";
-import Metamask from "../components/metamask";
+import { UpdateData } from "../../utils/updateData";
+import Metamask from "../../components/metamask";
 
 var status = "accept";
 
@@ -23,7 +24,7 @@ const columns1 = [
   },
   {
     title: "Seller Name",
-    dataIndex: "Owner",
+    dataIndex: "owner",
     key: "owner",
     render: (text) => <a>{text}</a>,
   },
@@ -35,20 +36,18 @@ const columns1 = [
   },
   {
     title: "Status",
-    dataIndex: "request",
-    key: "request",
+    dataIndex: "ProcessStatus",
+    key: "ProcessStatus",
     render: (text) => (
       <>
         <div className="flex">
-          {" "}
-          {text == false ? (
+          {text >= 2 ? (
             <button
-              onClick={() => (window.location.href = `/processstatus/${text}`)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full mr-4 py-2 rounded"
             >
-              Accepted {text}
+              Accepted
             </button>
-          ) : text==true? (
+          ) : text < 3? (
             <button
               className="bg-red-500 hover:bg-red-700 text-white font-bold w-full  mr-4 py-2 rounded"
             >
@@ -78,11 +77,19 @@ const columns1 = [
 ];
 
 function AcceptResponse(text) {
+  UpdateData({ProcessStatus:2},text);
   UpdateData({ request: false }, text);
+  alert("Your Response is Accepted\nYou will be redirected to Process Status Page")
   setTimeout
   (() => {
-  window.location.href = `/processstatus/${text}`;
-  }, 3000);
+    window.location.href = `/processstatus/${text}`;
+  }, 1000);
+}
+
+function RejectResponse(text) {
+  UpdateData({ Buyer_address: "0",request:false,ProcessStatus: 1}, text);
+  UpdateData({ request: false }, text);
+  alert("Your Response is Rejected\nYou will be redirected to lands Page")
 }
 
 const columns = [
@@ -119,7 +126,7 @@ const columns = [
           </button>
           <br />
           <button
-            onClick={()=>UpdateData({ Buyer_address: "", Buyer_name: "" }, text)}
+            onClick={()=>RejectResponse(text)}
             className="bg-red-500 hover:bg-red-700 text-white font-bold w-full  mr-4 py-2 rounded"
           >
             Reject
@@ -139,11 +146,9 @@ const Request = () => {
     return async () => {
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       setAccount(accounts[0]);
-    };
-  }, []);
 
 
-  fetch("http://localhost:8000/SellingLand")
+    fetch("https://rich-cyan-fawn-robe.cyclic.app/SellingLand")
     .then((response) => response.json())
     .then((response) => {
       // console.log(response);
@@ -154,20 +159,25 @@ const Request = () => {
       console.error(err);
       // alert(err)
     });
+  };
+  }, []);
+
+
+
 
   // My Land Requested
   let data = Dataset.filter(function (el) {
     return (
       (el.ownerAddress.toLowerCase())== (accountid.toLowerCase()) &&
-      el.Buyer_address != "" &&
-      el.request != false
+      el.request == true && el.ProcessStatus == 2
     );
   });
 
   // Land I Request
   let data1 = Dataset.filter(function (el) {
     console.log("sdfghgds "+el.Buyer_address+" wergfth "+accountid)
-    return ((el.Buyer_address) == (accountid.toLowerCase())); 
+    return ((el.Buyer_address) == (accountid.toLowerCase())
+    ); 
   });
 
   return (
