@@ -67,6 +67,30 @@ const App = ({ Component, pageProps }) => {
         {...pageProps}
         className="bg-white"
       />
+      
+<div id="container-floating">
+  <div class="nd4 nds"><img class="reminder"/>
+    <p class="letter">U</p>
+  </div>
+
+  <div class="nd3 nds"><img class="reminder"/>
+    <p class="letter">U</p>
+  </div>
+
+  <div class="nd2 nds"><img class="reminder"/>
+    <p class="letter">U</p>
+  </div>
+  
+  <div class="nd1 nds">
+    <p class="letter">B</p>
+  </div>
+
+  <div id="floating-button">
+    <p class="plus" style={{ fontSize: '25px' }}>🔗</p>
+    <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png"/>
+  </div>
+</div>
+
     </div>
   );
 };
