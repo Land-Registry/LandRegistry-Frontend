@@ -28,9 +28,8 @@ import {
   MaketokenPayment,
   PaymentBuyertoSeller,
 } from "../../../utils/makePayment";
-// import { Chat } from "../../../PushModule/@pushprotocol/uiweb";
+// import { Chat } from "../../../PushModule/pushprotocol/uiweb";
 // import { Chat } from "@pushprotocol/uiweb";
-
 
 var id = "";
 var Owner = "";
@@ -237,7 +236,7 @@ const processstatus = () => {
   ];
 
   return (
-    <div>
+    <div className="h-screen">
       <Modal
         title="Notification"
         centered
@@ -500,17 +499,7 @@ const processstatus = () => {
                 src={ImageURL}
                 alt={ImageURL}
               /> <br />
-              <div className="text-center ">
-                {ProcessStatus > 3?(
-                  <p className="text-xl m-auto font-bold text-red-400">Transaction Duration Till <br /> {PaymentDuration}</p>
-                ):(<></>)}
-              <button
-                  onClick={() => setOpen3d(true)}
-                  className="bg-red-500 w-[30%]  hover:bg-red-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
-                  >
-                  Cancel deal
-                </button>
-                  </div>
+             
 
             </Col>
           </Row>
@@ -546,16 +535,10 @@ const processstatus = () => {
               },
             ]}
           />
-          <Table
-            className="mt-10"
-            pagination={false}
-            columns={columns}
-            dataSource={data}
-          />
         </div>
       </div>
 
-      <Footer />
+      <Footer/>
       {/* <Chat
         account={address} //user address
         supportAddress={support_address} //support address
