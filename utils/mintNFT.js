@@ -1,11 +1,12 @@
-
 import { Button, message, Space } from "antd";
 import { InsertData } from "./insertData";
-import Metamask from "../components/metamask";
+import { CreateNFT } from "./ContractPlugins";
+import Web3 from "web3";
+import { abi, contractAddress } from "./abi";
+import { MainUpdateData } from "./updateData";
 
 var metadataURL = "";
 var Dataset = "";
-var token_id = "";
 var transaction_hash = "";
 var owneraddress;
 var landarray = [
@@ -15,6 +16,9 @@ var landarray = [
   "https://media.istockphoto.com/id/810005974/photo/peanut-tractor.jpg?s=170667a&w=0&k=20&c=K7VSqoq5tSqFI5kX-iEsKKHAF0MwHnkwdkv5iZ2CcWE=",
   "https://media.istockphoto.com/id/1179655501/photo/wheat-field.jpg?s=170667a&w=0&k=20&c=IBKD9ZGmVWrFHW0nL1yUdmprOTTxuLediny3gTCbfBo=",
 ];
+
+var BuyerNames = ["Aman", "Kumar", "Ravi", "Suresh", "Ramesh"];
+
 export const getMetadataURL = async (
   City,
   OwnerName,
@@ -23,7 +27,22 @@ export const getMetadataURL = async (
   survay,
   price
 ) => {
+  if (typeof window.ethereum === "undefined") {
+    alert("Please install MetaMask first.");
+  }
 
+  window.addEventListener("load", async () => {
+    try {
+      await ethereum.enable();
+    } catch (error) {}
+  });
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(abi, contractAddress);
+
+  const tokenid = await contract.methods._tokenIds().call();
+
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  owneraddress = accounts[0];
 
   function VerifyData() {
     const options = {
@@ -33,20 +52,23 @@ export const getMetadataURL = async (
         Authorization: "bfb1eeca-e144-4c3b-82ab-13d5bef82804",
       },
       body: `{  
-            "name":"Test1",
+            "name":"${OwnerName}",
           "description":"${City},,${OwnerName},,${area},,${PID},,${survay},,${price}",
-          "file_url":"TEST_LAND"
+          "file_url":"${landarray[Math.round(Math.random() * 4)]}"
           }`,
     };
 
-    fetch("http://localhost:8000/landDetails")
+    fetch("https://rich-cyan-fawn-robe.cyclic.app/landDetails")
       .then((response) => response.json())
       .then((response) => {
         // console.log(response);
         Dataset = response;
         console.log("234567", Dataset);
         let i;
-        for (i = 0; i <= Dataset.length; i++) {
+        for (i = 0; i < Dataset.length; i++) {
+          console.log(i);
+          console.log(Dataset[i]);
+
           if (
             Dataset[i].owner == OwnerName &&
             Dataset[i].propertyID == PID &&
@@ -54,16 +76,76 @@ export const getMetadataURL = async (
             Dataset[i].Area == area
           ) {
             alert("Data Verified");
-
-            fetch("https://api.nftport.xyz/v0/metadata", options)
-              .then((response) => response.json())
-              .then((response) => {
-                console.log(response);
-                metadataURL = JSON.stringify(response["metadata_uri"]);
-                alert("Your Metadata URL is Ready MINT NFT");
-              })
-              .catch((err) => console.error(err));
-            return true;
+            if (Dataset[i].status == false) {
+              if (Dataset[i].pricePerSqFeet * Dataset[i].Area < price) {
+                fetch("https://api.nftport.xyz/v0/metadata", options)
+                  .then((response) => response.json())
+                  .then((response) => {
+                    console.log(response);
+                    metadataURL = JSON.stringify(response["metadata_uri"]);
+                    alert("Your Metadata URL is Ready MINT NFT");
+                    CreateNFT(
+                      owneraddress,
+                      metadataURL,
+                      OwnerName,
+                      `${City},,${OwnerName},,${area},,${PID},,${survay},,${price}`,
+                      landarray[Math.round(Math.random() * 4)]
+                    );
+                    setTimeout(() => {
+                      console.log(
+                        "tokenID:",
+                        tokenid,
+                        "propertyID:",
+                        parseInt(PID),
+                        "physicalSurveyNo:",
+                        parseInt(survay),
+                        "Area:",
+                        parseInt(area),
+                        "City:",
+                        City,
+                        "owner:",
+                        OwnerName,
+                        "Price:",
+                        parseInt(price),
+                        "ownerAddress:",
+                        owneraddress,
+                        "ImageURL:",
+                        landarray[Math.round(Math.random() * 4)]
+                      );
+                      MainUpdateData({ status: true, TokenID: tokenid }, PID);
+                      InsertData({
+                        tokenID: tokenid,
+                        propertyID: parseInt(PID),
+                        physicalSurveyNo: parseInt(survay),
+                        Area: parseInt(area),
+                        City: City,
+                        owner: OwnerName,
+                        Price: parseInt(price),
+                        ownerAddress: owneraddress,
+                        ImageURL: landarray[Math.round(Math.random() * 4)],
+                        Buyer_name: BuyerNames[Math.round(Math.random() * 3)],
+                      });
+                      setTimeout(() => {
+                        window.location.href = "/lands";
+                      }, 10000);
+                    }, 2000);
+                  })
+                  .catch((err) => console.error(err));
+                return true;
+              } else {
+                alert(
+                  `Price is less than the price of land\npricePerSqFeet: ${
+                    Dataset[i].pricePerSqFeet
+                  }\nArea: ${Dataset[i].Area}\nPrcie Will be Greate than : ${
+                    Dataset[i].pricePerSqFeet * Dataset[i].Area
+                  }`
+                );
+                return false;
+              }
+            } else {
+              alert("Your Land is Already Added");
+              return false;
+            }
           }
         }
         alert("Data Not Verified");
@@ -76,79 +158,4 @@ export const getMetadataURL = async (
   }
 
   VerifyData();
-};
-
-export const MintNFT = async (City, OwnerName, area, PID, survay, price) => {
-  // Mint NFT
-
-  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-  owneraddress = accounts[0];
-
-  const options1 = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "bfb1eeca-e144-4c3b-82ab-13d5bef82804",
-    },
-    body: `{
-      "chain":"polygon",
-      "contract_address":"0x2f9227E2e1465a1bB38cE53c4516eC867Ac1535D",
-      "metadata_uri":${metadataURL},
-      "mint_to_address":"0x7ED790A1Ac108b9A50e24f5c5E061df59e3673a7"
-      }`,
-  };
-
-  fetch("https://api.nftport.xyz/v0/mints/customizable", options1)
-    .then((response) => response.json())
-    .then((response) => {
-      console.log("asedfg", response);
-      transaction_hash = response["transaction_hash"];
-      alert("NFT is Minting (It may take 10 sec)");
-      setTimeout(() => {
-        console.log("World!");
-        getTokenId();
-        InsertData({
-          "tokenID": parseInt(token_id),
-          "propertyID": parseInt(PID),
-          "physicalSurveyNo": parseInt(survay),
-          "Area": parseInt(area),
-          "City": City,
-          "owner": OwnerName,
-          "Price": parseInt(price),
-          "ownerAddress": owneraddress,
-          "ImageURL":landarray[Math.round(Math.random()*4)]
-        });
-        setTimeout(() => {
-        window.location.href = "/lands";
-        }, 2000);
-      }, 10000);
-      return true;
-    })
-    .catch((err) => {
-      console.error("error: ", err);
-      alert(err);
-    });
-
-  console.log("NFT Minted");
-};
-
-export const getTokenId = async () => {
-  const options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "bfb1eeca-e144-4c3b-82ab-13d5bef82804",
-    },
-  };
-
-  fetch(
-    `https://api.nftport.xyz/v0/mints/${transaction_hash}?chain=polygon`,
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      token_id = response["token_id"];
-    })
-
-    .catch((err) => console.error(err));
 };
