@@ -24,7 +24,7 @@ const Metamask = () => {
   
     onConnect();
   
-  return accountid;
+  return accountid.slice(0,15);
 }
 
 export default Metamask;

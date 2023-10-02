@@ -148,7 +148,7 @@ const Request = () => {
       setAccount(accounts[0]);
 
 
-    fetch("https://rich-cyan-fawn-robe.cyclic.app/SellingLand")
+    fetch("http://localhost:8000/SellingLand")
     .then((response) => response.json())
     .then((response) => {
       // console.log(response);

@@ -53,7 +53,7 @@ const inspectordashboard = () => {
   };
 
   function FetchData() {
-    fetch("https://rich-cyan-fawn-robe.cyclic.app/SellingLand/")
+    fetch("http://localhost:8000/SellingLand/")
       .then((response) => response.json())
       .then((response) => {
         // console.log(response);
@@ -71,7 +71,7 @@ const inspectordashboard = () => {
     FetchData();
   }, []);
 
-  // axios.get("https://rich-cyan-fawn-robe.cyclic.app/SellingLand").then((response) => {
+  // axios.get("http://localhost:8000/SellingLand").then((response) => {
   //   setDataset(response.data);
   // });
 

@@ -43,16 +43,50 @@ const Dashboard = () => {
 
   }, [aadhar]);
 
+  
+
   return (
     <>
       <Navbar />
       <div className="h-screen bg-gray-100 text-black">
         <div className="pt-20">
           <div className="bg-white p-4 rounded-lg shadow-md m-2">
-            <div className='flex justify-between'>
-              <h2 className="text-xl font-semibold ">Bid</h2>
-              <button className='px-3 py-1 bg-green-400 rounded-lg font-bold hover:bg-green-600'>START AUCTION ▶️</button>
-              {/* <button className='px-3 py-1 bg-red-300 rounded-lg font-bold'>JOIN AUCTION ▶️</button> */}
+            <div className='flex'>
+              <h2 className="text-xl font-semibold">Bid</h2>
+              {AllData?.allAuctions?.map((land) => {
+                if (land.propertyID == PID) {
+                  let linkJSX;
+
+                  if (land.aadhar == aadhar) {
+                    if (land.roomCreated == true) {
+                      linkJSX = (
+                        <Link href={`http://localhost:5173/${land.aadhar}#${land.propertyID}#livechats#${land.roomID}`} className='px-3 py-1 bg-green-400 rounded-lg font-bold hover:bg-green-600'>JOIN AUCTION ▶️</Link>
+                      );
+                    } else {
+                      linkJSX = (
+                        <Link href={`http://localhost:5173/${land.aadhar}#${land.propertyID}#livechats#room`} className='px-3 py-1 bg-green-400 rounded-lg font-bold hover-bg-green-600'>CREATE AUCTION ▶️</Link>
+                      );
+                    }
+                  } else {
+                    if (land.roomCreated == true) {
+                      linkJSX = (
+                        <Link href={`http://localhost:5173/${land.aadhar}#${land.propertyID}#livechats#${land.roomID}`} className='px-3 py-1 bg-green-400 rounded-lg font-bold hover:bg-green-600'>JOIN AUCTION ▶️</Link>
+                      );
+                    } else {
+                      linkJSX = (
+                        <Link href={`http://localhost:5173/${land.aadhar}#${land.propertyID}#livechats#room`} className='px-3 cursor-not-allowed py-1 bg-red-400 rounded-lg font-bold hover:bg-red-600'>AUCTION START SOON ▶️</Link>
+                      );
+                    }
+                  }
+
+                  return (
+                    <div key={land.propertyID} className="mx-2">
+                      {linkJSX}
+                    </div>
+                  );
+                }
+                return null; // Return null for non-matching land details
+              })}
             </div>
             <div className='w-full flex'>
               <div className='w-2/3'>
@@ -125,7 +159,7 @@ const Dashboard = () => {
               <div class="w-1/3 listofAuctions container m-4  h-[581px] ">
                 {targetAuction && targetAuction.propertyID == PID && (
                   <div className='bg-gray-100 rounded-md p-3'>
-                   {targetAuction.date && <ReverseTimer initialTime={new Date(targetAuction.date)} />}
+                    {targetAuction.date && <ReverseTimer initialTime={new Date(targetAuction.date)} />}
                     <div className='bg-white p-3 rounded-lg border shadow-md flex justify-between'>
                       <div>
                         <div>
