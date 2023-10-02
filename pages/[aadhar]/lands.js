@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button, Modal, Card } from "antd";
-import Navbar from "../../components/navbar/navbar";
+import Navbar from "../../components/navbar/Navbar";
 import { Select } from "antd";
 import { Footer } from "../../components/footer";
 
@@ -202,7 +202,7 @@ const lands = () => {
           </div>
           <div className="p-8">
             <h1 className="flex pb-5  font-bold text-4xl text-gray-800">
-              Selling Land Gallery
+              Land Gallery
             </h1>
             <div className=" flex overflow-x-scroll pb-10 scrollbar-hide ">
               <div className="flex flex-nowrap ">

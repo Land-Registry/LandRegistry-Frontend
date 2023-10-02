@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import {
   message,
@@ -12,7 +12,7 @@ import {
   Table,
 } from "antd";
 
-import Navbar from "../../components/navbar/navbar";
+import Navbar from "../../components/navbar/Navbar";
 import { Footer } from "../../components/footer";
 import { useRouter } from 'next/router';
 import { getMetadataURL } from "../../utils/mintNFT";
@@ -44,68 +44,83 @@ const form = () => {
   const [metadataStatus, setmetadataStatus] = useState(false);
   const [data, setData] = useState([]);
   const [Dataset, setDataset] = useState([]);
-const [accountid, setAccount] = useState("Connect Wallet");
-const router = useRouter();
-const { aadhar } = router.query;
-const aadharNum =aadhar;
+  const [accountid, setAccount] = useState("Connect Wallet");
+  const router = useRouter();
+  const { aadhar } = router.query;
+  const aadharNum = aadhar;
 
-useEffect(() => {
-  return async () => {
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-    setAccount(accounts[0]);
-  };
-}, []);
+  const [LoginUserData, setLoginUserData] = useState({});
+
+  useEffect(() => {
+    // Fetch user details and related data based on the aadhar value
+    async function fetchData() {
+      try {
+        const response = await fetch(`http://localhost:8000/getall/get-data-by-aadhar/${aadhar}`);
+        const data = await response.json();
+        console.log(data)
+        setLoginUserData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    if (aadhar) {
+      fetchData();
+    }
+
+  }, [aadhar]);
+
+  useEffect(() => {
+    return async () => {
+      const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+      setAccount(accounts[0]);
+    };
+  }, []);
 
 
-function FetchData() {
-  fetch("http://localhost:8000/SellingLand/")
-    .then((response) => response.json())
-    .then((response) => {
-      // console.log(response);
-      setDataset(response);
-      // console.log(Dataset);
-    })
-    .catch((err) => {
-      console.error(err);
-      // alert(err)
+  function FetchData() {
+    fetch("http://localhost:8000/SellingLand/")
+      .then((response) => response.json())
+      .then((response) => {
+        // console.log(response);
+        setDataset(response);
+        // console.log(Dataset);
+      })
+      .catch((err) => {
+        console.error(err);
+        // alert(err)
+      });
+    console.log("Function Called");
+  }
+
+  useEffect(() => {
+    FetchData();
+  }, []);
+
+  // My Land
+  try {
+
+    var datafilter = Dataset.filter(function (el) {
+      return (
+        el.ownerAddress.toLowerCase() == accountid.toLowerCase() &&
+        el.ProcessStatus == 5
+
+      );
     });
-  console.log("Function Called");
-}
+  } catch (error) {
+    console.log(error)
+  }
 
-useEffect(() => {
-  FetchData();
-}, []);
-
-// My Land
-try {
-  
-  var datafilter = Dataset.filter(function (el) {
-    return (
-      el.ownerAddress.toLowerCase() == accountid.toLowerCase() &&
-      el.ProcessStatus == 5
-    
-    );
-  });
-} catch (error) {
- console.log(error) 
-}
-
-function SellLand(PID) {
-  UpdateData({ProcessStatus:1},PID);
-  window.location.href = "/request";
-}
+  function SellLand(PID) {
+    UpdateData({ ProcessStatus: 1 }, PID);
+    window.location.href = "/request";
+  }
 
   const onFinish = (values) => {
     setData(values);
     // console.log("Success:", values);
     getMetadataURL(
-      values.district,
-      values.name,
-      values.area,
-      values.PID,
-      values.survay,
-      values.price,
-      values.aadhar=aadharNum,
+      values,LoginUserData?.user?.userName,aadharNum
     );
   };
   const onFinishFailed = (errorInfo) => {
@@ -148,7 +163,7 @@ function SellLand(PID) {
             >
               Sell land
             </button>
-           
+
           </div>
         </>
       ),
@@ -156,7 +171,7 @@ function SellLand(PID) {
   ];
 
   return (
-    <>
+    <div className="bg-gray-300">
       <Navbar />
       <div className="pt-20 bg-gray-300">
         <div className="w-[90%] shadow-2xl m-auto p-10 rounded-2xl mb-[500px]">
@@ -170,25 +185,31 @@ function SellLand(PID) {
             columns={columns}
             dataSource={datafilter}
           />
-<button>
-</button>
+          <button>
+          </button>
           <a href="#Addland" className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-10 p-2 rounded">Add New Land</a>
         </div>
         <div className="my-[200px]" id="Addland">_</div>
         <div className="w-1/2 shadow-2xl  rounded-2xl  mx-auto pb-2 bg-gray-100 dark:bg-gray-100">
-          <div className="flex items-center flex-none px-4 bg-gradient-to-r  from-rose-500 via-violet-600 to-blue-700 rounded-b-none h-11 rounded-xl">
+          <div className="flex justify-between items-center flex-none px-4 bg-gradient-to-r  from-rose-500 via-violet-600 to-blue-700 rounded-b-none h-11 rounded-xl">
             <div className="flex space-x-1.5">
               <div className="w-3 h-3 border-2 border-[#dc2626] bg-[#dc2626] rounded-full"></div>
               <div className="w-3 h-3 border-2 border-[#eab308] bg-[#eab308] rounded-full"></div>
               <div className="w-3 h-3 border-2 border-[#22c55e] bg-[#22c55e] rounded-full"></div>
             </div>
+            <div className="mr-6 font-bold">
+              ADD LAND FORM
+            </div>
           </div>
 
           <div className="m-10 mt-6 mb-10" >
             <p className="font-bold mb-6 text-xl text-black">
-              ADD LAND DETAILS
+
             </p>
-            <Form
+
+            <p className="font-bold mb-6 text-xl text-black">
+              USER DETAILS
+            </p>            <Form
               className=""
               layout="vertical"
               onFinish={onFinish}
@@ -197,29 +218,38 @@ function SellLand(PID) {
               <Form.Item
                 label="Land Owner Name"
                 name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input Owner Name",
-                  },
-                ]}
+                initialValue={LoginUserData?.user?.userName}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please input Owner Name",
+                //   },
+                // ]}
               >
-                <Input />
+                <Input
+                  placeholder={LoginUserData?.user?.userName}
+                  disabled
+                />
               </Form.Item>
+
               <Form.Item
-  label="Land Owner Aadhar Number" 
-  name="aadhar"
-  className="text-black"
-  initialValue={aadharNum}
-  rules={[
-    {
-      required: true,
-      message: "Please input Owner Name",
-    },
-  ]}
->
-  <Input defaultValue={aadharNum} placeholder={aadharNum} disabled/> {/* Add the `disabled` attribute to make it non-editable */}
-</Form.Item>
+                label="Land Owner Aadhar Number"
+                name="aadhar"
+                className="text-black"
+                initialValue={aadharNum}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: "Please input Owner Name",
+                //   },
+                // ]}
+              >
+                <Input defaultValue={aadharNum} placeholder={aadharNum} disabled /> {/* Add the `disabled` attribute to make it non-editable */}
+              </Form.Item>
+              <hr />
+              <p className="font-bold mb-6 text-xl text-black">
+                LAND DETAILS
+              </p>
               <Form.Item
                 label="Land Area (in sqm.)"
                 name="area"
@@ -349,7 +379,7 @@ function SellLand(PID) {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

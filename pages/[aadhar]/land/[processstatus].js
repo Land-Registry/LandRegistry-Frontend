@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from "../../../components/navbar/navbar";
+import Navbar from "../../../components/navbar/Navbar";
 import {
   LoadingOutlined,
   SmileOutlined,
@@ -184,7 +184,7 @@ const processstatus = () => {
     for (let i in Dataset) {
       if (Dataset[i].propertyID == processstatus) {
         id = Dataset[i]._id;
-        Owner = Dataset[i].owner;
+        Owner = Dataset[i].ownerName;
         Tokenid = Dataset[i].tokenID;
         PropertyID = Dataset[i].propertyID;
         SurveyNo = Dataset[i].physicalSurveyNo;

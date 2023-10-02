@@ -18,15 +18,8 @@ var landarray = [
 ];
 
 var BuyerNames = ["Aman", "Kumar", "Ravi", "Suresh", "Ramesh"];
-
-export const getMetadataURL = async (
-  City,
-  OwnerName,
-  area,
-  PID,
-  survay,
-  price
-) => {
+  
+export const getMetadataURL = async (values,UserName,aadhar) => {
   if (typeof window.ethereum === "undefined") {
     alert("Please install MetaMask first.");
   }
@@ -34,8 +27,9 @@ export const getMetadataURL = async (
   window.addEventListener("load", async () => {
     try {
       await ethereum.enable();
-    } catch (error) {}
+    } catch (error) { }
   });
+  console.log(values)
   const web3 = new Web3(window.ethereum);
   const contract = new web3.eth.Contract(abi, contractAddress);
 
@@ -43,6 +37,69 @@ export const getMetadataURL = async (
 
   const accounts = await ethereum.request({ method: "eth_requestAccounts" });
   owneraddress = accounts[0];
+
+  function VerifyAndCreateMetadata() {
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bfb1eeca-e144-4c3b-82ab-13d5bef82804",
+      },
+      body: `{  
+            "name":"{OwnerName}",
+            "description":"desc",
+            "file_url":"${landarray[Math.round(Math.random() * 4)]}"
+          }`,
+        };
+        // "description":"${City},,${OwnerName},,${area},,${PID},,${survay},,${price}",
+    fetch("https://api.nftport.xyz/v0/metadata", options)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        metadataURL = JSON.stringify(response["metadata_uri"]);
+        alert("Your Metadata URL is Ready MINT NFT");
+        CreateNFT(
+          owneraddress,
+          metadataURL,
+          'OwnerName',
+          "${City},,${OwnerName},,${area},,${PID},,${survay},,${price}",
+          landarray[Math.round(Math.random() * 4)]
+        );
+        setTimeout(() => {
+          // MainUpdateData({ status: true, TokenID: tokenid }, PID);
+          // InsertData({
+          //   tokenID: tokenid,
+          //   ownerAddress: owneraddress,
+          //   ImageURL: landarray[Math.round(Math.random() * 4)],
+          //   Buyer_name: BuyerNames[Math.round(Math.random() * 3)],
+          // });
+          InsertData({
+            "ownerName": UserName,
+            "request": false,
+            "propertyID": values.PID,
+            "physicalSurveyNo": values.survay,
+            "tokenID": tokenid,
+            "Area": values.area,
+            "City": values.district,
+            "ownerAddress": owneraddress,
+            "InspectorName": "Inspector",
+            "ProcessStatus": 1,
+            "Price": values.price,
+            "ImageURL":landarray[Math.round(Math.random() * 4)],
+            "aadhar": aadhar,
+          }
+          );
+          setTimeout(() => {
+            window.location.href = `/${aadhar}/mylands`;
+          }, 10000);
+        }, 2000);
+      })
+      .catch((err) => console.error(err));
+    return true;
+  }
+
+  VerifyAndCreateMetadata()
 
   function VerifyData() {
     const options = {
@@ -58,7 +115,7 @@ export const getMetadataURL = async (
           }`,
     };
 
-    fetch("https://rich-cyan-fawn-robe.cyclic.app/landDetails")
+    fetch("http://localhost:8000/landDetails")
       .then((response) => response.json())
       .then((response) => {
         // console.log(response);
@@ -134,10 +191,8 @@ export const getMetadataURL = async (
                 return true;
               } else {
                 alert(
-                  `Price is less than the price of land\npricePerSqFeet: ${
-                    Dataset[i].pricePerSqFeet
-                  }\nArea: ${Dataset[i].Area}\nPrcie Will be Greate than : ${
-                    Dataset[i].pricePerSqFeet * Dataset[i].Area
+                  `Price is less than the price of land\npricePerSqFeet: ${Dataset[i].pricePerSqFeet
+                  }\nArea: ${Dataset[i].Area}\nPrcie Will be Greate than : ${Dataset[i].pricePerSqFeet * Dataset[i].Area
                   }`
                 );
                 return false;
@@ -157,5 +212,5 @@ export const getMetadataURL = async (
       });
   }
 
-  VerifyData();
+  // VerifyData();
 };

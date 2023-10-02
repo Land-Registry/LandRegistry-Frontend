@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../../../components/navbar/navbar';
+import Navbar from '../../../components/navbar/Navbar';
 import { useRouter } from 'next/router';
 import Link from "next/link";
 import ReverseTimer from '../../../utils/reverseTimer'
@@ -42,7 +42,15 @@ const Dashboard = () => {
     fetchAllData();
 
   }, [aadhar]);
-
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "short",
+  };
   
 
   return (
@@ -91,38 +99,38 @@ const Dashboard = () => {
             <div className='w-full flex'>
               <div className='w-2/3'>
                 < div className=' h-[200px] bg-gray-100 my-4 rounded-md p-2'>
-                  {AllData?.allLandDetails?.map((land) => {
-                    if (land.propertyID == PID) {
+                  {AllData?.allAuctions?.map((auction) => {
+                    if (auction.propertyID == PID) {
                       return (
                         <>
                           <div className="grid grid-cols-2 gap-4 mt-1">
                             <div className="col-span-1">
                               <p className="text-gray-600">Property ID:</p>
-                              <p className="font-semibold">{land.propertyID}</p>
+                              <p className="font-semibold">{auction.propertyID}</p>
                             </div>
                             <div className="col-span-1">
                               <p className="text-gray-600">Owner Name:</p>
-                              <p className="font-semibold">{land.owner}</p>
+                              <p className="font-semibold">{auction.owner}</p>
                             </div>
                             <div className="col-span-1">
-                              <p className="text-gray-600">Location:</p>
+                              <p className="text-gray-600">Number of Buyers:</p>
                               <p className="font-semibold">
-                                {land.location?.area}, {land.location?.city}, {land.location?.state}
+                                {auction.numberOfBuyers}
                               </p>
                             </div>
                             <div className="col-span-1">
                               <p className="text-gray-600">Starting Price:</p>
                               <p className="font-semibold text-red-500">
-                                RS {land.CurrentPrice}
+                                RS {auction.StartPrice }
                               </p>
                             </div>
                             <div className="col-span-1">
-                              <p className="text-gray-600">Area of Land:</p>
-                              <p className="font-semibold">{land.areaOfLand} sq. feet</p>
+                              <p className="text-gray-600">Auction:</p>
+                              <p className="font-semibold">{auction.status}</p>
                             </div>
                             <div className="col-span-1">
-                              <p className="text-gray-600">Price per Sq. Feet:</p>
-                              <p className="font-semibold">Rs. {land.pricePerSqFeet}</p>
+                              <p className="text-gray-600">Date and Time</p>
+                              <p className="font-semibold">{new Date(auction.date).toLocaleDateString(undefined, options)}</p>
                             </div>
                           </div>
                         </>
