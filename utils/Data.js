@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const Data = () => {
   const [Dataset, setDataset] = useState([]);
 
-  fetch("http://localhost:8000/landDetails")
+  fetch("https://rich-cyan-fawn-robe.cyclic.app/landDetails")
     .then((response) => response.json())
     .then((response) => {
       // console.log(response);

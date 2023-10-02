@@ -28,9 +28,8 @@ import {
   MaketokenPayment,
   PaymentBuyertoSeller,
 } from "../../../utils/makePayment";
-// import { Chat } from "../../../PushModule/@pushprotocol/uiweb";
+import { Chat } from "../../../PushModule/@pushprotocol/uiweb";
 // import { Chat } from "@pushprotocol/uiweb";
-
 
 var id = "";
 var Owner = "";
@@ -556,12 +555,12 @@ const processstatus = () => {
       </div>
 
       <Footer />
-      {/* <Chat
+      <Chat
         account={address} //user address
         supportAddress={support_address} //support address
         apiKey="jVPMCRom1B.iDRMswdehJG7NpHDiECIHwYMMv6k2KzkPJscFIDyW8TtSnk4blYnGa8DIkfuacU0"
         env="staging"
-      /> */}
+      />
     </div>
   );
 };

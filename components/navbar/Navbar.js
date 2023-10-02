@@ -1,32 +1,9 @@
 import React, {useEffect,useState} from 'react';
 import Metamask from '../metamask';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 const Navbar = () => {
 
-  const router = useRouter();
-  const { aadhar, PID } = router.query;
-  const [LoginUserData, setLoginUserData] = useState({});
 
-  useEffect(() => {
-    // Fetch user details and related data based on the aadhar value
-    async function fetchData() {
-      try {
-        const response = await fetch(`http://localhost:8000/getall/get-data-by-aadhar/${aadhar}`);
-        const data = await response.json();
-        console.log(data)
-        setLoginUserData(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-
-    if (aadhar) {
-      fetchData();
-    }
-
-  })
   return (
     
 <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 shadow-lg fixed w-full z-50 bg-opacity-80">
@@ -50,7 +27,7 @@ const Navbar = () => {
         ) : (
           <>
             <a type="button" href="/request" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4">Requests</a>
-           <Link href={`/${aadhar}/land/${PID}`} className="text-white  m-auto py-1 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-5 text-center mr-3 md:mr-0 ">{LoginUserData?.user?.userName} <div className='border'/>  {<Metamask />}</Link>
+           <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 ">{<Metamask />}</button>
           </>
         )}
 
@@ -58,7 +35,7 @@ const Navbar = () => {
 
       <button data-collapse-toggle="navbar-cta" type="button" className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-cta" aria-expanded="false">
         <span className="sr-only">Open main menu</span>
-        <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+        <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
     </button>
   </div>
   <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-cta">
