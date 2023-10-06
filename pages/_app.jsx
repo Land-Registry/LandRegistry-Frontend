@@ -1,11 +1,13 @@
 import "aos/dist/aos.css";
 import "../styles/globals.css";
-
+import { useRouter } from 'next/router';
+import React, {useState } from 'react';
 import AOS from "aos";
 import Head from "next/head";
 import { NextSeo } from "next-seo";
 import { useEffect } from "react";
 import { useDarkMode, useEffectOnce } from "usehooks-ts";
+import Link from "next/link";
 
 // // Initialize Vivid (https://vivid.lol)
 // if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
@@ -19,6 +21,28 @@ const siteDescription =
 
 const App = ({ Component, pageProps }) => {
   const { isDarkMode, toggle: toggleDarkMode } = useDarkMode();
+  const router = useRouter();
+  const { aadhar, PID } = router.query;
+  const [LoginUserData, setLoginUserData] = useState({});
+
+  useEffect(() => {
+    // Fetch user details and related data based on the aadhar value
+    async function fetchData() {
+      try {
+        const response = await fetch(`http://localhost:8000/getall/get-data-by-aadhar/${aadhar}`);
+        const data = await response.json();
+        // console.log(data)
+        setLoginUserData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    if (aadhar) {
+      fetchData();
+    }
+
+  })
 
   useEffect(() => {
     if (isDarkMode) {
@@ -69,22 +93,22 @@ const App = ({ Component, pageProps }) => {
       />
       
 <div id="container-floating">
-  <div class="nd4 nds"><img class="reminder"/>
-    <p class="letter">U</p>
-  </div>
+  <Link href={`/${LoginUserData?.user?.aadhaar_number}/profile`} class="nd4 nds"><img class="reminder"/>
+    <p class="letter">P</p>
+  </Link>
 
-  <div class="nd3 nds"><img class="reminder"/>
-    <p class="letter">U</p>
-  </div>
+  <Link href={`/${LoginUserData?.user?.aadhaar_number}/lands`} class="nd3 nds"><img class="reminder"/>
+    <p class="letter">G</p>
+  </Link>
 
-  <div class="nd2 nds"><img class="reminder"/>
-    <p class="letter">U</p>
-  </div>
+  <Link href={`/${LoginUserData?.user?.aadhaar_number}/form#Addland`} class="nd2 nds"><img class="reminder"/>
+    <p class="letter">A</p>
+  </Link>
   
-  <div class="nd1 nds">
+  <Link href={`/${LoginUserData?.user?.aadhaar_number}/profile`} class="nd1 nds"><img class="reminder"/>
     <p class="letter">B</p>
-  </div>
-
+  </Link>
+  
   <div id="floating-button">
     <p class="plus" style={{ fontSize: '25px' }}>🔗</p>
     <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png"/>

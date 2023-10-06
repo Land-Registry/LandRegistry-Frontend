@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/navbar/navbar";
+import Navbar from "../components/navbar/Navbar";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Progress, Table } from "antd";
 import { Footer } from "../components/footer";
@@ -76,7 +76,7 @@ const inspectordashboard = () => {
   // });
 
   var data = Dataset.filter(function (el) {
-    return el.request == true && el.Buyer_address != "0";
+    return el.request == true;
   });
 
   function transferNFT(propertyID) {
@@ -144,16 +144,17 @@ const inspectordashboard = () => {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Seller Address",
+      title: "Seller Aadhar",
       dataIndex: "ownerAddress",
       key: "ownerAddress",
       render: (text) => <a>{text.slice(0, 12) + "..."}</a>,
     },
     {
-      title: "Buyer Address",
+      title: "Buyer Aadhar",
       dataIndex: "Buyer_address",
       key: "Buyer_address",
-      render: (text) => <a>{text.slice(0, 12) + "..."}</a>,
+      render: (text) => <a>{"..."}</a>,
+      // render: (text) => <a>{text.slice(0, 12) + "..."}</a>,
     },
     {
       title: "Price",
@@ -210,7 +211,7 @@ const inspectordashboard = () => {
               disabled
               className="bg-blue-500  -mr-4 hover:bg-red-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]"
             >
-              Transaction Pending
+              Pending
             </Button>
           )}
         </>
@@ -235,6 +236,21 @@ const inspectordashboard = () => {
           </Button.Group>
         </>
       ),
+    },
+    {
+      title: "RECORDING",
+      dataIndex: "recording",
+      key: "recording",
+      render: (text) => <Button
+        type="primary"
+        onClick={() => {
+          console.log(text);
+          window.location.href = `/chat/${text}`;
+        }}
+        className=" bg-red-500 w-[46%] mr-4 hover:bg-red-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded-lg my-2 text-[16px]"
+      >
+        Rec
+      </Button>,
     },
   ];
 

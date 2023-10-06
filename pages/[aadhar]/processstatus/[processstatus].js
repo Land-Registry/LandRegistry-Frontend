@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Navbar from "../../../components/navbar/navbar";
+import Navbar from "../../../components/navbar/Navbar";
 import {
   LoadingOutlined,
   SmileOutlined,
@@ -45,7 +45,7 @@ var Document_Access = "";
 var tokensend = "process";
 var ProcessStatus;
 var Document_Verify = "wait";
-var Transaction = "wair";
+var Transaction = "wait";
 var Ownership_Transfer = "wait";
 var Price = "";
 var request = false;
@@ -60,6 +60,10 @@ var StampDutyTokenStatus = false;
 var OwnerAdhar = "";
 var OwnerContact = "";
 var PaymentDuration = "";
+var AuctionCreated = false; // New field
+var OwnerName = ""; // New field
+var AadhaarNumber = ""; // New field
+var Buyer_adhar;
 
 const columns = [
   {
@@ -117,6 +121,7 @@ const processstatus = () => {
   // const [SurveyNo, setSurveyNo] = useState("");
   // const [Area, setArea] = useState("");
 
+
   const onFinish = (values) => {
     console.log("Success:", values);
     UpdateData({ Price: parseInt(values.Price),ProcessStatus:3 }, PropertyID);
@@ -151,7 +156,7 @@ const processstatus = () => {
   getaddress();
 
   const router = useRouter();
-  const { processstatus } = router.query;
+  const { aadhar,processstatus } = router.query;
 
   if (5 == ProcessStatus) {
     setOpennotify(true);
@@ -184,7 +189,7 @@ const processstatus = () => {
     for (let i in Dataset) {
       if (Dataset[i].propertyID == processstatus) {
         id = Dataset[i]._id;
-        Owner = Dataset[i].owner;
+        Owner = Dataset[i].ownerName;
         Tokenid = Dataset[i].tokenID;
         PropertyID = Dataset[i].propertyID;
         SurveyNo = Dataset[i].physicalSurveyNo;
@@ -210,9 +215,15 @@ const processstatus = () => {
         OwnerAdhar = Dataset[i].OwnerAdhar;
         OwnerContact = Dataset[i].OwnerContact;
         PaymentDuration = Dataset[i].PaymentDuration;
+        AuctionCreated = Dataset[i].auctioncreated; // New field
+        OwnerName = Dataset[i].OwnerName; // New field
+        AadhaarNumber = Dataset[i].AadhaarNumber; // New field
+        Buyer_adhar = Dataset[i].Buyer_adhar;
       }
     }
   }
+  
+  
 
   const data = [
     {
@@ -429,7 +440,7 @@ const processstatus = () => {
                   >
                     Payment Done
                   </button>
-                ) : address == Buyer_address && ProcessStatus == 3 ? (
+                ) : aadhar == Buyer_adhar && ProcessStatus == 3 ? (
                   <>
                     <button
                       onClick={() =>
@@ -555,7 +566,9 @@ const processstatus = () => {
       </div>
 
       <Footer />
+      
       <Chat
+     
         account={address} //user address
         supportAddress={support_address} //support address
         apiKey="jVPMCRom1B.iDRMswdehJG7NpHDiECIHwYMMv6k2KzkPJscFIDyW8TtSnk4blYnGa8DIkfuacU0"

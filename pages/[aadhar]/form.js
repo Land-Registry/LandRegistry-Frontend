@@ -47,7 +47,7 @@ const form = () => {
   const [accountid, setAccount] = useState("Connect Wallet");
   const router = useRouter();
   const { aadhar } = router.query;
-  const aadharNum = aadhar;
+  var aadharNum = aadhar;
 
   const [LoginUserData, setLoginUserData] = useState({});
 
@@ -102,9 +102,7 @@ const form = () => {
 
     var datafilter = Dataset.filter(function (el) {
       return (
-        el.ownerAddress.toLowerCase() == accountid.toLowerCase() &&
-        el.ProcessStatus == 5
-
+        el.aadhaar_number == aadhar
       );
     });
   } catch (error) {
@@ -113,15 +111,14 @@ const form = () => {
 
   function SellLand(PID) {
     UpdateData({ ProcessStatus: 1 }, PID);
-    window.location.href = "/request";
+    window.location.href = `/${aadhar}/land/${PID}`;
   }
 
   const onFinish = (values) => {
     setData(values);
-    // console.log("Success:", values);
-    getMetadataURL(
-      values,LoginUserData?.user?.userName,aadharNum
-    );
+    console.log("Success:", LoginUserData?.user?.aadhaar_number);
+      getMetadataURL(
+        values,LoginUserData?.user?.full_name,LoginUserData?.user?.aadhaar_number)
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -141,14 +138,15 @@ const form = () => {
     },
     {
       title: "Owner Name",
-      dataIndex: "owner",
-      key: "owner",
+      dataIndex: "ownerName",
+      key: "ownerName",
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Owner",
-      dataIndex: "ownerAddress",
-      key: "ownerAddress",
+      title: "Price",
+      dataIndex: "Price",
+      key: "Price",
+      render: (text) => <a>RS. {text}</a>,
     },
     {
       title: "Response",
@@ -161,7 +159,7 @@ const form = () => {
               onClick={() => SellLand(text)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full mr-4 py-2 rounded"
             >
-              Sell land
+              View Land
             </button>
 
           </div>
@@ -218,7 +216,7 @@ const form = () => {
               <Form.Item
                 label="Land Owner Name"
                 name="name"
-                initialValue={LoginUserData?.user?.userName}
+                initialValue={LoginUserData?.user?.full_name}
                 // rules={[
                 //   {
                 //     required: true,
@@ -227,7 +225,7 @@ const form = () => {
                 // ]}
               >
                 <Input
-                  placeholder={LoginUserData?.user?.userName}
+                  placeholder={LoginUserData?.user?.full_name}
                   disabled
                 />
               </Form.Item>

@@ -10,12 +10,15 @@ import {
   Checkbox,
   Space,
 } from "antd";
-import Navbar from "../components/navbar/navbar";
+import Navbar from "../components/navbar/Navbar";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import Metamask from "../components/metamask";
 import Web3 from 'web3';
 import { Footer } from "../components/footer";
 import axios from "axios";
+
+    const secretKey = 'JdrEbjltyrxfZb409OU9IbiE6NZtM8PuTubYbApSYhbPFWAS3JvNbcjClNUWFw5C0';
+    const clientIdKey = '749c3076c810de02fd2507c4dd61e128:2f1dbdc3d897c5e083914783748ad469';
 
 
 const dashboard = () => {
@@ -23,6 +26,7 @@ const dashboard = () => {
   const [modalbuyer, setModalBuyer] = useState(false);
   const [modalinstpector, setModalInspector] = useState(false);
   const [clientID, setClientID] = useState('');
+  const[MetamaskID,setMetamaskID] = useState('')
 
   useEffect(() => {
     if (window.ethereum) {
@@ -31,6 +35,11 @@ const dashboard = () => {
       alert('Please install MetaMask!')
     }
   }, [])
+
+  useEffect(() => {
+
+  setMetamaskID(<Metamask/>)
+}, [])
 
   const onConnect = async () => {
     
@@ -41,9 +50,6 @@ const dashboard = () => {
   async function SendOTP(aadhar) {
     const url = 'https://api.emptra.com/aadhaarVerification/requestOtp';
     
-    // Replace these with your actual secretKey and clientId
-    const secretKey = 'ohfBZTSKx1nxWf0LXRrPT3LLf7j1nBpimYF8ro8kjWebyO3adMlPeZoMjf2aArSfn';
-    const clientIdKey = '26b21be52ab8fbdea03eff523a05122b:a19dd06055d433bf76c609e64e1eecbf';
     const headers = {
       'Content-Type': 'application/json',
       secretKey,
@@ -71,11 +77,9 @@ const dashboard = () => {
   }
   
   async function VerifyOTP(user, aadhar, otp) {
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    console.log(clientID)
     const url = 'https://api.emptra.com/aadhaarVerification/submitOtp';
-
-    // Replace these with your actual secretKey and clientId
-    const secretKey = 'ohfBZTSKx1nxWf0LXRrPT3LLf7j1nBpimYF8ro8kjWebyO3adMlPeZoMjf2aArSfn';
-    const clientIdKey = '26b21be52ab8fbdea03eff523a05122b:a19dd06055d433bf76c609e64e1eecbf';
 
     const headers = {
       'Content-Type': 'application/json',
@@ -92,9 +96,19 @@ const dashboard = () => {
       const response = await axios.post(url, requestData, { headers });
       console.log(response.data);
 
-      if (response.data && response.data.result && response.data.result.data) {
-        // Handle the response data as needed
-        // Redirect based on the user value
+    if (response.data && response.data.result && response.data.result.data) {
+      // Add code here to save the user data to your MongoDB database
+      const userData = response.data.result.data;
+   
+
+      userData.metamaskAddress = accounts[0]
+
+
+      // Create a new instance of UserDetails using the userData
+      axios.post('http://localhost:8000/user', userData)
+      .then(function (response) {
+        console.log('User details saved successfully:', response.data);
+        // Handle the response as needed
         if (user === 'seller') {
           window.location = `/${aadhar}/form`;
         } else if (user === 'buyer') {
@@ -102,6 +116,13 @@ const dashboard = () => {
         } else if (user === 'inspector') {
           window.location = '/inspectordashboard';
         }
+      })
+      .catch(function (error) {
+        console.error('Error saving user details:', error);
+        // Handle errors here
+      });
+
+    
 
         // You can also update other state variables or perform actions here
       }

@@ -10,6 +10,7 @@ import Metamask from "../../components/metamask";
 import Router from "next/router";
 import { UpdateData } from "../../utils/updateData";
 import { createAuction } from "../../utils/createAuction";
+import Link from "next/link";
 const onChange = (value) => {
   console.log(`selected ${value}`);
 };
@@ -50,7 +51,7 @@ const lands = () => {
         owneraddress = accounts[0];
         let FilterDataset1 = response.filter(function (el) {
           return (
-            el.aadhar == aadhar
+            el.aadhaar_number == aadhar
             // &&
             // el.request == false
             //  && el.ProcessStatus == 1
@@ -99,7 +100,7 @@ const lands = () => {
         numberOfBuyers: 0, 
         date: dateAndTime, 
         status: "scheduled", 
-        aadhar: aadhar,
+        aadhaar_number: aadhar,
       });
 
       if (response) {
@@ -353,14 +354,26 @@ const lands = () => {
                           >
                             3D Land View
                           </button>
+                          {data.Buyer_adhar == null?
                           <Button
                             type="primary"
                             loading={loadings[0]}
                             onClick={() => setDate(true)}
                             className="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]"
                           >
-                            Schedule Auction
+                            Schedule Auction 
                           </Button>
+                          :
+                          <Link
+                          type="primary"
+                          loading={loadings[0]}
+                          href={`/${aadhar}/processstatus/${data.propertyID}`}
+                          // onClick={() => setDate(true)}
+                          className="bg-red-500 w-[46%] hover:bg-red-700 text-white font-bold py-3 h-auto px-6 mx-2 rounded my-2 text-[16px]"
+                        >
+                          Registry in Process 
+                        </Link>
+                          }
                         </div>
                       </div>
                     </div>

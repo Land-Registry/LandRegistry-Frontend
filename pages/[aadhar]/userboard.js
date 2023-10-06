@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../../components/navbar/navbar';
+import Navbar from '../../components/navbar/Navbar';
 import { useRouter } from 'next/router';
 import Link from "next/link";
 
@@ -55,10 +55,10 @@ const Dashboard = () => {
                     <div className="w-1/2">
                       <div className="h-[30%] landDetails flex-1 px-4 py-1 bg-gray-100 rounded-md">
                         <p className="mt-1">
-                          <span className="text-gray-500">Name:</span> {LoginUserData?.user?.userName}
+                          <span className="text-gray-500">Name:</span> {LoginUserData?.user?.full_name}
                         </p>
                         <p className="mt-2">
-                          <span className="text-gray-500">Aadhar No:</span> {LoginUserData?.user?.aadhar}
+                          <span className="text-gray-500">Aadhar No:</span> {LoginUserData?.user?.aadhaar_number}
                         </p>
                         <p className="mt-2">
                           <span className="text-gray-500">Phone Number:</span> {LoginUserData?.user?.phoneNo}

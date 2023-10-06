@@ -49,7 +49,7 @@ const Navbar = () => {
           ) : (
             <>
               <a type="button" href="/request" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-4">Requests</a>
-              <Link href={`/${aadhar}/land/${PID}`} className="text-white  m-auto py-1 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-5 text-center mr-3 md:mr-0 ">{LoginUserData?.user?.userName} <div className='border' />  {<Metamask />}</Link>
+              <Link href={`/${aadhar}/profile`} className="text-white  m-auto py-1 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-5 text-center mr-3 md:mr-0 ">{LoginUserData?.user?.full_name} <div className='border' />  {<Metamask />}</Link>
             </>
           )}
 
