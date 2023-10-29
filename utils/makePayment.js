@@ -2,7 +2,7 @@ import Web3 from "web3";
 import { Paymentabi, PaymentcontractAddress } from "./abi";
 import { UpdateData } from "./updateData";
 
-export const MakePayment = async (PID, fromaddress, toaddress, amount) => {
+export const MakePayment = async (PID, toaddress, amount) => {
   if (typeof window.ethereum === "undefined") {
     alert("Please install MetaMask first.");
   }
@@ -12,6 +12,10 @@ export const MakePayment = async (PID, fromaddress, toaddress, amount) => {
       await ethereum.enable();
     } catch (error) {}
   });
+  
+
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  const fromaddress = accounts[0];
   const web3 = new Web3(window.ethereum);
   const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
   const balanceOf = await contract.methods.balanceOf(fromaddress).call();
@@ -48,6 +52,8 @@ export const MaketokenPayment = async (PID, fromaddress, toaddress, amount) => {
       await ethereum.enable();
     } catch (error) {}
   });
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  fromaddress = accounts[0];
   const web3 = new Web3(window.ethereum);
   const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
   const balanceOf = await contract.methods.balanceOf(fromaddress).call();
@@ -73,7 +79,7 @@ export const MaketokenPayment = async (PID, fromaddress, toaddress, amount) => {
   }
 };
 
-export const PaymentBuyertoSeller = async (PID, fromaddress, toaddress, amount) => {
+export const PaymentBuyertoSeller = async (PID, toaddress, amount) => {
   if (typeof window.ethereum === "undefined") {
     alert("Please install MetaMask first.");
   }
@@ -83,6 +89,9 @@ export const PaymentBuyertoSeller = async (PID, fromaddress, toaddress, amount) 
       await ethereum.enable();
     } catch (error) {}
   });
+
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  const fromaddress = accounts[0];
   const web3 = new Web3(window.ethereum);
   const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
   const balanceOf = await contract.methods.balanceOf(fromaddress).call();

@@ -105,8 +105,8 @@ const App = ({ Component, pageProps }) => {
     <p class="letter">A</p>
   </Link>
   
-  <Link href={`/${LoginUserData?.user?.aadhaar_number}/profile`} class="nd1 nds"><img class="reminder"/>
-    <p class="letter">B</p>
+  <Link href={`/${LoginUserData?.user?.aadhaar_number}/mylands`} class="nd1 nds"><img class="reminder"/>
+    <p class="letter">M</p>
   </Link>
   
   <div id="floating-button">

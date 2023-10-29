@@ -518,7 +518,7 @@ const processstatus = () => {
                   onClick={() => setOpen3d(true)}
                   className="bg-red-500 w-[30%]  hover:bg-red-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
                   >
-                  Cancel deal
+                  Cancle deal
                 </button>
                   </div>
 

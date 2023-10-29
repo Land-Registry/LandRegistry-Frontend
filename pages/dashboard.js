@@ -100,9 +100,7 @@ const dashboard = () => {
       // Add code here to save the user data to your MongoDB database
       const userData = response.data.result.data;
    
-
       userData.metamaskAddress = accounts[0]
-
 
       // Create a new instance of UserDetails using the userData
       axios.post('http://localhost:8000/user', userData)

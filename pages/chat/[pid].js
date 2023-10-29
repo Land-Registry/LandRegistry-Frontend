@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Navbar from '../../components/navbar/Navbar';
 
 function PropertyChat() {
   const [propertyID, setPropertyID] = useState('');
@@ -44,38 +45,47 @@ function PropertyChat() {
     return userColors.get(userId);
   };
 
-  return (
-    <div style={{ padding: '20px' }} className='h-screen'>
-      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}>Chat Messages for Property ID</h1>
+  return (<>
+  <div className='pb-24'>
+    
+      <Navbar />
+  </div>
+    <div className='h-screen'>
+
+      <div className=' h-[70%] overflow-y-auto w-2/3 m-auto p-10 bg-gray-100 rounded-lg no-scrollbar'>
+        <div className='flex'>
+
+      <h1 style={{ fontSize: '24px', marginBottom: '20px' }} className="w-full">Chat Messages for Property ID</h1>
       <input
         type="text"
         placeholder="Enter Property ID"
         value={propertyID}
         onChange={handlePropertyIDChange}
+        className='bg-gray-100 font-bold text-red-500'
         style={{ padding: '10px', fontSize: '16px', width: '100%', marginBottom: '20px' }}
-      />
-<div className='h-[80%] overflow-y-auto w-2/3 m-auto p-10 bg-gray-100 rounded-lg no-scrollbar'>
-
-      {chatMessages.map((message, index) => (
-        <div
-          key={message._id}
-          style={{
-            marginBottom: '10px',
-            padding: '10px',
-            borderRadius: '5px',
-            textAlign: 'left',
-          }}
-          className='bg-gray-300 text-black'
-        >
-          <p style={{ fontWeight: 'bold'}}>{message.Name}</p>
-          <div className='flex justify-between'>
-          <p>RS. {message.highestBid}</p>
-          <p>{new Date(message.timestamp).toLocaleString()}</p>
-          </div>
+        />
         </div>
-      ))}
+        {chatMessages.map((message, index) => (
+          <div
+            key={message._id}
+            style={{
+              marginBottom: '10px',
+              padding: '10px',
+              borderRadius: '5px',
+              textAlign: 'left',
+            }}
+            className='bg-gray-300 text-black'
+            >
+            <p style={{ fontWeight: 'bold' }}>{message.Name}</p>
+            <div className='flex justify-between'>
+              <p>RS. {message.highestBid}</p>
+              <p>{new Date(message.timestamp).toLocaleString()}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-</div>
+            </>
 
   );
 }

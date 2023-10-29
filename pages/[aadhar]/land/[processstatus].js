@@ -28,6 +28,7 @@ import {
   MaketokenPayment,
   PaymentBuyertoSeller,
 } from "../../../utils/makePayment";
+import { useEffectOnce } from "usehooks-ts";
 // import { Chat } from "../../../PushModule/pushprotocol/uiweb";
 // import { Chat } from "@pushprotocol/uiweb";
 
@@ -40,6 +41,7 @@ var Area = "";
 var Buyer_name = "";
 var ownerAddress = "";
 var Buyer_address = "";
+var BuyerAadhar = "";
 var InspectorName = "";
 var Document_Access = "";
 var tokensend = "process";
@@ -69,9 +71,9 @@ const columns = [
     render: (text) => <a>{text}</a>,
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: "Aadhar Number",
+    dataIndex: "aadharnumber",
+    key: "aadharnumber",
   },
   {
     title: "Tags",
@@ -119,7 +121,7 @@ const processstatus = () => {
 
   const onFinish = (values) => {
     console.log("Success:", values);
-    UpdateData({ Price: parseInt(values.Price),ProcessStatus:3 }, PropertyID);
+    UpdateData({ Price: parseInt(values.Price), ProcessStatus: 3 }, PropertyID);
     alert(
       "Price Updated Successfully. Please wait for the transaction to be completed."
     );
@@ -151,7 +153,7 @@ const processstatus = () => {
   getaddress();
 
   const router = useRouter();
-  const { processstatus } = router.query;
+  const { processstatus, aadhar } = router.query;
 
   if (5 == ProcessStatus) {
     setOpennotify(true);
@@ -165,7 +167,7 @@ const processstatus = () => {
       .then((response) => {
         // console.log(response);
         setDataset(response);
-        console.log("sfdbg", Dataset);
+        console.log("sfdbg", response);
       })
       .catch((err) => {
         console.error(err);
@@ -192,6 +194,7 @@ const processstatus = () => {
         Buyer_name = Dataset[i].Buyer_name;
         ownerAddress = Dataset[i].ownerAddress;
         Buyer_address = Dataset[i].Buyer_address;
+        BuyerAadhar = Dataset[i].Buyer_adhar;
         Document_Access = Dataset[i].Document_Access;
         tokensend = Dataset[i].tokensend;
         ProcessStatus = Dataset[i].ProcessStatus;
@@ -205,34 +208,46 @@ const processstatus = () => {
         DocumentURL = Dataset[i].DocumentURL;
         PaymentStatus = Dataset[i].PaymentStatus;
         ProcessStatus = Dataset[i].ProcessStatus;
+        OwnerAdhar = Dataset[i].aadhaar_number;
         BuyerTokenstatus = Dataset[i].BuyerTokenstatus;
         StampDutyTokenStatus = Dataset[i].StampDutyTokenStatus;
-        OwnerAdhar = Dataset[i].OwnerAdhar;
         OwnerContact = Dataset[i].OwnerContact;
         PaymentDuration = Dataset[i].PaymentDuration;
+
+        if (ProcessStatus == 2) {
+          UpdateData({ ProcessStatus: 3 }, PropertyID);
+        }
       }
     }
   }
+
+  useEffect(() => {
+    if (ProcessStatus == 2) {
+      UpdateData({ ProcessStatus: 3 }, PropertyID);
+    }
+  
+  }, [])
+  
 
   const data = [
     {
       key: "1",
       name: Owner,
-      address: ownerAddress,
+      aadharnumber: OwnerAdhar,
       tags: ["SELLER"],
     },
     {
       key: "2",
       name: Buyer_name,
-      address: Buyer_address,
+      aadharnumber: BuyerAadhar,
       tags: ["BUYER"],
     },
-    {
-      key: "3",
-      name: InspectorName,
-      address: "-",
-      tags: ["LAND INSPECTOR"],
-    },
+    // {
+    //   key: "3",
+    //   name: InspectorName,
+    //   aadharnumber: "-",
+    //   tags: ["LAND INSPECTOR"],
+    // },
   ];
 
   return (
@@ -376,14 +391,15 @@ const processstatus = () => {
       </Modal>
 
       <Navbar />
-      <div className="pt-[110px] rounded-2xl">
-        <div className="w-[90%] shadow-2xl m-auto p-10 rounded-2xl">
+      <div className="pt-[80px] rounded-2xl">
+        <div className="w-[90%] shadow-2xl m-auto p-8 rounded-2xl">
           <Row className="mb-10">
             <Col span={12}>
               <div className="p-2 px-4 text-black">
                 <h1 className="mt-0  font-bold">Area: {Area} sq.m.</h1>
                 <h3 className="">Loaction: Nagpur, Maharashtra</h3>
                 <h3 className="">Price: Rs. {Price}</h3>
+                <h3 className="">Owner Aadhaar: {OwnerAdhar}</h3>
                 <h3>PID: {PropertyID}</h3>
                 <h3>Survey no: {SurveyNo}</h3>
                 <h3>Owner: {Owner}</h3>
@@ -429,20 +445,19 @@ const processstatus = () => {
                   >
                     Payment Done
                   </button>
-                ) : address == Buyer_address && ProcessStatus == 3 ? (
+                ) : aadhar == BuyerAadhar && ProcessStatus == 3 ? (
                   <>
                     <button
                       onClick={() =>
                         PaymentBuyertoSeller(
                           PropertyID,
-                          Buyer_address,
                           ownerAddress,
                           Price
                         )
                       }
                       className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 "
-                    > 
-                      Send Token ({parseInt(Price)*0.05}LR)
+                    >
+                      Send Token ({parseInt(Price) * 0.05}LR)
                     </button>
                   </>
                 ) : ProcessStatus < 4 ? (
@@ -452,7 +467,7 @@ const processstatus = () => {
                   >
                     Pending Processes
                   </button>
-                ) : address == Buyer_address && StampDutyTokenStatus == false ? (
+                ) : aadhar == BuyerAadhar  && StampDutyTokenStatus == false ? (
                   <button
                     onClick={() =>
                       MaketokenPayment(
@@ -466,13 +481,13 @@ const processstatus = () => {
                   >
                     Pay for Stamp Duty ({parseInt(parseInt(Price) * 0.06)}LR)
                   </button>
-                ) : address == Buyer_address && StampDutyTokenStatus == true ? (
+                ) : aadhar == BuyerAadhar  && StampDutyTokenStatus == true ? (
                   <>
                     <button
                       onClick={() =>
                         MakePayment(
                           PropertyID,
-                          Buyer_address,
+                          
                           ownerAddress,
                           Price
                         )
@@ -499,7 +514,18 @@ const processstatus = () => {
                 src={ImageURL}
                 alt={ImageURL}
               /> <br />
-             
+<div className="text-center ">
+                {ProcessStatus > 3?(
+                  <p className="text-xl m-auto font-bold text-red-400">Transaction Duration Till <br /> {PaymentDuration}</p>
+                ):(<></>)}
+              <button
+                  onClick={() => setOpen3d(true)}
+                  className="bg-red-500 w-[30%]  hover:bg-red-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
+                  >
+                  Cancle deal
+                </button>
+                  </div>
+
 
             </Col>
           </Row>
@@ -512,18 +538,18 @@ const processstatus = () => {
                 icon: <UserOutlined />,
               },
               {
-                title: "2. Document Verification / Negotiation",
+                title: "2. Pay Token Amount",
                 status: SetStatus(2, ProcessStatus),
                 icon: SetIcon(2, ProcessStatus),
                 // icon: <SolutionOutlined />,
               },
               {
-                title: "3. Token Send",
+                title: "3. Pay Stamp Duty Amount",
                 status: SetStatus(3, ProcessStatus),
                 icon: SetIcon(3, ProcessStatus),
               },
               {
-                title: "4. Transaction",
+                title: "4. Transaction / Inspector Verification",
                 status: SetStatus(4, ProcessStatus),
                 icon: SetIcon(4, ProcessStatus),
                 // icon: <LoadingOutlined />,
@@ -535,10 +561,15 @@ const processstatus = () => {
               },
             ]}
           />
+          <Table
+            className="mt-10"
+            pagination={false}
+            columns={columns}
+            dataSource={data}
+          />
         </div>
       </div>
-
-      <Footer/>
+      <Footer />
       {/* <Chat
         account={address} //user address
         supportAddress={support_address} //support address

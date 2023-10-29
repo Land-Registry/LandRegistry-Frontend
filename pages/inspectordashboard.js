@@ -144,16 +144,16 @@ const inspectordashboard = () => {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Seller Aadhar",
-      dataIndex: "ownerAddress",
-      key: "ownerAddress",
-      render: (text) => <a>{text.slice(0, 12) + "..."}</a>,
+      title: "Seller Name",
+      dataIndex: "ownerName",
+      key: "ownerName",
+      render: (text) => <a>{text}</a>,
     },
     {
-      title: "Buyer Aadhar",
-      dataIndex: "Buyer_address",
-      key: "Buyer_address",
-      render: (text) => <a>{"..."}</a>,
+      title: "Buyer Name",
+      dataIndex: "Buyer_name",
+      key: "Buyer_name",
+      render: (text) => <a>{text}</a>,
       // render: (text) => <a>{text.slice(0, 12) + "..."}</a>,
     },
     {
@@ -225,21 +225,20 @@ const inspectordashboard = () => {
         <>
           <Progress
             type="circle"
+            size={50}
             percent={setPercent(PID) * 20}
             style={{
-              marginRight: 8,
+              marginRight: 4,
             }}
           />
-          <Button.Group>
-            <Button onClick={() => decline(PID)} icon={<MinusOutlined />} />
-            <Button onClick={() => increase(PID)} icon={<PlusOutlined />} />
-          </Button.Group>
+           {/* <Button onClick={() => decline(PID)} icon={<MinusOutlined />} />
+           <Button onClick={() => increase(PID)} icon={<PlusOutlined />} /> */}
         </>
       ),
     },
     {
       title: "RECORDING",
-      dataIndex: "recording",
+      dataIndex: "propertyID",
       key: "recording",
       render: (text) => <Button
         type="primary"
@@ -247,7 +246,7 @@ const inspectordashboard = () => {
           console.log(text);
           window.location.href = `/chat/${text}`;
         }}
-        className=" bg-red-500 w-[46%] mr-4 hover:bg-red-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded-lg my-2 text-[16px]"
+        className=" bg-red-500 w-[46%]  hover:bg-red-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded-lg my-2 text-[16px]"
       >
         Rec
       </Button>,
@@ -260,11 +259,11 @@ const inspectordashboard = () => {
   }
   return (
     <div>
-      {/* <Navbar /> */}
-      <div className="pt-[10px] rounded-2xl">
-        <div className="w-[90%] shadow-2xl m-auto p-10 rounded-2xl">
+      <Navbar />
+      <div className="pt-[10px] rounded-2xl ">
+        <div className="w-[95%] shadow-2xl m-auto p-5 rounded-2xl mt-10">
           <Table
-            className="mt-10"
+            className="mt-10 w-full"
             pagination={false}
             columns={columns}
             dataSource={data}

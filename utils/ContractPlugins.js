@@ -85,6 +85,6 @@ export const TransferOwnership = async (from,to,tokenId) => {
   const web3 = new Web3(window.ethereum);
   const contract = new web3.eth.Contract(abi, contractAddress);
  
-  const transferNFT = await contract.methods.transferNFT(from,to,tokenId).send({ from: address });
+  const transferNFT = await contract.methods.transferNFT(address,address,tokenId).send({ from: address });
   console.log(transferNFT);
 };

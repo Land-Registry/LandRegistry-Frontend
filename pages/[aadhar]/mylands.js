@@ -350,18 +350,27 @@ const lands = () => {
                         <div className="m-auto text-center">
                           <button
                             onClick={() => setOpen(true)}
-                            className="bg-blue-500 w-[46%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
+                            className="bg-blue-500 w-[30%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
                           >
                             3D Land View
                           </button>
-                          {data.Buyer_adhar == null?
+                          <Link
+                          type="primary"
+                          loading={loadings[0]}
+                          href={`/${aadhar}/${data.propertyID}/bidboard/`}
+                          // onClick={() => setDate(true)}
+                          className="bg-blue-500 w-[20%] hover:bg-blue-700 text-white font-bold py-3 h-auto px-6 mx-2 rounded my-2 text-[16px]"
+                        >
+                          Auction
+                        </Link>
+                          {data.Buyer_name == null || data.Buyer_name == '0'?
                           <Button
                             type="primary"
                             loading={loadings[0]}
                             onClick={() => setDate(true)}
-                            className="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]"
+                            className="bg-blue-500 w-[30%] hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]"
                           >
-                            Schedule Auction 
+                            Schedule 
                           </Button>
                           :
                           <Link
@@ -369,9 +378,9 @@ const lands = () => {
                           loading={loadings[0]}
                           href={`/${aadhar}/processstatus/${data.propertyID}`}
                           // onClick={() => setDate(true)}
-                          className="bg-red-500 w-[46%] hover:bg-red-700 text-white font-bold py-3 h-auto px-6 mx-2 rounded my-2 text-[16px]"
+                          className="bg-red-500 w-[30%] hover:bg-red-700 text-white font-bold py-3 h-auto px-6 mx-2 rounded my-2 text-[16px]"
                         >
-                          Registry in Process 
+                          In Process 
                         </Link>
                           }
                         </div>
