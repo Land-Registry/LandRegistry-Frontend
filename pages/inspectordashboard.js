@@ -79,21 +79,25 @@ const inspectordashboard = () => {
     return el.request == true;
   });
 
-  function transferNFT(propertyID) {
+  async function transferNFT(propertyID) {
     let data = Dataset.filter(function (el) {
       console.log(el.propertyID, propertyID);
       return el.propertyID == propertyID;
     });
-    TransferOwnership(
+    console.log( data[0].ownerAddress,
+      data[0].Buyer_address,
+      data[0].tokenID)
+    await TransferOwnership(
       data[0].ownerAddress,
       data[0].Buyer_address,
       data[0].tokenID
     );
-    MainUpdateData({ owner: data[0].Buyer_name }, propertyID);
-    UpdateData(
+    // MainUpdateData({ owner: data[0].Buyer_name }, propertyID);
+    await UpdateData(
       {
-        ownerAddress: data[0].Buyer_address,
-        owner: data[0].Buyer_name,
+        ownerAddress: (data[0].Buyer_address).toString(),
+        ownerName: (data[0].Buyer_name).toString(),
+        aadhaar_number:(data[0].Buyer_adhar).toString(),
         ProcessStatus: 5,
         PaymentStatus: false,
         status: 5,
@@ -102,6 +106,7 @@ const inspectordashboard = () => {
         Buyer_name: "0",
         PaymentDuration: "",
         StampDutyTokenStatus: false,
+        BuyerTokenstatus: false,
 
       },
       propertyID
@@ -141,7 +146,10 @@ const inspectordashboard = () => {
       title: "PID",
       dataIndex: "propertyID",
       key: "propertyID",
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a   onClick={() => {
+        console.log(text);
+        window.location.href = `/0/processstatus/${text}`;
+      }}>{text}</a>,
     },
     {
       title: "Seller Name",
@@ -150,7 +158,7 @@ const inspectordashboard = () => {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Buyer Name",
+      title: "Buyer Name", 
       dataIndex: "Buyer_name",
       key: "Buyer_name",
       render: (text) => <a>{text}</a>,
@@ -160,23 +168,6 @@ const inspectordashboard = () => {
       title: "Price",
       dataIndex: "Price",
       key: "Price",
-    },
-    {
-      title: "Land View",
-      key: "landview",
-      dataIndex: "propertyID",
-      render: (text) => (
-        <Button
-          type="primary"
-          onClick={() => {
-            console.log(text);
-            window.location.href = `/processstatus/${text}`;
-          }}
-          className=" bg-blue-500 w-[46%] mr-4 hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]"
-        >
-          View
-        </Button>
-      ),
     },
     {
       title: "Transfer Ownership",

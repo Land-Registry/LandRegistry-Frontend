@@ -25,10 +25,12 @@ import { UpdateData } from "../../../utils/updateData";
 import {
   CheckBalance,
   MakePayment,
+  MakeStampDutyPayment,
   MaketokenPayment,
   PaymentBuyertoSeller,
 } from "../../../utils/makePayment";
 import { Chat } from "../../../PushModule/@pushprotocol/uiweb";
+import Confetti from "../../../components/Confetti";
 // import { Chat } from "@pushprotocol/uiweb";
 
 var id = "";
@@ -102,6 +104,7 @@ const columns = [
 async function getaddress() {
   const accounts = await ethereum.request({ method: "eth_requestAccounts" });
   address = accounts[0];
+  // Buyer_address = accounts[0];
   if (address == ownerAddress) {
     support_address = Buyer_address;
   } else {
@@ -124,7 +127,7 @@ const processstatus = () => {
 
   const onFinish = (values) => {
     console.log("Success:", values);
-    UpdateData({ Price: parseInt(values.Price),ProcessStatus:3 }, PropertyID);
+    UpdateData({ Price: parseInt(values.Price), ProcessStatus: 3 }, PropertyID);
     alert(
       "Price Updated Successfully. Please wait for the transaction to be completed."
     );
@@ -156,7 +159,7 @@ const processstatus = () => {
   getaddress();
 
   const router = useRouter();
-  const { aadhar,processstatus } = router.query;
+  const { aadhar, processstatus } = router.query;
 
   if (5 == ProcessStatus) {
     setOpennotify(true);
@@ -196,7 +199,6 @@ const processstatus = () => {
         Area = Dataset[i].Area;
         Buyer_name = Dataset[i].Buyer_name;
         ownerAddress = Dataset[i].ownerAddress;
-        Buyer_address = Dataset[i].Buyer_address;
         Document_Access = Dataset[i].Document_Access;
         tokensend = Dataset[i].tokensend;
         ProcessStatus = Dataset[i].ProcessStatus;
@@ -207,7 +209,7 @@ const processstatus = () => {
         ImageURL = Dataset[i].ImageURL;
         request = Dataset[i].request;
         InspectorName = Dataset[i].InspectorName;
-        DocumentURL = Dataset[i].DocumentURL;
+        DocumentURL = Dataset[i].DocumentURL; 
         PaymentStatus = Dataset[i].PaymentStatus;
         ProcessStatus = Dataset[i].ProcessStatus;
         BuyerTokenstatus = Dataset[i].BuyerTokenstatus;
@@ -219,11 +221,12 @@ const processstatus = () => {
         OwnerName = Dataset[i].OwnerName; // New field
         AadhaarNumber = Dataset[i].AadhaarNumber; // New field
         Buyer_adhar = Dataset[i].Buyer_adhar;
+        Buyer_address = Dataset[i].Buyer_address;
       }
     }
   }
-  
-  
+
+
 
   const data = [
     {
@@ -233,7 +236,7 @@ const processstatus = () => {
       tags: ["SELLER"],
     },
     {
-      key: "2",
+      key: "2", 
       name: Buyer_name,
       address: Buyer_address,
       tags: ["BUYER"],
@@ -255,10 +258,17 @@ const processstatus = () => {
         width={600}
         closable={false}
         footer={null}
+        zIndex={0}
       >
-        {address == ownerAddress
-          ? "Thanks for Buying Land By ❤"
-          : "Thanks for Selling Land By ❤"}
+        {aadhar == Buyer_adhar ? (
+  <>
+    <p>Thanks for Buying Land By ❤</p>
+    <Confetti />
+  </>
+) : (
+  <p>Thanks for Selling Land By ❤</p>
+)}
+
       </Modal>
       <Modal
         title="Update Price"
@@ -412,21 +422,7 @@ const processstatus = () => {
                 >
                   View Document
                 </button>
-                {ProcessStatus < 3 ? (
-                  <button
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] hover:bg-blue-700  mx-2 my-2 "
-                    onClick={() => setOpenprice(true)}
-                  >
-                    Update Price
-                  </button>
-                ) : (
-                  <button
-                    className="disabled:opacity-25 bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] cursor-not-allowed hover:bg-blue-700  mx-2 my-2 "
-                    disabled
-                  >
-                    Update Price
-                  </button>
-                )}
+                
                 <button
                   className="bg-blue-500 text-white font-bold py-2 px-4 rounded w-[30%] hover:bg-blue-700  mx-2 my-2 "
                   onClick={() => CheckBalance()}
@@ -440,61 +436,43 @@ const processstatus = () => {
                   >
                     Payment Done
                   </button>
-                ) : aadhar == Buyer_adhar && ProcessStatus == 3 ? (
+                ) : aadhar == Buyer_adhar && ProcessStatus == 2 ? (
                   <>
                     <button
                       onClick={() =>
-                        PaymentBuyertoSeller(
+                        MakeStampDutyPayment(
                           PropertyID,
-                          Buyer_address,
-                          ownerAddress,
-                          Price
-                        )
-                      }
-                      className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 "
-                    > 
-                      Send Token ({parseInt(Price)*0.05}LR)
-                    </button>
-                  </>
-                ) : ProcessStatus < 4 ? (
-                  <button
-                    disabled
-                    className="disabled:opacity-25 bg-blue-500  text-white font-bold py-2 px-4 rounded cursor-not-allowed w-[62%] hover:bg-blue-700  mx-2 my-2 "
-                  >
-                    Pending Processes
-                  </button>
-                ) : address == Buyer_address && StampDutyTokenStatus == false ? (
-                  <button
-                    onClick={() =>
-                      MaketokenPayment(
-                        PropertyID,
-                        Buyer_address,
-                        "0x7ed790a1ac108b9a50e24f5c5e061df59e3673a7",
-                        parseInt(Price) * 0.06
-                      )
-                    }
-                    className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 "
-                  >
-                    Pay for Stamp Duty ({parseInt(parseInt(Price) * 0.06)}LR)
-                  </button>
-                ) : address == Buyer_address && StampDutyTokenStatus == true ? (
-                  <>
-                    <button
-                      onClick={() =>
-                        MakePayment(
-                          PropertyID,
-                          Buyer_address,
                           ownerAddress,
                           Price
                         )
                       }
                       className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 "
                     >
-                      Make Payment
+                      Pay for Stamp Duty ({parseInt(Price) * 0.05}LR)
                     </button>
                   </>
-                ) : (
+                // ) : ProcessStatus < 4 ? (
+                //   <button
+                //     disabled
+                //     className="disabled:opacity-25 bg-blue-500  text-white font-bold py-2 px-4 rounded cursor-not-allowed w-[62%] hover:bg-blue-700  mx-2 my-2 "
+                //   >
+                //     Pending Processes
+                //   </button>
+                ) : aadhar == Buyer_adhar && StampDutyTokenStatus == true && PaymentStatus == false ? (
                   <button
+                    onClick={() =>
+                      MakePayment(
+                        PropertyID,
+                        ownerAddress,
+                        Price
+                      )
+                    }
+                    className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded  w-[62%] hover:bg-green-700  mx-2 my-2 "
+                  >
+                    Pay Remaining Amount ({parseInt(parseInt(Price) * 0.9)}LR)
+                  </button>
+                ) :  (
+                  <button 
                     disabled
                     className="disabled:opacity-25 bg-green-500  text-white font-bold py-2 px-4 rounded cursor-not-allowed w-[62%] hover:bg-green-700  mx-2 my-2 "
                   >
@@ -510,17 +488,19 @@ const processstatus = () => {
                 src={ImageURL}
                 alt={ImageURL}
               /> <br />
+                {PaymentStatus == false?(
               <div className="text-center ">
-                {ProcessStatus > 3?(
-                  <p className="text-xl m-auto font-bold text-red-400">Transaction Duration Till <br /> {PaymentDuration}</p>
-                ):(<></>)}
-              <button
-                  onClick={() => setOpen3d(true)}
-                  className="bg-red-500 w-[30%]  hover:bg-red-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
-                  >
+                  {aadhar == Buyer_adhar && StampDutyTokenStatus == true ? (
+                    <p className="text-xl m-auto font-bold text-red-400">Transaction Duration Till <br /> {PaymentDuration}</p>
+                    ) : (<></>)}
+                <button
+                onClick={() => setOpen3d(true)}
+                className="bg-red-500 w-[30%]  hover:bg-red-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
+                >
                   Cancle deal
                 </button>
-                  </div>
+              </div>
+                  ):(<></>)}
 
             </Col>
           </Row>
@@ -533,18 +513,18 @@ const processstatus = () => {
                 icon: <UserOutlined />,
               },
               {
-                title: "2. Document Verification / Negotiation",
+                title: "2. Pay Stamp Duty",
                 status: SetStatus(2, ProcessStatus),
                 icon: SetIcon(2, ProcessStatus),
-                // icon: <SolutionOutlined />,
               },
               {
-                title: "3. Token Send",
+                title: "3. Pay Remaining Amount",
                 status: SetStatus(3, ProcessStatus),
                 icon: SetIcon(3, ProcessStatus),
+                // icon: <LoadingOutlined />,
               },
               {
-                title: "4. Transaction",
+                title: "4. Inspector Review",
                 status: SetStatus(4, ProcessStatus),
                 icon: SetIcon(4, ProcessStatus),
                 // icon: <LoadingOutlined />,
@@ -566,9 +546,9 @@ const processstatus = () => {
       </div>
 
       <Footer />
-      
+
       <Chat
-     
+
         account={address} //user address
         supportAddress={support_address} //support address
         apiKey="jVPMCRom1B.iDRMswdehJG7NpHDiECIHwYMMv6k2KzkPJscFIDyW8TtSnk4blYnGa8DIkfuacU0"

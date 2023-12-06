@@ -83,7 +83,7 @@ const Profile = () => {
                   {lands.map((land, index) => (
 
                     <li key={index} className='bg-white px-2 rounded-lg my-2 p-3'>
-                      <Link href={`/${aadhar}/land/${land.propertyID}`}>
+                      <Link href={`/${aadhar}/processstatus/${land.propertyID}`}>
                         <div className='flex justify-between'>
                       <strong>Land: <b className='text-red-500'>{land.propertyID}</b></strong> <br />   {land.auctioncreated ?
                             <Link href={`/${aadhar}/${land.propertyID}/bidboard`} className="bg-gray-200 px-3 rounded-lg">Auction Scheduled</Link>:null}

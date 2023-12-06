@@ -10,6 +10,7 @@ import Metamask from "../../components/metamask";
 import Router from "next/router";
 import { UpdateData } from "../../utils/updateData";
 import { createAuction } from "../../utils/createAuction";
+import { MaketokenPayment, PaymentBuyertoSeller } from "../../utils/makePayment";
 
 const onChange = (value) => {
   console.log(`selected ${value}`);
@@ -140,7 +141,7 @@ const lands = () => {
     const address = accounts[0];
 
     UpdateData(
-      { Buyer_address: address, Document_Access: address, request: true, ProcessStatus: 2 },
+      { Buyer_address: address },
       PID
     );
     setTimeout(() => {
@@ -150,10 +151,20 @@ const lands = () => {
     }, 3000);
   }
 
-  async function JoinAuction(PID) {
+  async function JoinAuction(PID, ownerAddress,Price) {
     try {
-      const userId = 'user123'; 
 
+      const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+      const address = accounts[0];
+  
+      await UpdateData( { Buyer_address: address,Buyer_name:LoginUserData?.user?.full_name,Buyer_adhar:LoginUserData?.user?.aadhaar_number }, PID );
+
+      // Assuming PaymentBuyertoSeller is an asynchronous operation
+      await MaketokenPayment(PID, ownerAddress, Price);
+  
+      // If PaymentBuyertoSeller is successful, proceed to the next step
+      const userId = 'user123';
+  
       try {
         const url = `http://localhost:8000/auction/add-buyer/${PID}/${LoginUserData?.user?._id}`;
         const response = await axios.post(url);
@@ -167,9 +178,10 @@ const lands = () => {
         console.error('Error adding buyer to auction:', error.message);
       }
     } catch (error) {
-      console.error('Error joining auction:', error.message);
+      console.error('Error during PaymentBuyertoSeller:', error.message);
     }
   }
+  
 
   return (
     <div className="bg-slate-100">
@@ -263,21 +275,12 @@ const lands = () => {
                           alt=""
                         />
                         <div className="p-2 px-4">
-                          {/* <h1 className="mt-0  font-bold">Area: {data['metadata']['description'].split(",,")[2]} sq.m.</h1>
-                          <h3 className="">
-                            Loaction: {data['metadata']['description'].split(",,")[0]}, Maharashtra
-                          </h3>
-                          <h3 className="">Price: Rs. {data['metadata']['description'].split(",,")[5]}</h3>
-                          <h3>PID: {data['metadata']['description'].split(",,")[3]}</h3>
-                          <h3>Survey no: {data['metadata']['description'].split(",,")[4]}</h3>
-                          <h3>Owner: {data['metadata']['description'].split(",,")[1]}</h3> */}
-
                           <h1 className="mt-0  font-bold justify-between flex ">
                             <div>
-                            Area: {data.Area} sq.m.
+                              Area: {data.Area} sq.m.
                             </div>
                             {data.auctioncreated ?
-                            <div className="bg-gray-200 px-3 rounded-lg">Auction Scheduled</div>:null}
+                              <div className="bg-gray-200 px-3 rounded-lg">Auction Scheduled</div> : null}
                           </h1>
                           <h3 className="">Price: Rs. {data.Price}</h3>
                           <h3 className="">Owner: {data.ownerName}</h3>
@@ -296,7 +299,7 @@ const lands = () => {
                             <Button
                               type="primary"
                               loading={loadings[0]}
-                              onClick={() => JoinAuction(data.propertyID)}
+                              onClick={() => JoinAuction(data.propertyID,data.ownerAddress,data.Price)}
                               className="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]"
                             >
                               Join Auction
@@ -304,12 +307,11 @@ const lands = () => {
                             <Button
                               type="primary"
                               loading={loadings[0]}
-                              onClick={() => RequestLand(data.propertyID)}
+                              // onClick={() => RequestLand(data.propertyID)}
                               className="bg-blue-500 w-[46%] hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]"
                             >
-                              Request Document
+                              Contact Owner
                             </Button>
-
                           }
                         </div>
                       </div>

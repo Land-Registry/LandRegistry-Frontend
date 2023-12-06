@@ -114,21 +114,21 @@ const Dashboard = () => {
                   if (land.aadhaar_number == aadhar) {
                     if (land.roomCreated == true) {
                       linkJSX = (
-                        <Link href={`http://localhost:5173/${aadhar}#${land.propertyID}#livechats#${land.roomID}`} className='px-3 py-1 bg-green-400 rounded-lg font-bold hover:bg-green-600'>JOIN AUCTION ▶️</Link>
+                        <Link href={`http://localhost:5173/${aadhar}#${land.propertyID}#livechats#${land.roomID}`} target='_blank' className='px-3 py-1 bg-green-400 rounded-lg font-bold hover:bg-green-600'>JOIN AUCTION ▶️</Link>
                       );
                     } else {
                       linkJSX = (
-                        <Link href={`http://localhost:5173/${aadhar}#${land.propertyID}#livechats#room`} className='px-3 py-1 bg-green-400 rounded-lg font-bold hover-bg-green-600'>CREATE AUCTION ▶️</Link>
+                        <Link href={`http://localhost:5173/${aadhar}#${land.propertyID}#livechats#room`} target='_blank' className='px-3 py-1 bg-green-400 rounded-lg font-bold hover-bg-green-600'>CREATE AUCTION ▶️</Link>
                       );
                     }
                   } else {
                     if (land.roomCreated == true) {
                       linkJSX = (
-                        <Link href={`http://localhost:5173/${aadhar}#${land.propertyID}#livechats#${land.roomID}`} className='px-3 py-1 bg-green-400 rounded-lg font-bold hover:bg-green-600'>JOIN AUCTION ▶️</Link>
+                        <Link href={`http://localhost:5173/${aadhar}#${land.propertyID}#livechats#${land.roomID}`} target='_blank' className='px-3 py-1 bg-green-400 rounded-lg font-bold hover:bg-green-600'>JOIN AUCTION ▶️</Link>
                       );
                     } else {
                       linkJSX = (
-                        <Link href={`http://localhost:5173/${aadhar}#${land.propertyID}#livechats#room`} className='px-3 cursor-not-allowed py-1 bg-red-400 rounded-lg font-bold hover:bg-red-600'>AUCTION START SOON ▶️</Link>
+                        <Link href={`http://localhost:5173/${aadhar}#${land.propertyID}#livechats#room`} target='_blank' className='px-3 cursor-not-allowed py-1 bg-red-400 rounded-lg font-bold hover:bg-red-600'>AUCTION START SOON ▶️</Link>
                       );
                     }
                   }
@@ -175,7 +175,7 @@ const Dashboard = () => {
                             </div>
                             <div className="col-span-1">
                               <p className="text-gray-600">View Land Stats:</p>
-                              <Link className="font-semibold text-blue-500" href={`/${aadhar}/land/${auction.propertyID}`}>
+                              <Link className="font-semibold text-blue-500" href={`/${aadhar}/processstatus/${auction.propertyID}`}>
                                 Link
                               </Link>
                             </div>

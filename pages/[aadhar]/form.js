@@ -111,15 +111,16 @@ const form = () => {
 
   function SellLand(PID) {
     UpdateData({ ProcessStatus: 1 }, PID);
-    window.location.href = `/${aadhar}/land/${PID}`;
+    window.location.href = `/${aadhar}/processstatus/${PID}`;
   }
 
   const onFinish = (values) => {
     setData(values);
     console.log("Success:", LoginUserData?.user?.aadhaar_number);
-      getMetadataURL(
-        values,LoginUserData?.user?.full_name,LoginUserData?.user?.aadhaar_number)
+    getMetadataURL(
+      values, LoginUserData?.user?.full_name, LoginUserData?.user?.aadhaar_number)
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -217,12 +218,12 @@ const form = () => {
                 label="Land Owner Name"
                 name="name"
                 initialValue={LoginUserData?.user?.full_name}
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Please input Owner Name",
-                //   },
-                // ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "Please input Owner Name",
+              //   },
+              // ]}
               >
                 <Input
                   placeholder={LoginUserData?.user?.full_name}
@@ -235,12 +236,12 @@ const form = () => {
                 name="aadhar"
                 className="text-black"
                 initialValue={aadharNum}
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: "Please input Owner Name",
-                //   },
-                // ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "Please input Owner Name",
+              //   },
+              // ]}
               >
                 <Input defaultValue={aadharNum} placeholder={aadharNum} disabled /> {/* Add the `disabled` attribute to make it non-editable */}
               </Form.Item>
@@ -322,19 +323,19 @@ const form = () => {
                 <Input />
               </Form.Item>
               <Form.Item
-                label="Physical Survay Number"
+                label="Physical Survey Number"
                 name="survay"
                 rules={[
                   {
                     required: true,
-                    message: "Please input Physical Survay Number!",
+                    message: "Please input Physical Survey Number!",
                   },
                 ]}
               >
                 <Input />
               </Form.Item>
 
-              <Form.Item
+              {/* <Form.Item
                 label="Insert Land Image"
                 name="landimage"
                 rules={[
@@ -362,7 +363,7 @@ const form = () => {
                 <Upload {...props}>
                   <Button icon={<UploadOutlined />}>Upload Adharcard</Button>
                 </Upload>
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item>
                 <button

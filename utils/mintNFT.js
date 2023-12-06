@@ -55,11 +55,11 @@ export const getMetadataURL = async (values,UserName,aadhar) => {
         // "description":"${City},,${OwnerName},,${area},,${PID},,${survay},,${price}",
     fetch("https://api.nftport.xyz/v0/metadata", options)
       .then((response) => response.json())
-      .then((response) => {
+      .then(async (response) => {
         console.log(response);
         metadataURL = JSON.stringify(response["metadata_uri"]);
         alert("Your Metadata URL is Ready MINT NFT");
-        CreateNFT(
+        await CreateNFT(
           owneraddress,
           metadataURL,
           'OwnerName',
@@ -92,7 +92,7 @@ export const getMetadataURL = async (values,UserName,aadhar) => {
           );
           setTimeout(() => {
             window.location.href = `/${aadhar}/mylands`;
-          }, 8000);
+          }, 2000);
         }, 2000);
       })
       .catch((err) => console.error(err));

@@ -39,7 +39,7 @@ const x = () => {
       >SendToken</button><br />
       <button onClick={()=> CheckBalance()}
       >CheckBalance</button><br />
-      <button onClick={()=>TokenApprove("0x20DB5E91F92e254AeFbeFCe5da77435c0A9cD99F",100000000)}>Approve</button>
+      <button onClick={()=>TokenApprove("0x10b24F6378b4EBBEAe177138fFC339514CDD8cF4",100000000)}>Approve</button>
       <br />
       <button onClick={()=>CreateNFT("0x7ed790a1ac108b9a50e24f5c5e061df59e3673a7","tokenURI","Name","description","ImageURI")}>Create NFT</button>
     </div>

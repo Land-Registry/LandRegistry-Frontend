@@ -322,7 +322,7 @@ const lands = () => {
                 {FilterDataset &&
                   FilterDataset.map((data) => (
                     <div className="inline-block px-3 cursor-pointer">
-                      <div className="w-[500px] h-[410px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white text-black  hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                      <div className="w-[500px] h-[390px] max-w-xl overflow-hidden rounded-lg shadow-md bg-white text-black  hover:shadow-xl transition-shadow duration-300 ease-in-out">
                         <img
                           onClick={() => setOpen(true)}
                           className="p-2 w-[500px] h-48 rounded-2xl"
@@ -350,11 +350,11 @@ const lands = () => {
                         <div className="m-auto text-center">
                           <button
                             onClick={() => setOpen(true)}
-                            className="bg-blue-500 w-[30%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
+                            className="bg-blue-500 w-[45%]  hover:bg-blue-700 text-white font-bold py-2 mx-2 px-4 my-2 rounded"
                           >
                             3D Land View
                           </button>
-                          <Link
+                          {/* <Link
                           type="primary"
                           loading={loadings[0]}
                           href={`/${aadhar}/${data.propertyID}/bidboard/`}
@@ -362,13 +362,13 @@ const lands = () => {
                           className="bg-blue-500 w-[20%] hover:bg-blue-700 text-white font-bold py-3 h-auto px-6 mx-2 rounded my-2 text-[16px]"
                         >
                           Auction
-                        </Link>
+                        </Link> */}
                           {data.Buyer_name == null || data.Buyer_name == '0'?
                           <Button
                             type="primary"
                             loading={loadings[0]}
                             onClick={() => setDate(true)}
-                            className="bg-blue-500 w-[30%] hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]"
+                            className="bg-blue-500 w-[45%] hover:bg-blue-700 text-white font-bold py-2 h-auto px-4 mx-2 rounded my-2 text-[16px]"
                           >
                             Schedule 
                           </Button>
@@ -378,7 +378,7 @@ const lands = () => {
                           loading={loadings[0]}
                           href={`/${aadhar}/processstatus/${data.propertyID}`}
                           // onClick={() => setDate(true)}
-                          className="bg-red-500 w-[30%] hover:bg-red-700 text-white font-bold py-3 h-auto px-6 mx-2 rounded my-2 text-[16px]"
+                          className="bg-red-500 w-[45%] hover:bg-red-700 text-white font-bold py-3 h-auto px-6 mx-2 rounded my-2 text-[16px]"
                         >
                           In Process 
                         </Link>

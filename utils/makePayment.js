@@ -10,84 +10,7 @@ export const MakePayment = async (PID, toaddress, amount) => {
   window.addEventListener("load", async () => {
     try {
       await ethereum.enable();
-    } catch (error) {}
-  });
-  
-
-  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-  const fromaddress = accounts[0];
-  const web3 = new Web3(window.ethereum);
-  const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
-  const balanceOf = await contract.methods.balanceOf(fromaddress).call();
-
-  if (amount * 10 ** 18 <= balanceOf) {
-    const MakePayment = await contract.methods
-      .transferFrom(fromaddress, toaddress, BigInt((parseInt(amount)*0.95) * 10 ** 18))
-      .send({ from: fromaddress });
-
-    if (MakePayment != "") {
-      console.log(MakePayment);
-      console.log(MakePayment["transactionHash"]);
-        UpdateData(
-          {
-            PaymentStatus: true,
-            TransactionHash: MakePayment["transactionHash"],
-          },
-          PID
-        );
-      alert("Payment Done");
-    }
-  } else {
-    alert("Insufficient Balance");
-  }
-};
-
-export const MaketokenPayment = async (PID, fromaddress, toaddress, amount) => {
-  if (typeof window.ethereum === "undefined") {
-    alert("Please install MetaMask first.");
-  }
-
-  window.addEventListener("load", async () => {
-    try {
-      await ethereum.enable();
-    } catch (error) {}
-  });
-  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-  fromaddress = accounts[0];
-  const web3 = new Web3(window.ethereum);
-  const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
-  const balanceOf = await contract.methods.balanceOf(fromaddress).call();
-
-  if (amount * 10 ** 18 <= balanceOf) {
-    const MakePayment = await contract.methods
-      .transferFrom(fromaddress, toaddress, BigInt(parseInt(amount) * 10 ** 18))
-      .send({ from: fromaddress });
-
-    if (MakePayment != "") {
-      console.log(MakePayment);
-      console.log(MakePayment["transactionHash"]);
-        UpdateData(
-          {
-            StampDutyTokenStatus: true,
-          },
-          PID
-        );
-      alert("Payment Done");
-    }
-  } else {
-    alert("Insufficient Balance");
-  }
-};
-
-export const PaymentBuyertoSeller = async (PID, toaddress, amount) => {
-  if (typeof window.ethereum === "undefined") {
-    alert("Please install MetaMask first.");
-  }
-
-  window.addEventListener("load", async () => {
-    try {
-      await ethereum.enable();
-    } catch (error) {}
+    } catch (error) { }
   });
 
   const accounts = await ethereum.request({ method: "eth_requestAccounts" });
@@ -98,30 +21,119 @@ export const PaymentBuyertoSeller = async (PID, toaddress, amount) => {
 
   if (amount * 10 ** 18 <= balanceOf) {
     const MakePayment = await contract.methods
-      .transferFrom(fromaddress, toaddress, BigInt((parseInt(amount)*0.05) * 10 ** 18))
+      .transferFrom(fromaddress, toaddress, BigInt((parseInt(amount) * 0.95) * 10 ** 18))
       .send({ from: fromaddress });
-      if (MakePayment != "") {
-        console.log(MakePayment);
-        console.log(MakePayment["transactionHash"]);
-        const date = new Date();
 
-let currentDay= String(date.getDate()).padStart(2, '0');
+    if (MakePayment != "") {
+      console.log(MakePayment);
+      console.log(MakePayment["transactionHash"]);
+      UpdateData(
+        {
+          PaymentStatus: true,
+          ProcessStatus: 4,
+          TransactionHash: MakePayment["transactionHash"],
+        },
+        PID
+      );
+      alert("Payment Done");
+    }
+  } else {
+    alert("Insufficient Balance");
+  }
+};
 
-let currentMonth = String(date.getMonth()+3).padStart(2,"0");
+export const MaketokenPayment = async (PID, toaddress, amount) => {
+  if (typeof window.ethereum === "undefined") {
+    alert("Please install MetaMask first.");
+  }
 
-let currentYear = date.getFullYear();
-let DurationDate = `${currentDay}-${currentMonth}-${currentYear}`
-          UpdateData(
-            {
-              StampDutyTokenStatus: true,
-              ProcessStatus:4,
-              PaymentDuration:DurationDate
-            },
-            PID
-          );
-        alert("Payment Done");
-        // window.location.href = "/inspectorDashboard";
-      }
+  window.addEventListener("load", async () => {
+    try {
+      await ethereum.enable();
+    } catch (error) { }
+  });
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  var fromaddress = accounts[0];
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
+  const balanceOf = await contract.methods.balanceOf(fromaddress).call();
+
+  if (amount * 10 ** 18 <= balanceOf) {
+    const MakePayment = await contract.methods
+      .transferFrom(fromaddress, toaddress, BigInt((parseInt(amount) * 0.05) * 10 ** 18))
+      .send({ from: fromaddress });
+
+    if (MakePayment != "") {
+      console.log(MakePayment);
+      console.log(MakePayment["transactionHash"]);
+      UpdateData(
+        {
+          BuyerTokenstatus: true,
+          ProcessStatus: 2,
+
+        },
+        PID
+      );
+      alert("Payment Done");
+    }
+  } else {
+    alert("Insufficient Balance");
+  }
+};
+
+export const MakeStampDutyPayment = async (PID, toaddress, amount) => {
+  if (typeof window.ethereum === "undefined") {
+    alert("Please install MetaMask first.");
+  }
+
+  window.addEventListener("load", async () => {
+    try {
+      await ethereum.enable();
+    } catch (error) { }
+  });
+
+  const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+  const fromaddress = accounts[0];
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
+  const balanceOf = await contract.methods.balanceOf(fromaddress).call();
+
+  if (amount * 10 ** 18 <= balanceOf) {
+    const MakePayment = await contract.methods
+      .transferFrom(fromaddress, toaddress, BigInt((parseInt(amount) * 0.05) * 10 ** 18))
+      .send({ from: fromaddress });
+    if (MakePayment != "") {
+      console.log(MakePayment);
+      console.log(MakePayment["transactionHash"]);
+      const date = new Date();
+
+      const currentDate = new Date();
+
+      // Add two months to the current date
+      const twoMonthsLaterDate = new Date(currentDate);
+      twoMonthsLaterDate.setMonth(currentDate.getMonth() + 2);
+
+      // Format the date as a string (adjust the format as needed)
+      const formattedDate = twoMonthsLaterDate.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      });
+
+      let DurationDate = formattedDate
+      UpdateData(
+        {
+          StampDutyTokenStatus: true,
+          ProcessStatus: 3,
+          Buyer_address: fromaddress,
+          request: true,
+          PaymentDuration: DurationDate
+        },
+        PID
+      );
+      alert("Payment Done");
+      // window.location.href = "/inspectorDashboard";
+    }
 
 
   } else {
@@ -139,7 +151,7 @@ export const CheckBalance = async () => {
   window.addEventListener("load", async () => {
     try {
       await ethereum.enable();
-    } catch (error) {}
+    } catch (error) { }
   });
   const web3 = new Web3(window.ethereum);
   const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);
@@ -161,7 +173,7 @@ export const TokenApprove = async (spender, value) => {
   window.addEventListener("load", async () => {
     try {
       await ethereum.enable();
-    } catch (error) {}
+    } catch (error) { }
   });
   const web3 = new Web3(window.ethereum);
   const contract = new web3.eth.Contract(Paymentabi, PaymentcontractAddress);

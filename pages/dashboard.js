@@ -1,4 +1,4 @@
-import { React, useState,useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import {
   Card,
   Col,
@@ -17,8 +17,8 @@ import Web3 from 'web3';
 import { Footer } from "../components/footer";
 import axios from "axios";
 
-    const secretKey = 'JdrEbjltyrxfZb409OU9IbiE6NZtM8PuTubYbApSYhbPFWAS3JvNbcjClNUWFw5C0';
-    const clientIdKey = '749c3076c810de02fd2507c4dd61e128:2f1dbdc3d897c5e083914783748ad469';
+const secretKey = 'tjCmgrrcx2b7I83qu80GZhahqrHBGsTBr7Z305xYjc4AToApLWX50purgP8YYjkZn';
+const clientIdKey = 'f4eb75199e000ab1e0f97f3370250ac7:c70b4f66dc0087cbb1da8dc3c2d4ad48';
 
 
 const dashboard = () => {
@@ -26,7 +26,7 @@ const dashboard = () => {
   const [modalbuyer, setModalBuyer] = useState(false);
   const [modalinstpector, setModalInspector] = useState(false);
   const [clientID, setClientID] = useState('');
-  const[MetamaskID,setMetamaskID] = useState('')
+  const [MetamaskID, setMetamaskID] = useState('')
 
   useEffect(() => {
     if (window.ethereum) {
@@ -38,44 +38,44 @@ const dashboard = () => {
 
   useEffect(() => {
 
-  setMetamaskID(<Metamask/>)
-}, [])
+    setMetamaskID(<Metamask />)
+  }, [])
 
   const onConnect = async () => {
-    
+
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
     // console.log("Account: " + accounts[0]);
-  }  
+  }
 
   async function SendOTP(aadhar) {
     const url = 'https://api.emptra.com/aadhaarVerification/requestOtp';
-    
+
     const headers = {
       'Content-Type': 'application/json',
       secretKey,
-      clientID:clientIdKey,
+      clientID: clientIdKey,
     };
-    
+
     const requestData = {
       aadhaarNumber: aadhar,
     };
-    
+
     try {
       const response = await axios.post(url, requestData, { headers });
       console.log(response.data);
-      
+
       if (response.data && response.data.result && response.data.result.data) {
         const { client_id } = response.data.result.data;
         setClientID(client_id); // Store client_id in state
-      } 
-      
+      }
+
       // Handle other response data here
     } catch (error) {
       console.error(error);
       // Handle errors here
     }
   }
-  
+
   async function VerifyOTP(user, aadhar, otp) {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
     console.log(clientID)
@@ -84,7 +84,7 @@ const dashboard = () => {
     const headers = {
       'Content-Type': 'application/json',
       secretKey,
-      clientID:clientIdKey,
+      clientID: clientIdKey,
     };
 
     const requestData = {
@@ -96,31 +96,31 @@ const dashboard = () => {
       const response = await axios.post(url, requestData, { headers });
       console.log(response.data);
 
-    if (response.data && response.data.result && response.data.result.data) {
-      // Add code here to save the user data to your MongoDB database
-      const userData = response.data.result.data;
-   
-      userData.metamaskAddress = accounts[0]
+      if (response.data && response.data.result && response.data.result.data) {
+        // Add code here to save the user data to your MongoDB database
+        const userData = response.data.result.data;
 
-      // Create a new instance of UserDetails using the userData
-      axios.post('http://localhost:8000/user', userData)
-      .then(function (response) {
-        console.log('User details saved successfully:', response.data);
-        // Handle the response as needed
-        if (user === 'seller') {
-          window.location = `/${aadhar}/form`;
-        } else if (user === 'buyer') {
-          window.location = `/${aadhar}/lands`;
-        } else if (user === 'inspector') {
-          window.location = '/inspectordashboard';
-        }
-      })
-      .catch(function (error) {
-        console.error('Error saving user details:', error);
-        // Handle errors here
-      });
+        userData.metamaskAddress = accounts[0]
 
-    
+        // Create a new instance of UserDetails using the userData
+        axios.post('http://localhost:8000/user', userData)
+          .then(function (response) {
+            console.log('User details saved successfully:', response.data);
+            // Handle the response as needed
+            if (user === 'seller') {
+              window.location = `/${aadhar}/form`;
+            } else if (user === 'buyer') {
+              window.location = `/${aadhar}/lands`;
+            } else if (user === 'inspector') {
+              window.location = '/inspectordashboard';
+            }
+          })
+          .catch(function (error) {
+            console.error('Error saving user details:', error);
+            // Handle errors here
+          });
+
+
 
         // You can also update other state variables or perform actions here
       }
@@ -130,13 +130,13 @@ const dashboard = () => {
     }
   }
 
-    
+
   function OTPalert(params) {
-    alert('OTP will be send to your Registred Mobile');    
-    }
+    alert('OTP will be send to your Registred Mobile');
+  }
 
   function OTPSelleralert(params) {
-  alert('OTP will be send to your Registred Mobile');    
+    alert('OTP will be send to your Registred Mobile');
   }
   const onFinishseller = (values) => {
     VerifyOTP(
@@ -146,18 +146,18 @@ const dashboard = () => {
     )
   };
   const onFinishFailedseller = (errorInfo) => {
-    if (errorInfo.values['Adhar Number']){
+    if (errorInfo.values['Adhar Number']) {
       console.log("Failed:", errorInfo.values['otp']);
       SendOTP(errorInfo.values['Adhar Number']);
     }
-    else{
-    alert(
-      "Please inser Correct Adhar Card"
-    )
+    else {
+      alert(
+        "Please inser Correct Adhar Card"
+      )
     }
-  
+
   };
-  
+
   const onFinishbuyer = (values) => {
     VerifyOTP(
       'buyer',
@@ -166,76 +166,57 @@ const dashboard = () => {
     )
   };
   const onFinishFailedbuyer = (errorInfo) => {
-    if (errorInfo.values['Adhar Number']){
+    if (errorInfo.values['Adhar Number']) {
       console.log("Failed:", errorInfo.values['otp']);
       SendOTP(errorInfo.values['Adhar Number']);
     }
-    else{
-    alert(
-      "Please inser Correct Adhar Card"
-    )
+    else {
+      alert(
+        "Please inser Correct Adhar Card"
+      )
     }
   };
 
   const onFinishinspector = (values) => {
     console.log("Success:", values);
-    if (values.username=='admin' && values.password=='admin') {
-    window.location = "/inspectordashboard";
+    if (values.username == 'admin' && values.password == 'admin') {
+      window.location = "/inspectordashboard";
     }
-    else{
+    else {
       alert('Invalid Credentials');
     }
-    
+
   };
   const onFinishFailedinspector = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
   return (
-    <div className="bg-gray-200 max-h-screen overflow-y-auto overflow-x-hidden" >
+    <div className="bg-white max-h-screen overflow-y-auto overflow-x-hidden" >
       <Navbar />
-      <Row gutter={16} className="justify-center py-64">
+      <div>
+        <img className="mt-16 mx-auto" src="https://media.istockphoto.com/id/1465469111/vector/land-registry-concept-image-with-an-imaginary-cadastral-map-of-territory-property-tax-on.jpg?s=612x612&w=0&k=20&c=sIi4lvjtH2KMDUtMH8X02FJxRdzMtytkWSieuAASp6M=" alt="" />
+      </div>
+      <Row gutter={16} className="justify-center ">
         <Col
           span={6}
           onClick={() => setModalSeller(true)}
-          className=" m-8 cursor-pointer transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300 "
+          className=" m-8 cursor-pointer transition ease-in-out  flex-inline text-center  delay-150  hover:-translate-y-1 hover:scale-110  duration-300 "
         >
-          <Card title="SELLER LOGIN" bordered={false}>
-            <ul className="font-bold text-lg mb-2 text-center">FUNCTIONS OF SELLER</ul>
-            <ul>
-              <li className="text-center">CONNECT TO METAMASK</li>
-              <li className="text-center">ADD LAND DETAILS</li>
-              <li className="text-center">UPDATE LAND DETAILS</li>
-            </ul>
-          </Card>
+          <button className="bg-gray-200 w-full py-5 font-bold shadow-lg rounded-md">SELLER LOGIN</button>
         </Col>
         <Col
           span={6}
           onClick={() => setModalBuyer(true)}
-          className=" m-8 cursor-pointer transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
+          className=" m-8 cursor-pointer transition  flex-inline text-center  ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
         >
-          <Card title="Buyer Login" bordered={false}>
-          <ul className="font-bold text-lg mb-2 text-center">FUNCTIONS OF BUYER</ul>
-            <ul>
-              <li className="text-center">CONNECT TO METAMASK</li>
-              <li className="text-center">BUY LAND</li>
-              <li className="text-center">REQUEST FOR DOCUMENTS</li>
-            </ul>
-          </Card>
+          <button className="bg-gray-200 w-full py-5 font-bold shadow-lg rounded-md">BUYER LOGIN</button>
         </Col>
         <Col
           span={6}
           onClick={() => setModalInspector(true)}
-          className=" m-8 cursor-pointer transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
+          className=" m-8 cursor-pointer flex-inline text-center transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
         >
-          <Card title="Land Inspector" bordered={false}>
-          <ul className="font-bold text-lg mb-2 text-center">FUNCTIONS OF LAND INSPECTOR</ul>
-            <ul>
-              <li className="text-center">LOGIN USING UMIQUE ID</li>
-              <li className="text-center">VERIFY LAND DETAILS</li>
-              <li className="text-center">TRANSFER OWNERSHIP</li>
-              <li className="text-center">UPDATE LAND DETAILS</li>
-            </ul>
-          </Card>
+          <button className="bg-gray-200 w-full py-5 font-bold shadow-lg rounded-md">LAND INSPECTOR</button>
         </Col>
       </Row>
 
@@ -247,7 +228,7 @@ const dashboard = () => {
         onOk={() => setModalSeller(false)}
         onCancel={() => setModalSeller(false)}
       >
-          {(<Metamask /> == '') ? (
+        {(<Metamask /> == '') ? (
 
           <>
             <p> Connect Wallet </p>
@@ -304,7 +285,7 @@ const dashboard = () => {
                   <Input placeholder="Enter OTP" />
                 </Form.Item>
               </Col>
-              
+
             </Row>
           </Form.Item>
 
@@ -334,7 +315,7 @@ const dashboard = () => {
         onOk={() => setModalBuyer(false)}
         onCancel={() => setModalBuyer(false)}
       >
-           {(<Metamask /> == '') ? (
+        {(<Metamask /> == '') ? (
 
           <>
             <p> Connect Wallet </p>
@@ -363,7 +344,7 @@ const dashboard = () => {
           }}
           autoComplete="off"
         >
-        <Form.Item
+          <Form.Item
             label="Adhar Number"
             name="Adhar Number"
             rules={[
@@ -392,7 +373,7 @@ const dashboard = () => {
                   <Input placeholder="Enter OTP" />
                 </Form.Item>
               </Col>
-              
+
             </Row>
           </Form.Item>
 
@@ -407,7 +388,7 @@ const dashboard = () => {
                 type="submit"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 rounded"
               >
-                 Get OTP / Login
+                Get OTP / Login
               </button>
             </Space>
           </Form.Item>
@@ -422,7 +403,7 @@ const dashboard = () => {
         onOk={() => setModalInspector(false)}
         onCancel={() => setModalInspector(false)}
       >
-      
+
 
         <Form
           name="normal_login"
@@ -491,10 +472,10 @@ const dashboard = () => {
           </Form.Item>
         </Form>
       </Modal>
-      
-      <Footer/>
-     
-      </div>
+
+      <Footer />
+
+    </div>
   );
 };
 

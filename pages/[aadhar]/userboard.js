@@ -108,7 +108,7 @@ const Dashboard = () => {
                         <div className='w-1/2'>areaOfLand: {land?.areaOfLand}</div>
                         <div className='w-1/2'>location: {land?.location?.area}, {land?.location?.city}, {land?.location?.state}</div>
                       </div>
-                      <Link href={`/${aadhar}/land/`} className="my-4 bg-blue-500 flex justify-center text-white px-3 py-1 w-fit  rounded-full hover:bg-blue-600 transition duration-300 ease-in-out">
+                      <Link href={`/${aadhar}/processstatus/`} className="my-4 bg-blue-500 flex justify-center text-white px-3 py-1 w-fit  rounded-full hover:bg-blue-600 transition duration-300 ease-in-out">
                         Add land to auction
                       </Link>
                     </div>
@@ -130,7 +130,7 @@ const Dashboard = () => {
                       <div className='w-1/2'>areaOfLand: {land?.areaOfLand}</div>
                       <div className='w-1/2'>location: {land?.location?.area}, {land?.location?.city}, {land?.location?.state}</div>
                     </div>
-                    <Link href={`/${aadhar}/land/`} className="my-2 bg-blue-500 flex justify-center text-white px-3 py-1 w-full  rounded-full hover:bg-blue-600 transition duration-300 ease-in-out">
+                    <Link href={`/${aadhar}/processstatus/`} className="my-2 bg-blue-500 flex justify-center text-white px-3 py-1 w-full  rounded-full hover:bg-blue-600 transition duration-300 ease-in-out">
                       Add land to auction
                     </Link>
                   </div>
